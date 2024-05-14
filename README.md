@@ -4,7 +4,7 @@ LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and P
 ## 1. LucaOne Workflow      
 
 <center>
-<img alt="The workflow of LucaOne." src="pics/ModelArchitecture.png"/>
+<img alt="The workflow of LucaOne." src="./pics/ModelArchitecture.png"/>
 
 Fig. 1 The workflow of LucaOne.   
 </center>   
@@ -13,7 +13,7 @@ Fig. 1 The workflow of LucaOne.
 ## 2. LucaOne PreTraining Data & PreTraining Tasks
 
 <center>
-<img alt="The data and tasks for pre-training LucaOne, and T-SNE on four embedding models." src="pics/PretraingData&Tasks&EmbeddingTSNE.png"/>
+<img alt="The data and tasks for pre-training LucaOne, and T-SNE on four embedding models." src="./pics/PretraingData&Tasks&EmbeddingTSNE.png"/>
 
 Fig. 2 The data and tasks for pre-training LucaOne, and T-SNE on four embedding models.     
 </center>
@@ -22,7 +22,7 @@ Fig. 2 The data and tasks for pre-training LucaOne, and T-SNE on four embedding 
 ## 3. Downstream Tasks
 
 <center>
-<img alt="Downstream task network with three input types and results comparison of 8 verification tasks." src="pics/DownstreamNetworksAndMetrics.png"/>
+<img alt="Downstream task network with three input types and results comparison of 8 verification tasks." src="./pics/DownstreamNetworksAndMetrics.png"/>
 
 Fig. 3 Downstream task network with three input types and results comparison of 8 verification tasks.  
 </center>
