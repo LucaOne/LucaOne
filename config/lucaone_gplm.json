@@ -1,0 +1,32 @@
+{
+  "architectures": [
+    "LucaOneGPLM"
+  ],
+  "model_type": "lucaone_gplm",
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout_prob": 0.1,
+  "classifier_dropout": 0.1,
+  "hidden_dropout_prob": 0.1,
+  "pad_token_id": 0,
+  "unk_token_id": 1,
+  "bos_token_id": 2,
+  "eos_token_id": 3,
+  "sep_token_id": 3,
+  "mask_token_id": 4,
+  "hidden_act": "gelu",
+  "classifier_hidden_act": "gelu",
+  "vocab_size":39,
+  "max_position_embeddings": 4096,
+  "type_vocab_size": 2,
+  "num_hidden_layers": 36,
+  "hidden_size": 2560,
+  "num_attention_heads": 40,
+  "no_position_embeddings": true,
+  "no_token_type_embeddings": false,
+  "alphabet": "gene_prot",
+  "token_dropout": true,
+  "ignore_index": -100,
+  "use_embed_layer_norm": false,
+  "use_last_layer_norm": true,
+  "embed_scale": 1.0
+}

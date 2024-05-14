@@ -1,0 +1,2196 @@
+1604HC
+21-64-14
+4484-171
+Abditibacteriales
+Abrothallales
+Absconditabacterales
+Acanthobdellida
+Acanthocystida
+Acanthoecida
+Acanthopleuribacterales
+Acanthuriformes
+Acarosporales
+Accipitriformes
+Acetobacterales
+Acholeplasmatales
+Acidaminococcales
+Acidianus bottle-shaped virus
+Acidiferrobacterales
+Acidilobales
+Acidimicrobiales
+Acidimicrobiia
+Acidithiobacillales
+Acidobacteriota subdivision 22
+Acidothermales
+Aciduliprofundum
+Acidulodesulfobacterales
+Acipenseriformes
+Acochlidiacea
+Acoela
+Acorales
+Acrochaetiales
+Acrospermales
+Acrosymphytales
+Actiniaria
+Actinomarinales
+Actinomycetales
+Actinomycetes
+Actinomycetota incertae sedis
+Actinophryidae
+Actinopolysporales
+Acytosteliales
+Adapedonta
+Adinetida
+Adomaviridae
+Aeromonadales
+Agaricales
+Agaricostilbales
+Agelasida
+Aggregatilineales
+Ahnfeltiales
+Albuginales
+Albuliformes
+Alepocephaliformes
+Algavirales
+Alismatales
+Alphanudivirus
+Alphapermutotetravirus
+Alphaproteobacteria incertae sedis
+Alsuviricetes
+Alteromonadales
+Amarillovirales
+Amblypygi
+Amborellales
+Amiiformes
+Ammonifexales
+Amphidiniales
+Amphidiscosida
+Amphilepidida
+Amphilinidea
+Amphionidacea
+Amphioxiformes
+Amphipoda
+Amylocorticiales
+Anabantiformes
+Anaeramoeba
+Anaerolineae
+Anaerolineales
+Anaeroplasmatales
+Anaerosomatales
+Anaspidacea
+Anaulales
+Ancyromonadida
+Andreaeales
+Andreaeobryales
+Aneurinibacillales
+Anguilliformes
+Anisolpidiales
+Annulatascales
+Anostraca
+Anseriformes
+Anthoathecata
+Anthocerotales
+Antipatharia
+Anura
+Aphelidea
+Aphragmophora
+Apiales
+Apicomplexa
+Aplousobranchia
+Aplysiida
+Apochela
+Apodida
+Apodiformes
+Aporidea
+Apostomatida
+Apterygiformes
+Apusomonadida
+Aquabirnavirus
+Aquificales
+Aquifoliales
+Araeolaimida
+Araneae
+Araucariales
+Arbacioida
+Arcellinida
+Archaeoglobales
+Archaeognatha
+Archaeorhizomycetales
+Archaeosporales
+Archamoebae
+Archidiales
+Archinemertea
+Architaenioglossa
+Arcoida
+Arctomiales
+Ardenticatenales
+Ardenticatenia
+Ardissoneales
+Arecales
+Arenicellales
+Argentiniformes
+Arguloida
+Arhynchobdellida
+Armatimonadales
+Armatimonadota incertae sedis
+Armophorida
+Arthoniales
+Arthracanthida
+Arthrotardigrada
+Articulavirales
+Artiodactyla
+Ascoseirales
+Asellariales
+Asfuvirales
+Asparagales
+Aspergillus fumigatus polymycovirus 1
+Aspidochirotida
+Aspidosiphonidormes
+Asterales
+Asterinales
+Asterocladales
+Asterolamprales
+Asterotexales
+Astomatida
+Astrorhizida
+Ateleopodiformes
+Atheliales
+Atheriniformes
+Atractiellales
+Atribacterales
+Aulocalycoida
+Aulographales
+Aulopiformes
+Auriculariales
+Austrobaileyales
+Avibirnavirus
+Axinellida
+Azygiida
+BD1-5
+Bac17
+Bacillales
+Bacillales_A
+Bacillales_B
+Bacillales_D
+Bacillales_E
+Bacillales_G
+Bacillariales
+Bacilli
+Bacillota incertae sedis
+Bacillota sensu stricto incertae sedis
+Bacteria division CPR2
+Bacteria division CPR3
+Bacteria division KSB1
+Bacteria division Kazan-3B-28
+Bacteria division NPL-UPA2
+Bacteria division TA06
+Bacteria division WOR-3
+Bacteriovoracales
+Bacteroidales
+Bacteroidota
+Baeomycetales
+Baerida
+Balanomorpha
+Balbianiales
+Balliales
+Balneolales
+Bangiales
+Baphyvirales
+Barbatosporales
+Bartheletiales
+Bartramiales
+Basidiobolales
+Bathynellacea
+Batrachoidiformes
+Batrachospermales
+Bdellonemertea
+Bdellovibrionales
+Belfryvirales
+Beloniformes
+Berberidopsidales
+Beroida
+Beryciformes
+Betaproteobacteria incertae sedis
+Bhendi yellow vein India betasatellite
+Bicosoecida
+Biddulphiales
+Biemnida
+Bifidobacteriales
+Bin95
+Bipolaricaulales
+Bivalvulida
+Blasiales
+Blastocatellales
+Blastocladiales
+Blastodiniales
+Blattodea
+Blenniiformes
+Blosnavirus
+Blubervirales
+Boletales
+Boliniales
+Bonnemaisoniales
+Boraginales
+Bothriocephalidea
+Botrydiales
+Botryosphaeriales
+Bourgueticrinida
+Brachypoda
+Brachyspirales
+Bradymonadales
+Branchiobdellida
+Brassicales
+Brevibacillales
+Brevinematales
+Brisingida
+Brocadiales
+Bruniales
+Bryales
+Bryobacterales
+Bryopsidales
+Bryoxiphiales
+Bubarida
+Bucerotiformes
+Bunyavirales
+Burkholderiales
+Bursariomorphida
+Bursovaginoidea
+Buxales
+Buxbaumiales
+CADAEX01
+CAIPTA01
+CAJFEE01
+Calanoida
+Calanticomorpha
+Calcarisporiellales
+Caldanaerobiales
+Caldilineae
+Caldilineales
+Caldisericales
+Calditrichales
+Caliciales
+Callipodida
+Calobryales
+Calosphaeriales
+Camarodonta
+Campylobacterales
+Candelariales
+Candidatus Abawacabacteria
+Candidatus Absconditabacterales
+Candidatus Absconditabacteria
+Candidatus Acidoferrales
+Candidatus Acidulodesulfobacterales
+Candidatus Actinomarinales
+Candidatus Adamsella
+Candidatus Adiutricales
+Candidatus Aerophobetes
+Candidatus Altiarchaeales
+Candidatus Aminicenantes
+Candidatus Angelobacter
+Candidatus Anoxychlamydiales
+Candidatus Aquicultorales
+Candidatus Auribacterales
+Candidatus Babeliales
+Candidatus Bathyarchaeia
+Candidatus Berkelbacteria
+Candidatus Binatales
+Candidatus Bipolaricaulota
+Candidatus Blackallbacteria
+Candidatus Borkfalkiales
+Candidatus Brocadiales
+Candidatus Brocadiia
+Candidatus Caldatribacterium
+Candidatus Calescamantes
+Candidatus Chrysopegis
+Candidatus Cloacimonadales
+Candidatus Cloacimonadia
+Candidatus Coatesbacteria
+Candidatus Comchoanobacterales
+Candidatus Cryosericales
+Candidatus Dadabacteria
+Candidatus Delongbacteria
+Candidatus Dependentiae
+Candidatus Desantisbacteria
+Candidatus Desulfofervidales
+Candidatus Dojkabacteria
+Candidatus Dormibacter
+Candidatus Doudnabacteria
+Candidatus Edwardsbacteria
+Candidatus Eisenbacteria
+Candidatus Entotheonella
+Candidatus Eremiobacterales
+Candidatus Fermentibacterales
+Candidatus Fermentimicrarchaeales
+Candidatus Fervidibacteria
+Candidatus Firestonebacteria
+Candidatus Fischerbacteria
+Candidatus Fraserbacteria
+Candidatus Gastranaerophilales
+Candidatus Geothermincolales
+Candidatus Glassbacteria
+Candidatus Goldbacteria
+Candidatus Gribaldobacteria
+Candidatus Hadarchaeum
+Candidatus Handelsmanbacteria
+Candidatus Huberarchaeum
+Candidatus Humimicrobiales
+Candidatus Hydrogenedens
+Candidatus Hydrothermae
+Candidatus Izemoplasmatales
+Candidatus Izimaplasma
+Candidatus Kapabacteria
+Candidatus Korarchaeum
+Candidatus Kryptobacter
+Candidatus Kryptonium
+Candidatus Latescibacter
+Candidatus Limnocylindrales
+Candidatus Limnocylindria
+Candidatus Lindowbacteria
+Candidatus Lokiarchaeia
+Candidatus Lokiarchaeum
+Candidatus Mancarchaeum
+Candidatus Margulisbacteria
+Candidatus Marsarchaeota group 1
+Candidatus Marsarchaeota group 2
+Candidatus Mcinerneyibacteriales
+Candidatus Melainabacteria
+Candidatus Methanodesulfokores
+Candidatus Methanofastidiosa
+Candidatus Methanoliparales
+Candidatus Methanomethylicales
+Candidatus Methanomethylicia
+Candidatus Micrarchaeales
+Candidatus Muirbacteria
+Candidatus Naiadarchaeales
+Candidatus Nanogingivales
+Candidatus Nanohalobiales
+Candidatus Nanopelagicales
+Candidatus Nanoperiomorbales
+Candidatus Nanosynbacterales
+Candidatus Nanosyncoccales
+Candidatus Nitrosocaldales
+Candidatus Obscuribacterales
+Candidatus Odinarchaeum
+Candidatus Omnitrophus
+Candidatus Ozemobacteria
+Candidatus Parvarchaeum
+Candidatus Peregrinibacteria
+Candidatus Peribacterales
+Candidatus Polarisedimenticolales
+Candidatus Poribacteria
+Candidatus Poseidoniales
+Candidatus Proteinoplasmatales
+Candidatus Ratteibacteria
+Candidatus Riflebacteria
+Candidatus Rokubacteria
+Candidatus Saccharibacteria
+Candidatus Saccharimonadales
+Candidatus Schekmanbacteria
+Candidatus Sericytochromatia
+Candidatus Stahlbacteria
+Candidatus Sulfidibacteriales
+Candidatus Sumerlaeales
+Candidatus Sumerlaeota
+Candidatus Sysuiplasmatales
+Candidatus Termititenacales
+Candidatus Thermofonsia
+Candidatus Thermokryptus
+Candidatus Thermoprofundales
+Candidatus Troglogloeales
+Candidatus Uabimicrobiales
+Candidatus Undinarchaeales
+Candidatus Velamenicoccus
+Candidatus Wallbacteria
+Candidatus Wirthbacteria
+Candidatus Zymogeniales
+Canellales
+Cantharellales
+Capilloventrida
+Capnodiales
+Caprimulgiformes
+Caproiformes
+Capsalidea
+Capsaspora
+Capsicum India alphasatellite
+Capsulimonadales
+Carangiformes
+Carcharhiniformes
+Cardiida
+Cardiobacteriales
+Cardiopteridales
+Carditida
+Cariamiformes
+Carinomiformes
+Carnivora
+Carpediemonas-like organisms
+Carybdeida
+Caryophyllales
+Caryophyllidea
+Cassiduloida
+Casuariiformes
+Catenulisporales
+Caudata
+Caudovirales
+Caudoviricetes
+Caulobacterales
+Caulochytriales
+Cavernulicolales
+Cavibelonia
+Cavosteliida
+Celastrales
+Cellvibrionales
+Cenarchaeales
+Centrarchiformes
+Cephalaspidea
+Cephalodiscida
+Cephalothecales
+Ceraceosorales
+Ceramiales
+Ceratodontiformes
+Ceratophyllales
+Cercomonadida
+Cercozoa
+Cestida
+Chaetocerotales
+Chaetodermatida
+Chaetodontiformes
+Chaetomellales
+Chaetonotida
+Chaetopeltidales
+Chaetophorales
+Chaetosphaeriales
+Chaetothyriales
+Characiformes
+Charadriiformes
+Charales
+Chattonellales
+Chaunacanthida
+Cheilostomatida
+Chimaericolidea
+Chimaeriformes
+Chirodropida
+Chiroptera
+Chitinispirillales
+Chitinivibrionales
+Chitinophagales
+Chitonida
+Chitovirales
+Chlamydiales
+Chlamydiia
+Chlamydodontida
+Chlamydomonadales
+Chloracidobacterium
+Chloranthales
+Chlorellales
+Chlorobiales
+Chlorobiota
+Chlorocystidales
+Chlorodendrales
+Chloroflexales
+Chloroflexia
+Chloroflexota incertae sedis
+Chlorokybales
+Chloropicales
+Chlorosarcinales
+Chondrillida
+Chondrosiida
+Chordeumatida
+Chordodea
+Choreotrichida
+Christensenellales
+Chromadorida
+Chromatiales
+Chromulinales
+Chroococcales
+Chroococcidiopsidales
+Chrymotiviricetes
+Chrysanthemodiscales
+Chrysiogenales
+Chrysomeridales
+Chrysosphaerales
+Chthoniobacterales
+Chthonomonadales
+Chthonomonadetes
+Chytridiales
+Cichliformes
+Ciconiiformes
+Cidaroida
+Ciliophora
+Cingulata
+Circo-like virus-Brazil
+Circular single stranded RNA satellites
+Circularisvirus
+Cirlivirales
+Cladochytriales
+Cladophorales
+Cladosporiales
+Cladosporium cladosporioides polymycovirus 1
+Classiculales
+Clathrinida
+Climacospheniales
+Clionaida
+Cloacimonadales
+Clostridia
+Clostridiales
+Clupeiformes
+Clypeasteroida
+Coccolithales
+Cocconeidales
+Coccosphaerales
+Coelacanthiformes
+Colaconematales
+Coleochaetales
+Coleoptera
+Coliiformes
+Collemopsidiales
+Colletotrichum camelliae polymycovirus 1
+Collodaria
+Collodictyon
+Collothecaceae
+Colpodellida
+Colpodida
+Colponemida
+Columbiformes
+Comatulida
+Commelinales
+Compsopogonales
+Conexivisphaerales
+Coniochaetales
+Coniocybales
+Conioscyphales
+Copelata
+Coprothermobacterales
+Coraciiformes
+Corallimorpharia
+Corallinales
+Corallochytrium
+Corethrales
+Coriobacteriales
+Coriobacteriia
+Cornales
+Coronatae
+Coronophorales
+Corticiales
+Coryneliales
+Corynodactylales
+Coscinodiscales
+Cotesia sesamiae bracovirus
+Coxiellales
+Craniida
+Craspedida
+Crassiclitellata
+Crassvirales
+Craterostigmomorpha
+Cremevirales
+Creneidae
+Cristamonadida
+Crocodylia
+Crossosomatales
+Cruciviridae
+Cryomonadida
+Cryppavirales
+Cryptocaliciales
+Cryptomonadales
+Cryptophialida
+Cryptosporangiales
+Ctenophore-associated circular genome 1
+Ctenostomatida
+Cuculiformes
+Cucurbitales
+Culicoidibacterales
+Cumacea
+Cupressales
+Cutleriales
+Cyanidiales
+Cyanobacteriales
+Cyanobacteriota
+Cyanophora
+Cyatheales
+Cyathomonadacea
+Cycadales
+Cycloneritida
+Cyclophorales
+Cyclophyllidea
+Cyclopoida
+Cyclostomatida
+Cyclotrichida
+Cydippida
+Cymatosirales
+Cymbellales
+Cypriniformes
+Cyprinodontiformes
+Cyrtocrinida
+Cyrtolophosidida
+Cystobasidiales
+Cystofilobasidiales
+Cytophagales
+Cyttariales
+DHVE6 group
+DTUO25
+Dacrymycetales
+Dactylogyridea
+Dactylopodida
+Dasycladales
+Dasyuromorphia
+Decapoda
+Deferribacterales
+Deferrisomatales
+Dehalococcoidales
+Dehalococcoidia
+Deinococcales
+Deltaproteobacteria incertae sedis
+Dendroceratida
+Dendrocerotales
+Dendrochirotida
+Dendrogastrida
+Dentaliida
+Dermaptera
+Dermocystida
+Dermoptera
+Desertifilales
+Desmacellida
+Desmarestiales
+Desmidiales
+Desmodorida
+Desmoscolecida
+Desulfarculales
+Desulfobaccales
+Desulfobacterales
+Desulfobulbales
+Desulfomonilales
+Desulfotomaculales
+Desulfovibrionales
+Desulfurellales
+Desulfuribacillales
+Desulfurobacteriales
+Desulfurococcales
+Desulfuromonadales
+Diadematoida
+Diaporthales
+Diclybothriidea
+Dicranales
+Dictyoceratida
+Dictyochales
+Dictyoglomales
+Dictyosteliales
+Dictyotales
+Didelphimorphia
+Dikarya
+Dilleniales
+Dimargaritales
+Dinophyceae
+Dinophysiales
+Dinornithiformes
+Dioctophymatida
+Dioscoreales
+Diphylleia
+Diphyllidea
+Diphyllobothriidea
+Diphysciales
+Diplomonadida
+Diplonemea
+Diplorickettsiales
+Diplostomida
+Diplostraca
+Diplura
+Diprotodontia
+Dipsacales
+Diptera
+Dissulfuribacterales
+Diversisporales
+Dixoniellales
+Doassansiales
+Dolichomastigales
+Doliolida
+Dorylaimida
+Dothideales
+Durnavirales
+Dysteriida
+Echinamoebida
+Echiniscoidea
+Echinorhiniformes
+Echinorhynchida
+Echinosteliales
+Echinothurioida
+Echiuroidea
+Ectocarpales
+Eggerthellales
+Egibacterales
+Egicoccales
+Elasipodida
+Ellobiida
+Elopiformes
+Elusimicrobiales
+Embioptera
+Emcibacterales
+Encalyptales
+Enchytraeida
+Endogenida
+Endogonales
+Endomicrobiales
+Endomyxa
+Enoplida
+Enterobacterales
+Enterobacterales_A
+Entodiniomorphida
+Entomobirnavirus
+Entomobryomorpha
+Entomophthorales
+Entomoplasmatales
+Entorrhizales
+Entwisleiales
+Entylomatales
+Ephedrales
+Ephemeroptera
+Ephippiformes
+Equisetales
+Eremithallales
+Eremomycetales
+Ericales
+Erysipelotrichales
+Erysipelotrichia
+Erysiphales
+Erythrobasidiales
+Erythropeltidales
+Escalloniales
+Esociformes
+Euamoebida
+Eubacteriales
+Eubodonida
+Eucoccidiorida
+Euglenales
+Euglenida
+Euglyphida
+Eugregarinorida
+Eulipotyphla
+Eumetazoa
+Eumycetozoa
+Eunicida
+Eunotiales
+Euonychophora
+Euphausiacea
+Euplotida
+Eupodiscales
+Eurotiales
+Euryalida
+Eustigmatales
+Eutreptiales
+Euzebyales
+Evaginogenida
+Exiguobacterales
+Exobasidiales
+Exogenida
+Fabales
+Fagales
+Falcocladiales
+Falconiformes
+Ferrovales
+Fervidicoccales
+Fibrobacterales
+Filobasidiales
+Filospermoidea
+Fimbriimonadales
+Flabellinia
+Flasuviricetes
+Flavobacteriales
+Florenciellales
+Flosculariaceae
+Forcipulatida
+Fossombroniales
+Fractovitellida
+Fragilariales
+Francisellales
+Frankiales
+Fucales
+Funariales
+Fungi incertae sedis
+Fuscosporellales
+Fusobacteriales
+Futianiales
+GCA-001735895
+GCA-002705445
+GCA-2717565
+GCA-2729495
+GCA-2731375
+Ga0077536
+Gadiformes
+Gadilida
+Gaiellales
+Galaxiiformes
+Galbuliformes
+Galdieriales
+Galeommatida
+Galliformes
+Gammaproteobacteria incertae sedis
+Garryales
+Gastranaerophilales
+Gastrochaenida
+Gaviiformes
+Geastrales
+Gelidiales
+Gelyelloida
+Geminibasidiales
+Gemmatales
+Gemmatimonadales
+Gentianales
+Geobacterales
+Geodermatophilales
+Geoglossales
+Geophilomorpha
+Georgefischeriales
+Geplafuvirales
+Geraniales
+Gerreiformes
+Ghabrivirales
+Ghiorsea
+Gigantorhynchida
+Gigartinales
+Gigaspermales
+Ginkgoales
+Glaucocystales
+Glaucosphaerales
+Gleicheniales
+Glissomonadida
+Gloeobacterales
+Gloeochaetales
+Gloeomargaritales
+Gloeophyllales
+Glomerales
+Glomerellales
+Glomerida
+Glomeridesmida
+Glycomycetales
+Gnetales
+Gobiiformes
+Golfingiida
+Golubeviales
+Gomphales
+Goniochloridales
+Gonorynchiformes
+Gonyaulacales
+Gordea
+Goujianvirales
+Gracilariales
+Grimmiales
+Gromiida
+Gruiformes
+Grylloblattodea
+Gunnerales
+Gymnodiniales
+Gymnophiona
+Gymnotiformes
+Gyracanthocephala
+Gyrocotylidea
+Gyrodactylidea
+HGM11327
+HGM11514
+HIMB59
+Haemosporida
+Halanaerobiales
+Haliangiales
+Halobacteria
+Halobacteriales
+Halocyprida
+Haloferacales
+Halopanivirales
+Haloplasmatales
+Haloplasmatales_A
+Halorutilales
+Haloruvirales
+Halymeniales
+Hapalidiales
+Haplobothriidea
+Haplopharyngida
+Haplosclerida
+Haplosporida
+Haplotaxida
+Haploviricotina
+Haptorida
+Harpacticoida
+Harpellales
+Hedwigiales
+Helicobasidiales
+Helotiales
+Hemiaulales
+Hemiptera
+Hepatitis delta virus
+Hepelivirales
+Herpesvirales
+Herpetosiphonales
+Herviviricetes
+Heterodontiformes
+Heterogastridiales
+Heteronematales
+Heteronemertea
+Heterotrichida
+Hexactinosida
+Hexanchiformes
+Hibberdiales
+High Plains virus
+Hildenbrandiales
+Himatismenida
+Hiodontiformes
+Hirudinida
+Holasteroida
+Holocentriformes
+Holophagales
+Holosporales
+Holothyrida
+Holtermanniales
+Homosclerophorida
+Honigbergiellida
+Hookeriales
+Huerteales
+Hydrogenophilales
+Hydrogenophilalia incertae sedis
+Hydrurales
+Hymeneliales
+Hymenochaetales
+Hymenophyllales
+Hymenoptera
+Hymenostomatida
+Hyocrinida
+Hyphomicrobiales
+Hyphomonadales
+Hypnales
+Hypnodendrales
+Hypocomatida
+Hypocreales
+Hypotrichomonadida
+Hyracoidea
+Hysterangiales
+Hysteriales
+Iblomorpha
+Icacinales
+Ichthyophonida
+Ignatiales
+Ignavibacteriales
+Ignavibacteriota
+Imitervirales
+Immundisolibacterales
+Iodidimonadales
+Isochrysidales
+Isocrinida
+Isoetales
+Isopoda
+Isosphaerales
+Istiophoriformes
+Ixodida
+Izemoplasmatales
+JAAXHH01
+JABSQK01
+Jaapiales
+Jahnulales
+Jakobida
+Jatrophihabitantales
+Jiangellales
+Jingchuvirales
+Julida
+Jungermanniales
+KS3-K002
+Kalamavirales
+Kallotenuales
+Kangiellales
+Katanobacteria
+Kathablepharidacea
+Kickxellales
+Kiitrichida
+Kiloniellales
+Kineosporiales
+Kinetoplastea
+Kiritimatiellales
+Kiritimatiellia
+Kirjokansivirales
+Kirschsteiniotheliales
+Kitasatosporales
+Klebsormidiales
+Koleobacterales
+Kordiimonadales
+Kosmotogales
+Kriegeriales
+Ktedonobacterales
+Ktedonobacteria
+Kurtiformes
+LD1-PB3
+Laboulbeniales
+Labriformes
+Labyrinthulida
+Lachnospirales
+Lactobacillales
+Lagenidiales
+Lagomorpha
+Lamiales
+Laminariales
+Lamniformes
+Lampriformes
+Large single stranded RNA satellites
+Laurales
+Laurida
+Lecanicephalidea
+Lecanorales
+Lecideales
+Lecithoepitheliata
+Lefavirales
+Legionellales
+Leiosporocerotales
+Lentisphaerales
+Lentisphaeria
+Leotiales
+Lepetellida
+Lepidogalaxiiformes
+Lepidopleurida
+Lepidoptera
+Lepidostromatales
+Leptocylindrales
+Leptomitales
+Leptomyxida
+Leptospirales
+Leptostraca
+Leptothecata
+Leucosolenida
+Leucosporidiales
+Liceales
+Lichenostigmatales
+Lichinales
+Lichinodiales
+Licmophorales
+Licnophorida
+Ligamenvirales
+Liliales
+Limifossorida
+Limnochordales
+Limnognathida
+Limnomedusae
+Limoida
+Lineolatales
+Lingulida
+Lithobiomorpha
+Lithodesmiales
+Lithoglyptida
+Lithonida
+Litobothriidea
+Litopterna
+Littorinimorpha
+Lituolida
+Lobata
+Lobotiformes
+Longamoebia
+Longimicrobiales
+Lophiiformes
+Lophodiniales
+Lophogastrida
+Loxodida
+Lucinida
+Ludwigia leaf distortion betasatellite
+Luffa puckering and leaf distortion-associated DNA beta
+Lulworthiales
+Lumbriculida
+Lunulariales
+Lutjaniformes
+Lycopodiales
+Lyrellales
+Lyssacinosida
+M satellites of Saccharomyces L-A virus
+MAG-NZ
+MCG-1
+MCG-15
+ML615J-28
+MPNO01
+Macrobrachium satellite virus 1
+Macrodasyida
+Macroscelidea
+Macrostomida
+Magnaporthales
+Magnetococcales
+Magnoliales
+Malacalcyonacea
+Malacovalvulida
+Malasseziales
+Malawimonadida
+Malpighiales
+Malvales
+Mamiellales
+Mamiellophyceae
+Mantodea
+Mantophasmatodea
+Marattiales
+Marchantiales
+Maricaulales
+Marinilabiliales
+Marinisomatales
+Mariprofundales
+Marsupiomonadales
+Martellivirales
+Mastigamoebida
+Mastogloiales
+Mazocraeidea
+Mecoptera
+Megaloptera
+Megaviricetes
+Meliolales
+Melosirales
+Merliida
+Mermithida
+Mesoaciditogales
+Mesostigmata
+Mesostigmatales
+Mesostigmatophyceae
+Methanobacteriales
+Methanobavirales
+Methanocellales
+Methanococcales
+Methanomassiliicoccales
+Methanomicrobia
+Methanomicrobiales
+Methanonatronarchaeales
+Methanophagales
+Methanopyrales
+Methanopyri
+Methanosarcinales
+Methanotrichales
+Methylacidiphilales
+Methylococcales
+Metopida
+Metteniusales
+Metzgeriales
+Micavibrionales
+Micavibrionales_C
+Micraspidales
+Microascales
+Microbiotheria
+Microbotryales
+Micrococcales
+Microlaimida
+Micromonosporales
+Micropepsales
+Micropygoida
+Microstromatales
+Microthamniales
+Microthoracida
+Microthyriales
+Miliolida
+Milk vetch dwarf alphasatellite 2
+Millericrinida
+Miltoncostaeales
+Mindivirales
+Ministeria
+Minutisphaerales
+Minwuiales
+Mischococcales
+Misophrioida
+Mixiales
+Mobilida
+Mollicutes
+Molpadida
+Monhysterida
+Moniliellales
+Moniliformida
+Moniligastrida
+Monoblastiales
+Monoblepharidales
+Monocotylidea
+Monoglobales
+Monoglobales_A
+Monomastigales
+Mononchida
+Mononegavirales
+Monophragmophora
+Monostilifera
+Monotremata
+Monstrilloida
+Moorellales
+Moraxellales
+Mormonilloida
+Mortierellales
+Motilibacterales
+Mucorales
+Mugiliformes
+Mulpavirales
+Multivalvulida
+Musophagiformes
+Muspiceida
+Muvirales
+Muyocopronales
+Mycobacteriales
+Mycocaliciales
+Mycoplasmatales
+Mycoplasmatota incertae sedis
+Mycoplasmoidales
+Mycosphaerellales
+Myctophiformes
+Myida
+Myliobatiformes
+Myodocopida
+Myopsida
+Myriangiales
+Myrmecridiales
+Myrtales
+Mysida
+Mystacocaridida
+Mytilida
+Mytilinidiales
+Myxiniformes
+Myxococcales
+Myzocytiopsidales
+Myzostomida
+NPL-UPA2
+NS11-12g
+NULL
+Nakamurellales
+Nanaloricida
+Nannocystales
+Nanoarchaeales
+Nanoarchaeota incertae sedis
+Nanobdellales
+Nanohaloarchaea
+Nanopelagicales
+Naohideales
+Narcomedusae
+Nassellaria
+Nassulida
+Natranaerobiales
+Natrialbales
+Nautiliales
+Nautilida
+Naviculales
+Nebulidida
+Nectiopoda
+Neelipleona
+Negativicutes
+Neisseriales
+Nemaliales
+Nemastomatales
+Nemertodermatida
+Neobodonida
+Neocallimastigales
+Neoechinorhynchida
+Neogastropoda
+Neohodgsoniales
+Neolectales
+Neomeniamorpha
+Neophaeothecales
+Neozygitales
+Nephromycida
+Nephroselmidales
+Neuroptera
+Nevskiales
+Nidovirales
+Nippotaeniidea
+Nitriliruptorales
+Nitrococcales
+Nitrosococcales
+Nitrosomonadales
+Nitrosopumilales
+Nitrososphaerales
+Nitrososphaeria
+Nitrososphaerota incertae sedis
+Nitrospinales
+Nitrospirales
+Noctilucales
+Nodamuvirales
+Nodosilineales
+Norzivirales
+Nostocales
+Notacanthiformes
+Notomyotida
+Notoryctemorphia
+Notostraca
+Notothyladales
+Notoungulata
+Nuculanida
+Nuculida
+Nudibranchia
+Nymphaeales
+Oblongichytrida
+Obscuribacterales
+Oceanospirillales
+Ochromonadales
+Ochrophyta
+Octopoda
+Odonata
+Oedipodiales
+Oedogoniales
+Oegopsida
+Oligacanthorhynchida
+Oligoflexales
+Oligosphaerales
+Olpidiales
+Olpidiopsidales
+Oltmannsiellopsidales
+Oltmansiellopsidales
+Oncothecales
+Onslowiales
+Onygenales
+Opalinata
+Ophidiiformes
+Ophioglossales
+Ophioleucida
+Ophioscolecida
+Ophiostomatales
+Opilioacarida
+Opiliones
+Opisthocomiformes
+Opisthorchiida
+Opitutae
+Opitutales
+Orbales
+Orbiliales
+Orectolobiformes
+Orphellales
+Ortervirales
+Orthopolintovirales
+Orthoptera
+Orthotrichales
+Oscillatoriales
+Oscillospirales
+Osmeriformes
+Osmundales
+Osteoglossiformes
+Ostreida
+Ostropales
+Ourlivirales
+Oxalidales
+Oxymonadida
+Oxyrrhinales
+PCC-6307
+PS1
+Paceibacterales
+Pachnocybales
+Paenibacillales
+Pallaviciniales
+Palmariales
+Palmophyllales
+Palpigradi
+Pandanales
+Pandoravirus
+Pantopoda
+Parabodonida
+Parachela
+Parachlamydiales
+Paracryphiales
+Paraglomerales
+Paraliales
+Paratrimastigidae
+Parmales
+Parvibaculales
+Parvidrilida
+Parvularculales
+Passeriformes
+Pasteurellales
+Patatavirales
+Patellariales
+Patescibacteria group
+Paucituberculata
+Pavlovales
+Paxillosida
+Pectinida
+Pedinellales
+Pedinoida
+Pedinomonadales
+Pedosphaerales
+Pelagibacterales
+Pelagomonadales
+Pelecaniformes
+Pelliales
+Pelobiontida
+Peltigerales
+Pempheriformes
+Penicillaria (in: tube anenomes)
+Peniculida
+Peptococcales
+Peptostreptococcales
+Peramelemorphia
+Perciformes
+Percopsiformes
+Peribacterales
+Peridiniales
+Peripodida
+Perissodactyla
+Perkinsida
+Peronosporales
+Pertusariales
+Petalomonadida
+Petitvirales
+Petromyzontiformes
+Petrosaviales
+Petrotogales
+Peyssonneliales
+Pezizales
+Phacidiales
+Phaeocystales
+Phaeocystida
+Phaeomoniellales
+Phaeophilales
+Phaeosacciales
+Phaeothamnales
+Phaeothamniales
+Phaeotrichales
+Phallales
+Pharyngomonada
+Phascolosomatiformes
+Phasmatodea
+Philasterida
+Philodinavidae
+Philodinida
+Phlebobranchia
+Phoenicopteriformes
+Pholidoskepia
+Pholidota
+Phototrophicales
+Phragmophora
+Phthiraptera
+Phycisphaerae
+Phycisphaerales
+Phyllachorales
+Phyllobothriidea
+Phyllodocida
+Phymatocerotales
+Phymosomatoida
+Physariida
+Physodermatales
+Phytodiniales
+Piccovirales
+Piciformes
+Picocystales
+Picomonadida
+Picornavirales
+Picramniales
+Pilosa
+Pimascovirales
+Pinales
+Pinguiochrysidales
+Piperales
+Pirellulales
+Piroplasmida
+Pisoniviricetes
+Pisorisporiales
+Pithoviridae
+Placidida
+Plagiopylida
+Plagiorchiida
+Planctomycetales
+Planctomycetia
+Plasmodiophorida
+Platycopida
+Platycopioida
+Platyctenida
+Platygloeales
+Playtdesmida
+Plecoptera
+Plectida
+Pleosporales
+Pleurobranchida
+Pleurocapsales
+Pleurochloridellales
+Pleuronectiformes
+Pleuronematida
+Pleurostomatida
+Pleurotheciales
+Pleurotomariida
+Pleuroziales
+Plocamiales
+Ploima
+Pneumocystidales
+Poales
+Podicipediformes
+Podocopida
+Poduromorpha
+Poecilosclerida
+Poecilostomatoida
+Pokkesviricetes
+Polivirales
+Pollicipedomorpha
+Polyangiales
+Polyarthra
+Polychytriales
+Polycladida
+Polydesmida
+Polymastiida
+Polymixiiformes
+Polymorphida
+Polypodiales
+Polypodiidea
+Polyporales
+Polypteriformes
+Polystilifera
+Polystomatidea
+Polytrichales
+Polyxenida
+Polyzoniida
+Porellales
+Porifera
+Porocephalida
+Porphyridiales
+Portnoybacterales
+Potamodrilidae
+Pottiales
+Prasinococcales
+Prasinodermales
+Prasiolales
+Priacanthiformes
+Priapulimorphida
+Priklausovirales
+Primates
+Primavirales
+Proboscidea
+Procellariiformes
+Prolecithophora
+Propionibacteriales
+Prorocentrales
+Prorodontida
+Proseriata
+Proteales
+Proteocephalidea
+Protoheterotrichida
+Protoraphidales
+Protosiphonales
+Protosteliida
+Protostomatida
+Prymnesiales
+Pseudanabaenales
+Pseudoamphisiellida
+Pseudoditrichales
+Pseudomonadales
+Pseudonocardiales
+Pseudophyllidea
+Pseudoscorpiones
+Psilotales
+Psittaciformes
+Psocoptera
+Pterioida
+Pterocystida
+Pteropoda
+Ptilidiales
+Ptychomniales
+Pucciniales
+Puniceicoccales
+Puniceispirillales
+Pyramimonadales
+Pyrenomonadales
+Pyrenulales
+Pyrobaculum spherical virus
+Pyrosomata
+Pythiales
+Pyxidiophorales
+Quasiramulariales
+Quintoviricetes
+RBG-16-55-9
+RF32
+RF39
+RFN20
+RFP12
+RGIG6154
+RUG11792
+RUG12999
+Racodiales
+Raillietiellida
+Rajiformes
+Ralfsiales
+Ramicandelaberales
+Randiellida
+Ranunculales
+Raphidioptera
+Raymondbacteria
+Recrevirales
+Reighardiida
+Reovirales
+Repensiviricetes
+Retaria
+Retortamonadidae
+Revtraviricetes
+Reyranellales
+Rhabditida
+Rhabdocoela
+Rhabdomonadales
+Rhabdonematales
+Rhabdopleurida
+Rhaponeidales
+Rheiformes
+Rhinebothriidea
+Rhinopristiformes
+Rhipidiales
+Rhizobiales
+Rhizobiales_A
+Rhizobiales_B
+Rhizocarpales
+Rhizochloridales
+Rhizochromulinales
+Rhizogoniales
+Rhizophlyctidales
+Rhizophydiales
+Rhizosoleniales
+Rhizostomeae
+Rhodachlyales
+Rhodellales
+Rhodobacterales
+Rhodochaetales
+Rhodocyclales
+Rhodogorgonales
+Rhodospirillales
+Rhodothalassiales
+Rhodothermales
+Rhodothermota
+Rhodymeniales
+Rhopalodiales
+Rhynchobdellida
+Rhynchonellida
+Rhytismatales
+Ricinulei
+Rickettsiales
+Rigifilida
+Rivendellvirales
+Robbauerales
+Rodentia
+Rohanvirales
+Rosales
+Rotaliida
+Rotosphaerida
+Rowavirales
+Rs-D84
+Rubrobacterales
+Rufusiales
+Runcinacea
+Russulales
+SAR202
+SAR324
+SAR86
+SBBL01
+SCGC-AAA003-L08
+SM23-28-2
+SM23-61
+SP197
+SW-4-49-11
+SZUA-21
+SZUA-229
+SZUA-365
+SZUA-6
+Sabellida
+Saccharimonadales
+Saccharofermentanales
+Saccharomycetales
+Saganbacteria
+Salenioida
+Salinisphaerales
+Salmoniformes
+Salpida
+Salsipaludibacterales
+Salviniales
+Santalales
+Sapindales
+Saprolegniales
+Saprospirales
+Sarcinochrysidales
+Sarcoptiformes
+Sareales
+Sarrameanales
+Savoryellales
+Saxifragales
+Scandentia
+Schizaeales
+Schizomida
+Schizosaccharomycetales
+Scleractinia
+Scleralcyonacea
+Sclerococcales
+Sclerosporales
+Scolopendromorpha
+Scombriformes
+Scopalinida
+Scorpiones
+Scotinosphaerales
+Scouleriales
+Scourfieldiales
+Scutigeromorpha
+Scytothamnales
+Sebacinales
+Sebdeniales
+Sedimentisphaerales
+Seguenziida
+Seisonacea
+Selaginellales
+Selenomonadales
+Semaeostomeae
+Semionotiformes
+Sepiida
+Sepolyvirales
+Septobasidiales
+Serpentovirales
+Sessilida
+Sida leaf curl virus-associated DNA beta
+Siegesbeckia yellow vein virus-associated DNA beta
+Siluriformes
+Silvanigrellales
+Siphonaptera
+Siphonariida
+Siphonophorae
+Siphonophorida
+Siphonostomatoida
+Sirenia
+Small linear single stranded RNA satellites
+Sneathiellales
+Sobelivirales
+Solanales
+Solemyida
+Solifugae
+Solirubrobacterales
+Sophora yellow stunt alphasatellite 5
+Sordariales
+Sorogenida
+Spariformes
+Spartobacteria
+Spatangoida
+Spathebothriidea
+Spechtbacterales
+Sphacelariales
+Sphaerobacterales
+Sphaerocarpales
+Sphaerochaetales
+Sphaerocladina
+Sphaeropleales
+Sphaerotheriida
+Sphagnales
+Sphenisciformes
+Sphenodontia
+Sphingobacteriales
+Sphingomonadales
+Spiculogloeales
+Spinulosida
+Spionida
+Spirobolida
+Spirochaetales
+Spirochaetales_C
+Spirostreptida
+Spirotrichonymphida
+Spirularia
+Spirulida
+Spirulinales
+Spizellomycetales
+Splachnales
+Spongillida
+Spongomonadida
+Sporadotrichida
+Sporichthyales
+Sporidiobolales
+Sporochnales
+Sporolithales
+Sporomusales
+Spumellaria
+Squaliformes
+Squamata
+Staphylococcales
+Stauromedusae
+Stellavirales
+Stemmiulida
+Stemonitida
+Stephanodiscales
+Sterrofustia
+Sticholonchida
+Stichotrichida
+Stictocyclales
+Stigmatodiscales
+Stolidobranchia
+Stomatopoda
+Stomiiformes
+Strepsiptera
+Streptomycetales
+Streptophytina
+Streptosporangiales
+Striatellales
+Strigeidida
+Strigiformes
+Strigulales
+Strongylida
+Struthioniformes
+Stygamoebida
+Stylephoriformes
+Stylommatophora
+Stylonematales
+Suberitida
+Suessiales
+Sulfolobales
+Superstratomycetales
+Surirellales
+Symbiotaphrinales
+Symphyacanthida
+Symphypleona
+Synbranchiformes
+Synchytriales
+Syndiniales
+Synechococcales
+Synergistales
+Syngnathiformes
+Synhymeniida
+Syntrophales
+Syntrophobacterales
+Syntrophorhabdales
+Synurales
+Syracosphaerales
+Syringodermatales
+Systellommatophora
+TANB77
+TMED109
+TMED127
+TT virus group 1
+TT virus group 3
+TT virus group 5
+Tabellariales
+Takakiales
+Tanaidacea
+Taphrinales
+Tectofilosida
+Telnavirus
+Telonemida
+Teloschistales
+Temnopleuroida
+Tepidiformales
+Tepidiformia
+Tepidisphaerales
+Terebellida
+Terebratulida
+Terriglobales
+Terrimicrobiales
+Testudines
+Tethyida
+Tetrabothriidea
+Tetractinellida
+Tetramerocerata
+Tetramitia
+Tetraodontiformes
+Tetraphidales
+Tetraphyllidea
+Tetrasporales
+Teuthida
+Textulariida
+Thalassionemales
+Thalassiophysales
+Thalassiosirales
+Thalassobaculales
+Thalassocalycida
+Thaumatomonadida
+Thecideida
+Thelebolales
+Thelephorales
+Thelocarpales
+Thermales
+Thermoactinomycetales
+Thermoanaerobacterales
+Thermoanaerobaculales
+Thermococcales
+Thermodesulfobacteriales
+Thermodesulfovibrionales
+Thermofilales
+Thermoflexales
+Thermoflexia
+Thermogemmatisporales
+Thermoleophilales
+Thermoleophilia
+Thermomicrobia
+Thermomicrobiales
+Thermoplasmatales
+Thermoproteales
+Thermoprotei
+Thermoproteota incertae sedis
+Thermosbaenacea
+Thermosediminibacterales
+Thermostichales
+Thermotogales
+Thermotomaculales
+Thigmotrichida
+Thiohalobacterales
+Thiohalomonadales
+Thiohalomonadales_A
+Thiotrichales
+Thoracosphaerales
+Thoreales
+Thraustochytrida
+Thumleimavirales
+Thysanoptera
+Tichowtungiales
+Tilletiales
+Tilopteridales
+Timlovirales
+Timmiales
+Tinamiformes
+Tintinnida
+Tissierellales
+Tissierellia
+Togniniales
+Tolivirales
+Tolucaviricetes
+Torpediniformes
+Torpedosporales
+Torque teno canis virus
+Torque teno mini virus 1
+Torque teno sus virus 1a
+Toxariales
+Trachichthyiformes
+Trachymedusae
+Trapeliales
+Trebouxiales
+Trechisporales
+Tremellales
+Trentepohliales
+Treponematales
+Treubiales
+Triblidiales
+Tribonematales
+Triceratiales
+Trichiida
+Trichinellida
+Trichomonadida
+Trichonymphida
+Trichoptera
+Trichosphaeriales
+Trichosporonales
+Tricladida
+Trigoniida
+Trimastigidae
+Triplonchida
+Tritirachiales
+Tritrichomonadida
+Trochida
+Trochodendrales
+Trogoniformes
+Trombidiformes
+Trueperales
+Tryblidiida
+Trypanorhyncha
+Trypanosomatida
+Trypetheliales
+Tsukubamonadida
+Tubeufiales
+Tubificida
+Tubulaniformes
+Tubulavirales
+Tubulidentata
+Tubuliporida
+Tymovirales
+UBA1063
+UBA11136
+UBA1127
+UBA1135
+UBA1144
+UBA1146
+UBA1151
+UBA11654
+UBA1177
+UBA11872
+UBA1212
+UBA12402
+UBA1280
+UBA1381
+UBA1407
+UBA2169
+UBA2774
+UBA2963
+UBA2966
+UBA2968
+UBA2979
+UBA2985
+UBA2991
+UBA3495
+UBA3561
+UBA3567
+UBA3569
+UBA3575
+UBA4068
+UBA4151
+UBA4248
+UBA4486
+UBA4575
+UBA5794
+UBA6186
+UBA6522
+UBA6615
+UBA6624
+UBA6919
+UBA6926
+UBA6952
+UBA727
+UBA7541
+UBA7702
+UBA7879
+UBA7883
+UBA7887
+UBA7916
+UBA796
+UBA7976
+UBA8108
+UBA8231
+UBA8248
+UBA828
+UBA8317
+UBA8366
+UBA890
+UBA9160
+UBA9673
+UBA9942
+UBA9983_A
+UMGS1260
+UMGS1810
+UMGS1840
+UMGS1883
+Ulotrichales
+Ulvales
+Ulvophyceae
+Umbelopsidales
+Umbilicariales
+Umbraculida
+Unionida
+Upupiformes
+Uranoscopiformes
+Urocystidales
+Uropygi
+Urostylida
+Ustilaginales
+Vahliales
+Valsariales
+Valvatida
+Vampirovibrionales
+Vampyrellida
+Vampyromorpha
+Variosea
+Vaucheriales
+Veillonellales
+Velatida
+Venerida
+Ventricleftida
+Venturiales
+Vermiculariopsiellales
+Verongiida
+Verrucariales
+Verrucomicrobiae
+Verrucomicrobiales
+Verrucomicrobiota incertae sedis
+Verrucomorpha
+Vestibuliferida
+Vezdaeales
+Vibrionales
+Vicinamibacterales
+Victivallales
+Vinavirales
+Violaceomycetales
+Vitales
+Volvovirus
+WGA-4E
+Wallemiales
+Watanabeales
+Welwitschiales
+White spot syndrome virus
+Woeseiales
+Wolframvirales
+XJ16
+Xanthomonadales
+Xenobiales
+Xenopneusta
+Xenospadicoidales
+Xiphosura
+Xylariales
+Xylobotryales
+Xylonales
+Yadokarivirales
+Zeiformes
+Zingiberales
+Zoantharia
+Zoopagales
+Zoraptera
+Zurhausenvirales
+Zygentoma
+Zygnematales
+Zygodiscales
+Zygophyllales
+candidate division CPR1
+candidate division GN15
+candidate division KD3-62
+candidate division KSB3
+candidate division MSBL1
+candidate division NC10
+candidate division WS2
+candidate division WS5
+core chlorophytes
+environmental samples
+eukaryotic vectors
+prasinophyte incertae sedis
+unclassified Actinomycetota
+unclassified Aenigmarchaeota
+unclassified Alphaproteobacteria
+unclassified Archaeoglobi
+unclassified Armatimonadota
+unclassified Bacillota
+unclassified Bacteria candidate phyla
+unclassified Bacteroidetes Order II.
+unclassified Bacteroidota/Chlorobiota group
+unclassified Betaproteobacteria
+unclassified Birnaviridae
+unclassified Blastocatellia
+unclassified Botybirnavirus
+unclassified Caldisericota
+unclassified Candidatus Aegiribacteria
+unclassified Candidatus Altiarchaeota
+unclassified Candidatus Bathyarchaeota
+unclassified Candidatus Cloacimonadota
+unclassified Candidatus Dormibacteraeota
+unclassified Candidatus Eremiobacteraeota
+unclassified Candidatus Fermentibacteria
+unclassified Candidatus Hydrogenedentes
+unclassified Candidatus Kryptonia
+unclassified Candidatus Latescibacteria
+unclassified Candidatus Micrarchaeota
+unclassified Candidatus Nanohaloarchaeota
+unclassified Candidatus Nezhaarchaeota
+unclassified Candidatus Omnitrophica
+unclassified Candidatus Parvarchaeota
+unclassified Candidatus Poseidoniia
+unclassified Candidatus Tectomicrobia
+unclassified Candidatus Verstraetearchaeota
+unclassified Chlamydiota
+unclassified Chloroflexota
+unclassified Chrysiogenetes
+unclassified Cressdnaviricota
+unclassified Deinococcota
+unclassified Deltaproteobacteria
+unclassified Diapherotrites
+unclassified Endomicrobiia
+unclassified Fibrobacterota
+unclassified Fungi
+unclassified Fusobacteriia
+unclassified Gammaproteobacteria
+unclassified Gemmatimonadota
+unclassified Hadesarchaea
+unclassified Haptophyceae
+unclassified Heterolobosea
+unclassified Holophagae
+unclassified Lentisphaerota
+unclassified Lokiarchaeota
+unclassified Methanonatronarchaeia
+unclassified Mycoplasmatota
+unclassified Nanoarchaeota
+unclassified Negarnaviricota
+unclassified Nitrososphaerota
+unclassified Nitrospinota
+unclassified Nitrospira
+unclassified Nucleocytoviricota
+unclassified Parabasalia
+unclassified Picozoa
+unclassified Planctomycetota
+unclassified Polymycovirus
+unclassified Preplasmiviricota
+unclassified Spirochaetia
+unclassified Subulatomonas
+unclassified Terriglobia
+unclassified Theionarchaea
+unclassified Thermoanaerobaculia
+unclassified Thermococci
+unclassified Thermoplasmata
+unclassified Thermoproteota
+unclassified Verrucomicrobiota
+unclassified Whispovirus
+unclassified Zetaproteobacteria
+unclassified candidate division WS1
+unclassified candidate division Zixibacteria
+unclassified prasinophytes
+unclassified pseudomonads
+unclassified ssRNA negative-strand viruses
+unclassified ssRNA positive-strand viruses
+unclassified stramenopiles
+vectors (genetic code 6)

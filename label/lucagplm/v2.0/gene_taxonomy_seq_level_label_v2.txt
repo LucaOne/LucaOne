@@ -1,0 +1,735 @@
+Anguilliformes
+Brassicales
+Candidatus Cryosericales
+Candidatus Fervidibacteria
+Candidatus Kryptobacter
+Chroococcidiopsidales
+Cladosporium cladosporioides polymycovirus 1
+Halopanivirales
+Mariprofundales
+Primavirales
+Siluriformes
+Tobacco leaf curl disease associated sequence
+Verrucomicrobiota incertae sedis
+unclassified Double-stranded satellite RNAs
+unclassified Single stranded RNA satellites
+Accipitriformes
+Bacillota sensu stricto incertae sedis
+Balanomorpha
+Candidatus Comchoanobacterales
+Coliiformes
+Eulipotyphla
+Geodermatophilales
+Haloferacales
+Holophagales
+Holosporales
+Lefavirales
+Longamoebia
+Malpighiales
+Okra enation leaf curl betasatellite
+Pezizales
+Polivirales
+Salmoniformes
+Subterranean clover stunt alphasatellite 2
+Tepidiformales
+Vicinamibacterales
+Acipenseriformes
+Apiales
+Blosnavirus
+Deinococcales
+Fervidicoccales
+Galliformes
+Gloeophyllales
+Jiangellales
+Magnetococcales
+New World begomovirus associated satellite DNA
+Nitrososphaerales
+Polyporales
+Russulales
+Saprospirales
+Syngnathiformes
+Tomato leaf curl Pakistan alphasatellite
+Tymovirales
+unclassified Deltavirus
+Acanthopleuribacterales
+Anaeroplasmatales
+Candidatus Bipolaricaulota
+Cyanidiales
+Desertifilales
+Desulfobacterales
+Elopiformes
+Eremomycetales
+Haemosporida
+Hepelivirales
+Opisthocomiformes
+Ortervirales
+Phthiraptera
+Rohanvirales
+Thermoanaerobaculales
+Thermomicrobia
+unclassified Bacillota
+Anaerosomatales
+Aplysiida
+Calditrichales
+Egibacterales
+Faba bean necrotic yellows alphasatellite 2
+Gloeomargaritales
+Iodidimonadales
+Lecanorales
+Malasseziales
+Mamiellales
+Microascales
+Mindivirales
+Nanobdellales
+Nitriliruptorales
+Piciformes
+Siphonaptera
+Thermodesulfovibrionales
+Apodiformes
+Chromatiales
+Chthonomonadales
+Exobasidiales
+Goujianvirales
+Ludwigia leaf distortion betasatellite
+Pirellulales
+Procellariiformes
+Scombriformes
+Sulfolobales
+Synchytriales
+Tomato leaf curl Cameroon alphasatellite
+Amphioxiformes
+Candidatus Kryptonium
+Candidatus Nitrosocaldales
+Elusimicrobiales
+Istiophoriformes
+Lepetellida
+Methanobacteriales
+Musophagiformes
+Nitrospinales
+Okra yellow crinkle Cameroon alphasatellite
+Ophiostomatales
+Piroplasmida
+Pleuronectiformes
+Rowavirales
+Selenomonadales
+Syntrophorhabdales
+Tetraodontiformes
+Verrucariales
+Batrachoidiformes
+Cardiobacteriales
+Cellvibrionales
+Clupeiformes
+Dehalococcoidales
+Desulfurococcales
+Isosphaerales
+Macrobrachium satellite virus 1
+Methylacidiphilales
+Mycoplasmatales
+Naviculales
+Peronosporales
+Recrevirales
+candidate division NC10
+Articulavirales
+Avibirnavirus
+Camarodonta
+Caprimulgiformes
+Chloracidobacterium
+Cruciviridae
+Gentianales
+Nodamuvirales
+Nostocales
+Priapulimorphida
+Sida leaf curl alphasatellite 2
+Timlovirales
+Trichomonadida
+Xylonales
+unclassified Birnaviridae
+Arenicellales
+Candidatus Sulfidibacteriales
+Chitinivibrionales
+Entomobirnavirus
+Immundisolibacterales
+Large single stranded RNA satellites
+Martellivirales
+Minwuiales
+Mixiales
+Mugiliformes
+Mycoplasmoidales
+Orbales
+Pseudanabaenales
+Puniceicoccales
+Rhynchobdellida
+Small linear single stranded RNA satellites
+Sphenisciformes
+Candidatus Borkfalkiales
+Candidatus Nanoperiomorbales
+Herpetosiphonales
+Honeysuckle yellow vein beta
+Hymenostomatida
+Mesta yellow vein mosaic virus alphasatellite
+Pithoviridae
+Rhabditida
+Siphonostomatoida
+Streptosporangiales
+Thermotogales
+Trogoniformes
+Artiodactyla
+Asparagales
+Candidatus Mancarchaeum
+Cercozoa
+Characiformes
+Dictyoglomales
+Dothideales
+Fungi incertae sedis
+Geplafuvirales
+Gigartinales
+Ixodida
+Proteales
+unclassified Gammaproteobacteria
+Actinomycetota incertae sedis
+Aquificales
+Bryobacterales
+Desulfurellales
+Diplostraca
+Falconiformes
+Gloeobacterales
+Methanococcales
+Nakamurellales
+Ranunculales
+Terrimicrobiales
+Tichowtungiales
+Acholeplasmatales
+Aciduliprofundum
+Apusomonadida
+Asfuvirales
+Dasyuromorphia
+Decapoda
+Eumetazoa
+Fagales
+Funariales
+Gammaproteobacteria incertae sedis
+Halorutilales
+Milk vetch dwarf China alphasatellite
+Pelecaniformes
+Thermogemmatisporales
+Tissierellia
+Tremellales
+Acidithiobacillales
+Brachyspirales
+Charadriiformes
+Entylomatales
+Erysipelotrichales
+Gaiellales
+Glomerales
+Luffa puckering and leaf distortion-associated DNA beta
+Mesoaciditogales
+Ustilaginales
+Venerida
+Yadokarivirales
+Anthoathecata
+Caulobacterales
+Cingulata
+Cryppavirales
+Desulfobaccales
+Labriformes
+Opalinata
+Spizellomycetales
+Strigiformes
+Thalassiosirales
+Thermomicrobiales
+unclassified Botybirnavirus
+Atribacterales
+Belfryvirales
+Candidatus Nanohalobiales
+Candidatus Uabimicrobiales
+Carangiformes
+Dermoptera
+Frankiales
+Glycomycetales
+Gruiformes
+Nautiliales
+Petitvirales
+Polypteriformes
+Reovirales
+Sapindales
+Scorpiones
+Stellavirales
+Struthioniformes
+Aquabirnavirus
+Candidatus Chrysopegis
+Coelacanthiformes
+Cyclophyllidea
+Eugregarinorida
+Eustigmatales
+Lamiales
+Natrialbales
+Nodosilineales
+Ourlivirales
+Phycisphaerales
+Thermosediminibacterales
+Venturiales
+Verrucomicrobiales
+Candidatus Babeliales
+Capsaspora
+Circular single stranded RNA satellites
+Cyanobacteriota
+Desulfuromonadales
+Euphorbia yellow mosaic alphasatellite
+Gonorynchiformes
+Limnochordales
+Myida
+Sophora yellow stunt alphasatellite 4
+Sphingobacteriales
+Vitales
+Acidiferrobacterales
+Acrospermales
+Acytosteliales
+Alphaproteobacteria incertae sedis
+Anabantiformes
+Columbiformes
+Cryptomonadales
+Dioscoreales
+Ghabrivirales
+Polychytriales
+Proboscidea
+Rotosphaerida
+Spirulinales
+Vinavirales
+Actinomycetes
+Candidatus Absconditabacteria
+Candidatus Brocadiales
+Desulfurobacteriales
+Gadiformes
+Jatrophihabitantales
+Methanocellales
+Micropepsales
+Oligoflexales
+Opisthorchiida
+Orectolobiformes
+Pilosa
+Thermoproteales
+Tubulidentata
+Victivallales
+Abditibacteriales
+Architaenioglossa
+Asterales
+Bucerotiformes
+Calanoida
+Casuariiformes
+Ceraceosorales
+Chthoniobacterales
+Didelphimorphia
+Lingulida
+Marinilabiliales
+Methanobavirales
+Mytilida
+Nannocystales
+Temnopleuroida
+Acidothermales
+Anseriformes
+Apterygiformes
+Gymnotiformes
+Hymenoptera
+Hypocreales
+Isochrysidales
+Kallotenuales
+Malacalcyonacea
+Mycosphaerellales
+Osmeriformes
+Perkinsida
+Petromyzontiformes
+Petrotogales
+Primates
+Saprolegniales
+Tubulavirales
+Algavirales
+Candidatus Nanosynbacterales
+Carcharhiniformes
+Centrarchiformes
+Forcipulatida
+Imitervirales
+Magnaporthales
+Malvales
+Mesostigmata
+Methanopyrales
+Milk vetch dwarf alphasatellite 2
+Monotremata
+Octopoda
+Pectinida
+Pelagomonadales
+Zingiberales
+Adomaviridae
+Anaerolineales
+Candidatus Desulfofervidales
+Cirlivirales
+Coprothermobacterales
+Euzebyales
+Kurtiformes
+Lepidoptera
+Leptospirales
+Sepolyvirales
+Solanales
+Sophora yellow stunt alphasatellite 5
+Thermoleophilales
+Betaproteobacteria incertae sedis
+Blastocatellales
+Caudoviricetes
+Chimaeriformes
+Dictyosteliales
+Orthoptera
+Rhodothermales
+Semionotiformes
+Chlamydomonadales
+Chrysiogenales
+Crocodylia
+Dacrymycetales
+Enterobacterales
+Ericales
+Fibrobacterales
+Ichthyophonida
+Nanoarchaeales
+Nitrososphaerota incertae sedis
+Sobelivirales
+Stolidobranchia
+Thermostichales
+Amphipoda
+Armatimonadales
+Candidatus Nanosyncoccales
+Legionellales
+Methanosarcinales
+Neuroptera
+Nitrosomonadales
+Pleosporales
+Psittaciformes
+unclassified Preplasmiviricota
+Acidaminococcales
+Amborellales
+Araneae
+Bacteriovoracales
+Caldilineales
+Chloroflexales
+Cremevirales
+Egicoccales
+Ferrovales
+Sarcoptiformes
+Serpentovirales
+Thermales
+Tinamiformes
+core chlorophytes
+Acidilobales
+Balneolales
+Bunyavirales
+Chaetodontiformes
+Dissulfuribacterales
+Eggerthellales
+Fimbriimonadales
+Gemmatales
+Strigeidida
+Synergistales
+Syntrophales
+Thermoanaerobacterales
+Candidatus Methanoliparales
+Chitinophagales
+Eurotiales
+Fusobacteriales
+Kordiimonadales
+Pandoravirus
+Sneathiellales
+Thermotomaculales
+Trombidiformes
+Bdellovibrionales
+Blenniiformes
+Candidatus Korarchaeum
+Corticiales
+Gymnophiona
+Microstromatales
+Phlebobranchia
+Pyrenomonadales
+Synbranchiformes
+Thermoplasmatales
+Zurhausenvirales
+Bacteroidota
+Orbiliales
+Terriglobales
+Veillonellales
+unclassified ssRNA negative-strand viruses
+Aggregatilineales
+Deferrisomatales
+Hemiptera
+Hydrogenophilales
+Koleobacterales
+Natranaerobiales
+Onygenales
+Pimascovirales
+Polyangiales
+Rhodocyclales
+Schizosaccharomycetales
+Syntrophobacterales
+Testudines
+Candidatus Saccharimonadales
+Circo-like virus-Brazil
+Crassvirales
+Diaporthales
+Durnavirales
+Macroscelidea
+Priklausovirales
+Rhizophydiales
+Tetramitia
+Alphapermutotetravirus
+Caldisericales
+Candidatus Troglogloeales
+Emcibacterales
+Gobiiformes
+Holocentriformes
+Jingchuvirales
+Opitutales
+Pneumocystidales
+Taphrinales
+Blubervirales
+Candidatus Nanogingivales
+Ignavibacteriales
+Kineosporiales
+Microbiotheria
+Nevskiales
+Saccharomycetales
+Scandentia
+Thermodesulfobacteriales
+Ardenticatenales
+Beloniformes
+Celastrales
+Desulfuribacillales
+Helotiales
+Lagomorpha
+Mulpavirales
+Muvirales
+Nitrospirales
+Parvularculales
+Patatavirales
+Phototrophicales
+Cucurbitales
+Cyprinodontiformes
+Dikarya
+Entomobryomorpha
+Entomoplasmatales
+Moorellales
+Mortierellales
+Penicillium digitatum polymycovirus 1
+Sphaeropleales
+Spirochaetales
+Squamata
+Thermofilales
+Volvovirus
+Archaeoglobales
+Coleoptera
+Eucoccidiorida
+Haloruvirales
+Kiritimatiellales
+Methylococcales
+Milk vetch dwarf alphasatellite 3
+Miltoncostaeales
+Motilibacterales
+Rickettsiales
+Acidimicrobiales
+Actinopolysporales
+Candidatus Absconditabacterales
+Candidatus Methanodesulfokores
+Filobasidiales
+Haloplasmatales
+Longimicrobiales
+Maricaulales
+Norzivirales
+Bradymonadales
+Candidatus Micrarchaeales
+Cichliformes
+Comatulida
+Cytophagales
+Kangiellales
+Kosmotogales
+Sordariales
+Trichosporonales
+Trueperales
+Umbelopsidales
+Amarillovirales
+Candidatus Nanopelagicales
+Candidatus Saccharibacteria
+Gaviiformes
+Hymenochaetales
+Kirjokansivirales
+Methanonatronarchaeales
+Perciformes
+Scleractinia
+Xylariales
+Rhodobacterales
+unclassified ssRNA positive-strand viruses
+Blattodea
+Caryophyllales
+Catenulisporales
+Cuculiformes
+Desulfovibrionales
+Diplomonadida
+Ghiorsea
+Ligamenvirales
+Methanomassiliicoccales
+Micromonosporales
+Salsipaludibacterales
+Togniniales
+Burkholderiales
+Candidatus Thermokryptus
+Coraciiformes
+Nidovirales
+Nitrosopumilales
+Ostreida
+Pollicipedomorpha
+Solirubrobacterales
+Spartobacteria
+Agaricales
+Arecales
+Candidatus Cloacimonadales
+Desulfomonilales
+Glomerellales
+Mytilinidiales
+Osteoglossiformes
+Perissodactyla
+Rajiformes
+Selaginellales
+Tissierellales
+Wallemiales
+Chlamydiales
+Culicoidibacterales
+Desulfarculales
+Endomicrobiales
+Hydrogenophilalia incertae sedis
+Salinisphaerales
+Sedimentisphaerales
+Atheriniformes
+Faba bean necrotic yellows alphasatellite 3
+Gemmatimonadales
+Kickxellales
+Pelagibacterales
+Propionibacteriales
+Penicillum brevicompactum polymycovirus 1
+Vibrionales
+Candidatus Thermofonsia
+Chlorobiales
+Cypriniformes
+Parachlamydiales
+Rhinopristiformes
+Botryosphaeriales
+Candidatus Entotheonella
+Hyphomonadales
+Mycobacteriales
+Odonata
+Sirenia
+Tepidisphaerales
+Thermoflexales
+Actiniaria
+Baphyvirales
+Boletales
+Candidatus Velamenicoccus
+Conexivisphaerales
+Deferribacterales
+Mastigamoebida
+Mononegavirales
+Passeriformes
+Actinomycetales
+Bhendi yellow vein India betasatellite
+Deltaproteobacteria incertae sedis
+Diprotodontia
+Tectiliviricetes
+Ardenticatenia
+Chaetothyriales
+Chitovirales
+Chlorellales
+Cryptosporangiales
+Haliangiales
+Haplosclerida
+Peniculida
+Pholidota
+Piccovirales
+Candidatus Lokiarchaeia
+Craspedida
+Rhodothalassiales
+Thermococcales
+Tolivirales
+Xiphosura
+Esociformes
+Ktedonobacterales
+Nymphaeales
+Patescibacteria group
+Rodentia
+Rosales
+Sporichthyales
+Trichinellida
+Aeromonadales
+Herpesvirales
+Myrtales
+Oscillatoriales
+Spariformes
+Sphaerobacterales
+Dehalococcoidia
+Kitasatosporales
+Lamniformes
+Lentisphaerales
+Planctomycetales
+Anura
+Candidatus Izemoplasmatales
+Cariamiformes
+Chloroflexota incertae sedis
+Coriobacteriales
+Methanotrichales
+Brevinematales
+Georgefischeriales
+Halobacteriales
+Strongylida
+Thiotrichales
+Hyphomicrobiales
+Poales
+Silvanigrellales
+Telnavirus
+Wolframvirales
+Carnivora
+Ceratodontiformes
+Chroococcales
+Mucorales
+Picornavirales
+Pleurocapsales
+Valvatida
+Chiroptera
+Galdieriales
+Methanomicrobiales
+Pseudonocardiales
+Pucciniales
+Kalamavirales
+Lactobacillales
+Thumleimavirales
+Thysanoptera
+Circularisvirus
+Myxococcales
+Sporidiobolales
+Halanaerobiales
+Moraxellales
+Trypanosomatida
+Desulfobulbales
+Oceanospirillales
+Alteromonadales
+Synechococcales
+Ciconiiformes
+Rhodospirillales
+Bifidobacteriales
+Campylobacterales
+Geobacterales
+Pasteurellales
+Fabales
+Flavobacteriales
+Rubrobacterales
+Sphingomonadales
+Bacillales
+Cantharellales
+Futianiales
+Pseudomonadales
+Xanthomonadales
+Bacteroidales
+Eubacteriales
+Micrococcales
+Neisseriales
+Diptera
