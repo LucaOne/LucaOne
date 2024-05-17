@@ -173,7 +173,7 @@ def metrics_multi_label(targets,  probs, threshold=0.5):
     cal metrics for true matrix to predict probability matrix
     :param targets: true 0-1 indicator matrix (n_samples, n_labels)
     :param probs: probs 0~1 probability matrix (n_samples, n_labels)
-    :param thresold: negative-positive threshold
+    :param threshold: negative-positive threshold
     :return: some metrics
     '''
     targets_relevant = relevant_indexes(targets)
