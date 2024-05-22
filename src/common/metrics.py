@@ -115,9 +115,9 @@ def metrics_multi_class(targets, probs, average="macro"):
         })
     except Exception as e:
         pass
-    z = probs.shape[1]
-    new_targets = np.eye(z)[targets]
     try:
+        z = probs.shape[1]
+        new_targets = np.eye(z)[targets]
         pr_auc = average_precision_score(new_targets, probs, average=average)
         result.update({
             "pr_auc": round(float(pr_auc), 6),
@@ -157,7 +157,9 @@ def metrics_multi_class_for_pred(targets, preds, probs=None, average="macro", sa
     except Exception as e:
         pass
     try:
-        pr_auc = average_precision_score(targets, probs, average=average)
+        z = probs.shape[1]
+        new_targets = np.eye(z)[targets]
+        pr_auc = average_precision_score(new_targets, probs, average=average)
         result.update({
             "pr_auc": round(float(pr_auc), 6),
         })
