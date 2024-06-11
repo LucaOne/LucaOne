@@ -29,7 +29,7 @@ class Encoder(object):
                  non_ignore,
                  ignore_index,
                  model_type,
-                 special_tokens=["[PAD]", "[UNK]", "[SEP]", "[CLS]", "[MASK]"],
+                 special_tokens=["[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"],
                  max_coord_x=None,
                  min_coord_x=None,
                  max_coord_y=None,
@@ -308,6 +308,7 @@ class Encoder(object):
                         res["structure_level"] .update({structure_level_key: new_structure_level_labels})
                     elif structure_level_key == "prot_contact":
                         structure_level_labels = structure_level_item[1]
+                        cur_output_mode = output_mode_dict["structure_level"][structure_level_key]
                         new_structure_level_labels = []
                         for _ in range(seq_length):
                             new_structure_level_labels.append(self.ignore_index)
