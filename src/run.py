@@ -1217,7 +1217,7 @@ def main():
                     args.pair_output_mode_dict
                 ),
                 batched=False,
-                remove_columns=["gene_id", "gene_seq", "gene_label", "prot_id", "prot_seq", "prot_label", "pair_label"]
+                remove_columns=["gene_label", "prot_label", "pair_label"]
             )
         else:
             print("Has Pair: False")
