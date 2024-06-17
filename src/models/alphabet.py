@@ -109,11 +109,6 @@ class Alphabet(object):
         with open(os.path.join(save_dir, "alphabet.pkl"), 'wb') as outp:
             pickle.dump(self, outp, pickle.HIGHEST_PROTOCOL)
 
-    def save_pretrained(self, save_dir):
-        import os, pickle
-        with open(os.path.join(save_dir, "alphabet.pkl"), 'wb') as outp:
-            pickle.dump(self, outp, pickle.HIGHEST_PROTOCOL)
-
     def _tokenize(self, text) -> str:
         return text.split()
 
