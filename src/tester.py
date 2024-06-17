@@ -38,6 +38,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
     :param log_fp:
     :return:
     '''
+    if hasattr(model, "module"):
+        model = model.module
     save_output_dir = os.path.join(args.output_dir, prefix)
     print("\nTesting information dir: ", save_output_dir)
     if not os.path.exists(save_output_dir) and args.local_rank in [-1, 0]:

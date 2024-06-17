@@ -37,6 +37,8 @@ def evaluate(args, model, parse_row_func, batch_data_func, prefix="", log_fp=Non
     :param log_fp:
     :return:
     '''
+    if hasattr(model, "module"):
+        model = model.module
     save_output_dir = os.path.join(args.output_dir, prefix)
     print("\nEvaluating information dir: ", save_output_dir)
     if args.local_rank in [-1, 0] and not os.path.exists(save_output_dir):
