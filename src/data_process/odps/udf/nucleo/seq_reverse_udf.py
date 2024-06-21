@@ -46,7 +46,7 @@ class seq_reverse(object):
     def evaluate(self, seq):
         if seq:
             reverse_seq = ""
-            seq = seq.strip().upper()
+            seq = seq[::-1].strip().upper()
             for ch in seq:
                 if ch == "A":
                     reverse_seq += "T"
