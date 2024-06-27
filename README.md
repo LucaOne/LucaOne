@@ -59,7 +59,7 @@ pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 
 ## 5. Inference   
-You can use the project: **<a href='https://github.com/LucaOne/LucaOneApp'>LucaOneApp Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneApp'>LucaOneApp FTP</a>** for **embedding inference**, For details, please refer to the **`README`** of this project.        
+You can use the project: **<a href='https://github.com/LucaOne/LucaOneApp'>LucaOneApp Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneApp'>LucaOneApp FTP</a>** for **embedding inference**. For details, please refer to the **`README`** of the LucaOneApp project.        
 
 The project will download automatically LucaOne Trained-CheckPoint from **FTP**.     
 
