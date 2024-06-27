@@ -55,10 +55,18 @@ conda create -n lucaone python=3.9.13
 conda activate lucaone
 
 ### step3:  install other requirements
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple   
 
 
-## 5. Dataset   
+## 5. Inference   
+You can use the project: **<a href='https://github.com/LucaOne/LucaOneApp'>LucaOneApp Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneApp'>LucaOneApp FTP</a>** for **embedding inference**, For details, please refer to the **`README`** of this project.        
+
+The project will download automatically LucaOne Trained-CheckPoint from **FTP**.     
+
+## 6. For Downstream Tasks    
+This project: **<a href='https://github.com/LucaOne/LucaOneTasks'>LucaOneTasks Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneTasks'>LucaOneTasks FTP</a>** is all the downstream tasks used in our paper(**based on LucaOne's Embedding**), and you can use this project to run other tasks, please refer to the **`README`** of this project. 
+
+## 7. Dataset   
 Pretraining Dataset FTP: <a href='http://47.93.21.181/lucaone/PreTrainingDataset/dataset/lucagplm'>Dataset for LucaOne</a>     
 
 Copy the dataset from <href> http://47.93.21.181/lucaone/PreTrainingDataset/dataset/lucagplm </href> into the directory: `./dataset/` 
@@ -72,14 +80,14 @@ The testing dataset(`dataset/lucagplm/v2.0/test/`) whose file names start with *
 **Notice**     
 If you want to train individual nucleic acid or protein LucaOne(LucaOne-Gene or LucaOne-Prot), please separate the datasets as described above.   
 
-## 6. Training Scripts   
+## 8. Training Scripts   
 Training scripts are under the directory `src/training`, including 4 shell scripts:    
 `run_multi_v2.0.sh`:  nucleic acid(DNA+RNA) and protein mixed training with 10 pre-training tasks.   
 `run_multi_mask_v2.0.sh`:  nucleic acid(DNA+RNA) and protein mixed training with only 2 mask pre-training tasks.       
 `run_multi_v2.0_gene.sh`:  individual nucleic acid training with 3 pre-training tasks.   
 `run_multi_v2.0_prot.sh`:  individual protein training with 7 pre-training tasks.    
 
-## 7. Data and Code Availability     
+## 9. Data and Code Availability     
 **FTP:**   
 Pre-training data, code, and trained checkpoint of LucaOne, embedding inference code, downstream validation tasks data & code, and other materials are available: <a href='http://47.93.21.181/lucaone/'>FTP</a>. 
 
@@ -100,14 +108,14 @@ The datasets of downstream tasks are available at: <a href='http://47.93.21.181/
 Other supplementary materials are available at: <a href='http://47.93.21.181/lucaone/Others/'> Others </a>.
 
 
-## 8. Contributor        
+## 10. Contributor        
 <a href="https://scholar.google.com.hk/citations?user=RDbqGTcAAAAJ&hl=en" title="Yong He">Yong He</a>, 
 <a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>, 
 <a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>,
 <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>, Yanhong Wei, 
 <a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>
 
-## 9. Citation          
+## 11. Citation          
 @article {LucaOne,                
 author = {Yong He and Pan Fang and Yongtao Shan and Yuanfei Pan and Yanhong Wei and Yichang Chen and Yihao Chen and Yi Liu and Zhenyu Zeng and Zhan Zhou and Feng Zhu and Edward C. Holmes and Jieping Ye and Jun Li and Yuelong Shu and Mang Shi and Zhaorong Li},     
 title = {LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language},      
