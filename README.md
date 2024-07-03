@@ -105,6 +105,8 @@ The pre-training dataset of LucaOne is opened at: <a href='http://47.93.21.181/l
 
 The datasets of downstream tasks are available at: <a href='http://47.93.21.181/lucaone/DownstreamTasksDataset/'> DownstreamTasksDataset </a>. 
 
+The trained models of downstream tasks are available at: <a href='http://47.93.21.181/lucaone/DownstreamTasksTrainedModels/'> DownstreamTasksTrainedModels </a>.
+
 Other supplementary materials are available at: <a href='http://47.93.21.181/lucaone/Others/'> Others </a>.
 
 
