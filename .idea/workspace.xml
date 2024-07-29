@@ -4,35 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add `continue training when failure`">
-      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LucaOne.iml" beforeDir="false" afterPath="$PROJECT_DIR$/LucaOne.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/batch_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/classification_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/classification_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/pairwise_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/pairwise_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/regression_loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/regression_loss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_process/script/read_protein_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_process/script/read_protein_structure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_process/script/refseq_parse_rna.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_process/script/refseq_parse_rna.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_process/script/uniparc_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_process/script/uniparc_parse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_operator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_operator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/model_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/model_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
-    </list>
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add `continue training when failure`" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,6 +30,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -89,7 +62,23 @@
       <workItem from="1721963631276" duration="14000" />
       <workItem from="1721963867015" duration="368000" />
       <workItem from="1721966163439" duration="35000" />
+      <workItem from="1722218449777" duration="808000" />
     </task>
+    <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
+      <created>1722218669521</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722218669521</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feature: add `continue training when failure`">
+      <created>1722218680788</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1722218680788</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,5 +94,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feature: add `continue training when failure`" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: add `continue training when failure`" />
   </component>
 </project>
