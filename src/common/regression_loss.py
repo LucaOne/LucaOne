@@ -43,6 +43,8 @@ def iqr(batch, dim=None, reduction='mean'):
     elif isinstance(batch, torch.Tensor):
         out = torch.quantile(batch, 0.75, dim=dim) - \
               torch.quantile(batch, 0.25, dim=dim)
+    else:
+        out = None
     if reduction == 'none':
         return out
     elif reduction == 'mean':
@@ -63,6 +65,8 @@ def naniqr(batch, dim=None, reduction='none'):
     elif isinstance(batch, torch.Tensor):
         out = torch.nanquantile(batch, 0.75, dim=dim) - \
               torch.nanquantile(batch, 0.25, dim=dim)
+    else:
+        out = None
     if reduction == 'none':
         return out
     elif reduction == 'mean':

@@ -244,7 +244,7 @@ def parse(dirpath, save_dir, prefix, chunk_size=1000000):
             err_wfp.write("%s not contains genomic.gbff file\n" % dirname)
             err_wfp.flush()
             continue
-        print("process filenames: %s" % filepath)
+        print("process filenames: %s" % str(filepath_list))
         dir_num += 1
         for filepath in filepath_list:
             try:
@@ -286,6 +286,7 @@ def parse(dirpath, save_dir, prefix, chunk_size=1000000):
         chunk_idx += 1
         write_chunk(chunk_t_nucleo_fasta, chunk_t_nucleo_sequence, chunk_t_nucleo_features,
                     chunk_idx, save_dir, prefix=prefix)
+
 
 parse("/mnt2/yanyan/refseq_data/",
       "/mnt3/sanyuan.hy/data/refseq/rna_parsed/",

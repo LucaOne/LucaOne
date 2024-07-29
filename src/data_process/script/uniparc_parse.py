@@ -71,6 +71,7 @@ def fasta_reader(handle, width=None):
     handle = handle if isinstance(handle, io.TextIOWrapper) else open(handle, 'r')
     width = width if isinstance(width, int) and width > 0 else None
     try:
+        header = None
         for is_header, group in itertools.groupby(handle, lambda line: line.startswith(">")):
             if is_header:
                 header = group.__next__().strip()

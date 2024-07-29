@@ -60,7 +60,7 @@ def create_pooler(task_level_type, task_level_name, config, args):
     if pooling_type == "max":
         return GlobalMaskMaxPooling1D()
     elif pooling_type == "sum":
-        return GlobalMaskSumPooling1D()
+        return GlobalMaskSumPooling1D(axis=1)
     elif pooling_type == "avg":
         return GlobalMaskAvgPooling1D()
     elif pooling_type == "attention":

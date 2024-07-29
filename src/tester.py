@@ -101,13 +101,16 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
                                output_attentions=True,
                                output_hidden_states=True)
             except Exception as e:
-                with open("test_exception_info_%d" % args.local_rank, "a+") as afp:
+                exception_path = "../exception/%s" % args.time_str
+                if not os.path.exists(exception_path):
+                    os.makedirs(exception_path)
+                with open(os.path.join(exception_path, "test_exception_info_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(e) + "\n")
                     afp.flush()
-                with open("test_exception_input_%d" % args.local_rank, "a+") as afp:
+                with open(os.path.join(exception_path, "test_exception_input_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(batch) + "\n")
                     afp.flush()
-                debug_path = "./debug/test/local_rank%s/%d/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", step)
+                debug_path = "../debug/test/local_rank%s/%d/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", step)
                 if not os.path.exists(debug_path):
                     os.makedirs(debug_path)
                 with open(os.path.join(debug_path, "test_exception_input_details.txt"), "a+") as afp:
@@ -172,8 +175,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
 
     with open(os.path.join(save_output_dir, "test_metrics.txt"), "w") as writer:
         writer.write("***** Test results {} *****\n".format(prefix))
-        writer.write("Test average loss = %0.6f" % loss)
-        writer.write("Test detail loss = %s" % str(loss_detail))
+        writer.write("Test average loss = %0.6f\n" % loss)
+        writer.write("Test detail loss = %s\n" % str(loss_detail))
         for key in sorted(all_result.keys()):
             writer.write("%s = %s\n" % (key, str(all_result[key])))
 

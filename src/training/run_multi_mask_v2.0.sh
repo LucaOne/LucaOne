@@ -32,6 +32,7 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 cd ..
 python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_per_node=8 \
        run.py \
+       --time_str $time_str \
        --tb_log_dir ../tb-logs/$DATASET_NAME/$DATASET_TYPE/$TASK_TYPE/$MODEL_TYPE/$time_str \
        --log_dir ../logs/$DATASET_NAME/$DATASET_TYPE/$TASK_TYPE/$MODEL_TYPE/$time_str \
        --output_dir ../models/$DATASET_NAME/$DATASET_TYPE/$TASK_TYPE/$MODEL_TYPE/$time_str \
