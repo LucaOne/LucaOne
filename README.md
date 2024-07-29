@@ -1,5 +1,8 @@
 # LucaOne(LucaGPLM)     
-LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.  
+LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.   
+
+# TimeLine   
+* 2024/07/24: feature: add `continue training when failure`      
 
 ## 1. LucaOne Workflow      
 
@@ -87,7 +90,10 @@ Training scripts are under the directory `src/training`, including 4 shell scrip
 `run_multi_v2.0_gene.sh`:  individual nucleic acid training with 3 pre-training tasks.   
 `run_multi_v2.0_prot.sh`:  individual protein training with 7 pre-training tasks.    
 
-## 9. Data and Code Availability     
+## 9. Continue Training when Failure     
+`run_multi_v2.0_continue.sh`:  continue training when failure.  
+
+## 10. Data and Code Availability     
 **FTP:**   
 Pre-training data, code, and trained checkpoint of LucaOne, embedding inference code, downstream validation tasks data & code, and other materials are available: <a href='http://47.93.21.181/lucaone/'>FTP</a>. 
 
@@ -109,15 +115,14 @@ The trained models of downstream tasks are available at: <a href='http://47.93.2
 
 Other supplementary materials are available at: <a href='http://47.93.21.181/lucaone/Others/'> Others </a>.
 
-
-## 10. Contributor        
+## 11. Contributor        
 <a href="https://scholar.google.com.hk/citations?user=RDbqGTcAAAAJ&hl=en" title="Yong He">Yong He</a>, 
-<a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>, 
-<a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>,
-<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>, Yanhong Wei, 
+<a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>,
+<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>, Yanhong Wei,
 <a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>
+<a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>,
 
-## 11. Citation          
+## 12. Citation          
 @article {LucaOne,                
 author = {Yong He and Pan Fang and Yongtao Shan and Yuanfei Pan and Yanhong Wei and Yichang Chen and Yihao Chen and Yi Liu and Zhenyu Zeng and Zhan Zhou and Feng Zhu and Edward C. Holmes and Jieping Ye and Jun Li and Yuelong Shu and Mang Shi and Zhaorong Li},     
 title = {LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language},      

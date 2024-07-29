@@ -29,7 +29,7 @@ try:
     from encoder import Encoder
     from utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from multi_files_stream_dataloader import *
-    from trainer import train
+    from trainer import train, train_continue
     from models.lucaone_gplm import LucaGPLM
     from models.alphabet import Alphabet
     from models.lucaone_gplm_config import LucaGPLMConfig
@@ -39,7 +39,7 @@ except ImportError as e:
     from src.encoder import Encoder
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from src.multi_files_stream_dataloader import *
-    from src.trainer import train
+    from src.trainer import train, train_continue
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.alphabet import Alphabet
     from src.models.lucaone_gplm_config import LucaGPLMConfig
@@ -57,6 +57,8 @@ def get_args():
     parser.add_argument("--log_dir", type=str, default=None, required=True, help="Log every X updates steps.")
 
     # for model
+    # modeling time str
+    parser.add_argument("--time_str", type=str, default=None, help="the modeling time str")
     parser.add_argument("--hidden_size", type=int, default=None, required=True, help="the hidden size (embedding vector size)")
     parser.add_argument("--num_attention_heads", type=int, default=None, required=True, help="num attention heads")
     parser.add_argument("--num_hidden_layers", type=int, default=None, required=True, help="num hidden layers")
@@ -312,6 +314,8 @@ def get_args():
     parser.add_argument("--embed_scale", type=float, default=1.0, help="embed scale")
     parser.add_argument("--pretrained_model_name", type=str, default=None, help="whether to use the pretrained model init parameters")
 
+    parser.add_argument("--processed_sample_cnt", default=1000000, type=int, help="processed how many samples to write sample ids")
+    parser.add_argument("--trained_checkpoint", default=None, type=int, help="the checkpoint of continue to pretraining")
     args = parser.parse_args()
     return args
 
@@ -351,6 +355,9 @@ def check_args(args):
     assert args.train_data_dir is not None and os.path.exists(args.train_data_dir)
     assert args.output_dir is not None
     assert args.model_config is not None and os.path.exists(args.model_config)
+    if not hasattr(args, "time_str") or args.time_str is None:
+        now = datetime.datetime.now()
+        args.time_str = now.strftime('%Y%m%d%H%M%S')
     args.pretrain_task_level_type = list(args.pretrain_task_level_type.split(","))
     for v in args.pretrain_task_level_type:
         assert v in ["all", "seq2seq_level", "token_level", "span_level", "seq_level", "structure_level", "pair_level"]
@@ -896,6 +903,20 @@ def create_logger(args):
         # create tensorboard logs dir
         if not os.path.exists(args.tb_log_dir):
             os.makedirs(args.tb_log_dir)
+        for dataset_type in ["train", "dev", "test"]:
+            processed_samples_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                                      "processed_samples",
+                                                      args.time_str,
+                                                      dataset_type)
+            if not os.path.exists(processed_samples_dir_path):
+                os.makedirs(processed_samples_dir_path)
+        exception_path = "../exception/%s/" % args.time_str
+        if not os.path.exists(exception_path):
+            os.makedirs(exception_path)
+        debug_path = "../debug/%s/" % args.time_str
+        if not os.path.exists(debug_path):
+            os.makedirs(debug_path)
+        print("Output dir, logger, tb-logger created succeed.")
     else:
         log_fp = None
     return log_fp
@@ -1246,18 +1267,32 @@ def main():
                                       pin_memory=True,
                                       collate_fn=batch_data_func)
     if args.do_train:
-        global_step, avg_loss, max_metric_model_info = train(
-            args,
-            model,
-            model_config,
-            dataloader=train_dataloader,
-            label_size_dict=args.label_size,
-            parse_row_func=parse_row_func,
-            batch_data_func=batch_data_func,
-            tokenizer=tokenizer,
-            train_sampler=None,
-            log_fp=log_fp
-        )
+        if args.trained_checkpoint is not None:
+            global_step, avg_loss, max_metric_model_info = train_continue(
+                args,
+                model,
+                model_config,
+                dataloader=train_dataloader,
+                label_size_dict=args.label_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                tokenizer=tokenizer,
+                train_sampler=None,
+                log_fp=log_fp
+            )
+        else:
+            global_step, avg_loss, max_metric_model_info = train(
+                args,
+                model,
+                model_config,
+                dataloader=train_dataloader,
+                label_size_dict=args.label_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                tokenizer=tokenizer,
+                train_sampler=None,
+                log_fp=log_fp
+            )
 
 
 if __name__ == "__main__":

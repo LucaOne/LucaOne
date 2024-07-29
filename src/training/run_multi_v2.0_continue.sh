@@ -1,5 +1,4 @@
-#!/bin/bash
-# the dataset contain the entire dataset(gene+prot)
+# sh
 DATASET_NAME="lucagplm"
 DATASET_TYPE="v2.0"
 TASK_TYPE="token_level,span_level,seq_level,structure_level"
@@ -23,7 +22,6 @@ warmup_steps=64000
 max_steps=16000000
 batch_size=1
 learning_rate=2e-4
-worker_num=8
 
 time_str=$(date "+%Y%m%d%H%M%S")
 
@@ -110,7 +108,7 @@ python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_pe
        --prot_contact_weight 1.0 \
        --trans_weight 1.0 \
        --buffer_size 10240 \
-       --worker_num $worker_num \
+       --worker_num 8 \
        --seed 1111 \
        --pretrain_task_level_type $TASK_TYPE \
        --pretrain_task_level_name $PRETRAIN_TASK_LEVEL_NAME \
@@ -141,4 +139,5 @@ python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_pe
        --weight_decay 0.01 \
        --no_use_embed_layer_norm \
        --loss_logging_steps $loss_logging_steps \
-       --pretrained_model_name esm2_t36_3B_UR50D
+       --trained_checkpoint 17600000 \
+       --model_dirpath /mnt/sanyuan.hy/workspace/LucaOne/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045/checkpoint-step17600000

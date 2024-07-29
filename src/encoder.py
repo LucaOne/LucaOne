@@ -386,6 +386,7 @@ class Encoder(object):
                     prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict,
                     pair_label, pair_label_size_dict, pair_output_mode_dict):
         res = {}
+        sample_id = ""
         if gene_seq:
             gene_seq = gene_seq_replace(gene_seq)
             gene_encode, gene_length = self.__encode__(pretrain_task_level_type, gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict)
@@ -394,6 +395,7 @@ class Encoder(object):
                     "gene_id": gene_id,
                     "gene": gene_encode
                 })
+                sample_id = gene_id
         if prot_seq:
             prot_encode, prot_length = self.__encode__(pretrain_task_level_type, prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict)
             if not self.no_token_type_embeddings:
@@ -403,6 +405,11 @@ class Encoder(object):
                     "prot_id": prot_id,
                     "prot": prot_encode
                 })
+                if len(sample_id) == 0:
+                    sample_id = prot_id
+                else:
+                    sample_id = sample_id + "#" + prot_id
+        res["sample_id"] = sample_id
         pair = None
 
         if gene_seq and prot_seq and ("all" in pretrain_task_level_type or "pair_level" in pretrain_task_level_type):
@@ -437,7 +444,11 @@ class Encoder(object):
                       pretrain_task_level_type,
                       obj_id,
                       obj_type,
-                      obj_seq, obj_label, label_size_dict, output_mode_dict):
+                      obj_seq,
+                      obj_label,
+                      label_size_dict,
+                      output_mode_dict
+                      ):
         res = {}
         if obj_type == "gene":
             obj_seq = gene_seq_replace(obj_seq)
@@ -456,6 +467,7 @@ class Encoder(object):
                     "prot_id": obj_id,
                     "prot": prot_encode
                 })
+        res["sample_id"] = obj_id
         return res
 
     def encode_char_single(self,
@@ -486,6 +498,7 @@ class Encoder(object):
                     "prot_seq": prot_encode["seq"],
                     "prot_labels": prot_encode["labels"],
                 })
+        res["sample_id"] = obj_id
         return res
 
     def encode_char_pair(self,
@@ -496,6 +509,7 @@ class Encoder(object):
                          prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict,
                          pair_label, pair_label_size_dict, pair_output_mode_dict):
         res = {}
+        sample_id = ""
         if gene_seq:
             gene_seq = gene_seq_replace(gene_seq)
             gene_encode, gene_length = self.__encode_char__(pretrain_task_level_type, gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict)
@@ -506,6 +520,7 @@ class Encoder(object):
                     "gene_seq": gene_encode["seq"],
                     "gene_labels": gene_encode["labels"],
                 })
+                sample_id = gene_id
         if prot_seq:
             prot_encode, prot_length = self.__encode_char__(pretrain_task_level_type, prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict)
             if prot_encode:
@@ -515,6 +530,11 @@ class Encoder(object):
                     "prot_seq": prot_encode["seq"],
                     "prot_labels": prot_encode["labels"],
                 })
+                if len(sample_id) == 0:
+                    sample_id = prot_id
+                else:
+                    sample_id = sample_id + "#" + prot_id
+        res["sample_id"] = sample_id
         pair = None
         if gene_seq and prot_seq and ("all" in pretrain_task_level_type or "pair_level" in pretrain_task_level_type):
             pair = {"pair_label": {"pair_level": {}}}

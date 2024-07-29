@@ -1598,3 +1598,49 @@ def dict_add(raw, new):
 
     raw.update(update_dict)
 
+
+def write_processed_sample_ids(dataset_type, time_str, sample_ids, epoch, local_rank):
+    """
+    将已处理的样本id写入，便于恢复现场
+    :param dataset_type: 数据集类型，train，validation，
+    :param sample_ids: 要写入的sample_ids
+    :param time_str: modeling time str
+    :param epoch: 当前第几个epoch
+    :param local_rank: cuda的id
+    :return:
+    """
+    if local_rank > -1:
+        dir_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "processed_samples",
+            time_str,
+            dataset_type,
+            "rank-%d" % local_rank,
+            "epoch-%d" % epoch
+        )
+    else:
+        dir_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "processed_samples",
+            time_str,
+            dataset_type,
+            "epoch-%d" % epoch
+        )
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
+    size = len(sample_ids)
+    if size > 0:
+        if local_rank > -1:
+            file_path = os.path.join(
+                dir_path,
+                "%sed_sample_ids_epoch_%d_rank_%d.txt" % (dataset_type, epoch, local_rank)
+            )
+        else:
+            file_path = os.path.join(
+                dir_path,
+                "%sed_sample_ids_epoch_%d.txt" % (dataset_type, epoch)
+            )
+        with open(file_path, "a+") as afp:
+            for sample_id in sample_ids:
+                afp.write("%s\n" % str(sample_id))
+            print("Wrote %d into %s." % (size, file_path))

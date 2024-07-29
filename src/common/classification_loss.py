@@ -292,14 +292,14 @@ class ASLSingleLabel(nn.Module):
 
 
 class MaskedBCEWithLogitsLoss(_MaskedLoss):
-    """Masked MSE loss"""
+    """Masked BCE loss"""
     def __init__(self, pos_weight=None, weight=None, reduction='mean', ignore_nans=True, ignore_value=-100):
         super().__init__(reduction=reduction, ignore_nans=ignore_nans, ignore_value=ignore_value)
         self.criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight, weight=weight, reduction='none')
 
 
 class MaskedCrossEntropyLoss(_MaskedLoss):
-    """Masked MSE loss"""
+    """Masked CCE loss"""
     def __init__(self, weight=None, reduction='mean', ignore_nans=True, ignore_value=-100):
         super().__init__(reduction=reduction, ignore_nans=ignore_nans, ignore_value=ignore_value)
         self.criterion = nn.CrossEntropyLoss(weight=weight, reduction='none', ignore_index=ignore_value)

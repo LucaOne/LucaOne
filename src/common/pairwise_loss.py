@@ -36,7 +36,7 @@ class PairwiseLoss(nn.Module):
         outputs = (preds,)
         if targets is not None:
             contact_loss = self.mse_loss(
-                target=targets.type_as(preds),
+                targets=targets.type_as(preds),
                 preds=preds,
                 ignore_index=self.ignore_index,
                 reduction=self.reduction)
