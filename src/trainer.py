@@ -8,7 +8,7 @@
 @datetime: 2023/4/26 15:35
 @project: LucaOne
 @file: trainer
-@desc: xxxx
+@desc: trainer of LucaOne
 '''
 import shutil
 import os, sys, time, json
