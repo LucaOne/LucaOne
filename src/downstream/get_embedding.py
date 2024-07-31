@@ -39,7 +39,8 @@ from transformers import AutoTokenizer, PretrainedConfig, BertTokenizer
 def load_model(log_filepath, model_dirpath):
     '''
     create tokenizer, model config, model
-    :param args:
+    :param log_filepath:
+    :param model_dirpath:
     :return:
     '''
     with open(log_filepath, "r") as rfp:
@@ -236,7 +237,7 @@ def main():
             print(emb.hidden_states)
             if isinstance(emb.hidden_states, list):
                 layer_num = len(emb.hidden_states)
-                print("Hidden states layer num:" % layer_num)
+                print("Hidden states layer num: %d" % layer_num)
                 for idx in range(layer_num):
                     print("Layer %d:" % idx)
                     print(emb.hidden_states[idx].shape)
@@ -268,7 +269,7 @@ def main():
             print(emb.hidden_states_b)
             if isinstance(emb.hidden_states_b, list):
                 layer_num = len(emb.hidden_states_b)
-                print("Hidden_states layer num:" % layer_num)
+                print("Hidden_states layer num: %d" % layer_num)
                 for idx in range(layer_num):
                     print("Layer %d" % idx)
                     print(emb.hidden_states_b[idx].shape)

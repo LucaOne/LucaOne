@@ -39,7 +39,8 @@ from collections import OrderedDict
 def load_model(log_filepath, model_dirpath):
     '''
     create tokenizer, model config, model
-    :param args:
+    :param log_filepath:
+    :param model_dirpath:
     :return:
     '''
     with open(log_filepath, "r") as rfp:
