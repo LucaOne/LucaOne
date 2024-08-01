@@ -126,17 +126,17 @@ def create_loss_function(config,
 
     if "loss" in return_types:
         # positive weight
-        if hasattr(config, "pos_weight"):
-            pos_weight = config.pos_weight
-        elif hasattr(args, "pos_weight"):
+        if hasattr(args, "pos_weight") and args.pos_weight:
             pos_weight = args.pos_weight
+        elif hasattr(config, "pos_weight") and config.pos_weight:
+            pos_weight = config.pos_weight
         else:
             pos_weight = None
 
-        if hasattr(config, "weight"):
-            weight = config.weight
-        elif hasattr(args, "weight"):
+        if hasattr(args, "weight") and args.weight is not None:
             weight = args.weight
+        elif hasattr(config, "weight") and config.weight is not None:
+            weight = config.weight
         else:
             weight = None
 
