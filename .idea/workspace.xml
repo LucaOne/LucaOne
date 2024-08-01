@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add `continue training when failure`">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +71,8 @@
       <workItem from="1722413695311" duration="110000" />
       <workItem from="1722482707507" duration="21000" />
       <workItem from="1722482742208" duration="303000" />
-      <workItem from="1722484989198" duration="302000" />
+      <workItem from="1722484989198" duration="486000" />
+      <workItem from="1722504185938" duration="786000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -94,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722413740568</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="feature: optimized code">
+      <created>1722485450834</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1722485450834</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +121,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feature: add `continue training when failure`" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: add `continue training when failure`" />
+    <MESSAGE value="feature: optimized code" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: optimized code" />
   </component>
 </project>
