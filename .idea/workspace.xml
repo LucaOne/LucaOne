@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +72,14 @@
       <workItem from="1722482707507" duration="21000" />
       <workItem from="1722482742208" duration="303000" />
       <workItem from="1722484989198" duration="486000" />
-      <workItem from="1722504185938" duration="786000" />
+      <workItem from="1722504185938" duration="991000" />
+      <workItem from="1722833016598" duration="74000" />
+      <workItem from="1722833963061" duration="75000" />
+      <workItem from="1722841955721" duration="121000" />
+      <workItem from="1722845603280" duration="40000" />
+      <workItem from="1722846916101" duration="41000" />
+      <workItem from="1722849935939" duration="42000" />
+      <workItem from="1722869418642" duration="106000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -102,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722485450834</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feature: optimized code">
+      <created>1722505196753</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1722505196753</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

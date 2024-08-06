@@ -154,7 +154,10 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
         cur_epoch_time = 0.0
         # total_step = 0
         # num = 0
+        no_grad_gradient_accumulation_step = False
         trained_sample_ids = []
+        # 训练模式
+        model.train()
         for step, batch in enumerate(dataloader):
             # 用于训练中途失败来恢复现场
             sample_ids = batch["sample_ids"]
@@ -168,7 +171,6 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 trained_sample_ids = []
             del batch["sample_ids"]
 
-            model.train()
             batch_total += 1
             if args.local_rank in [-1, 0]:
                 begin_time = time.time()
@@ -281,6 +283,7 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                         scaled_loss.backward()
                 else:
                     loss.backward()
+                no_grad_gradient_accumulation_step = False
                 cur_global_steps += 1
                 if (step + 1) % args.gradient_accumulation_steps == 0:
                     if args.fp16:
@@ -310,6 +313,7 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                             writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
 
                     optimizer.zero_grad()
+                    no_grad_gradient_accumulation_step = True
                     # print("lr: ", get_lr(optimizer))
                 if args.local_rank in [-1, 0] and args.save_steps > 0 and global_step % args.save_steps == 0:
                     output_dir = os.path.join(args.output_dir, "checkpoint-step{}".format(global_step))
@@ -330,8 +334,12 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
                     print_batch(batch, key=None, debug_path=debug_path, wfp=afp, local_rank=args.local_rank)
                     afp.flush()
-        optimizer.step()
-        optimizer.zero_grad()
+        # 一个epoch完成
+        if not no_grad_gradient_accumulation_step:
+            optimizer.step()
+            optimizer.zero_grad()
+            print("Has retained gard: rank=%d" % args.local_rank)
+
         if len(trained_sample_ids) > 0:
             write_processed_sample_ids(dataset_type="train",
                                        sample_ids=trained_sample_ids,
@@ -345,8 +353,10 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             if args.local_rank in [-1, 0]:
                 updated_lr = scheduler.get_last_lr()[0]
                 writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
+        '''
         if args.n_gpu > 1:
             dist.barrier()
+        '''
         if args.local_rank in [-1, 0]:
             logs = {}
             update_flag = False
@@ -418,9 +428,10 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 cur_lr = get_lr(optimizer)
             print("Epoch: %d, batch total: %d, lr: %0.10f" % (epoch + 1, batch_total, cur_lr))
             real_epoch += 1
-
+        '''
         if args.n_gpu > 1:
             dist.barrier()
+        '''
         torch.cuda.empty_cache()
 
     if args.local_rank in [0, -1]:
@@ -547,7 +558,10 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
         cur_epoch_time = 0.0
         # total_step = 0
         # num = 0
+        no_grad_gradient_accumulation_step = False
         trained_sample_ids = []
+        # 训练模式
+        model.train()
         for step, batch in enumerate(dataloader):
             # 用于训练中途失败来恢复现场
             sample_ids = batch["sample_ids"]
@@ -563,7 +577,6 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                 trained_sample_ids = []
             del batch["sample_ids"]
 
-            model.train()
             batch_total += 1
             if args.local_rank in [-1, 0]:
                 begin_time = time.time()
@@ -705,6 +718,7 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                             scaled_loss.backward()
                     else:
                         loss.backward()
+                    no_grad_gradient_accumulation_step = False
                     cur_global_steps += 1
                     if (step + 1) % args.gradient_accumulation_steps == 0:
                         if args.fp16:
@@ -734,6 +748,7 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                                 writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
 
                         optimizer.zero_grad()
+                        no_grad_gradient_accumulation_step = True
                         # print("lr: ", get_lr(optimizer))
                     if args.local_rank in [-1, 0] and args.save_steps > 0 and global_step % args.save_steps == 0:
                         output_dir = os.path.join(args.output_dir, "checkpoint-step{}".format(global_step))
@@ -754,8 +769,12 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
                     print_batch(batch, key=None, debug_path=debug_path, wfp=afp, local_rank=args.local_rank)
                     afp.flush()
-        optimizer.step()
-        optimizer.zero_grad()
+        # 一个epoch完成
+        if not no_grad_gradient_accumulation_step:
+            optimizer.step()
+            optimizer.zero_grad()
+            print("Has retained gard: rank=%d" % args.local_rank)
+
         if len(trained_sample_ids) > 0:
             write_processed_sample_ids(dataset_type="train",
                                        sample_ids=trained_sample_ids,
@@ -769,8 +788,10 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             if args.local_rank in [-1, 0]:
                 updated_lr = scheduler.get_last_lr()[0]
                 writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
+        '''
         if args.n_gpu > 1:
             dist.barrier()
+        '''
         if args.local_rank in [-1, 0]:
             logs = {}
             update_flag = False
@@ -842,9 +863,10 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                 cur_lr = get_lr(optimizer)
             print("Epoch: %d, batch total: %d, lr: %0.10f" % (epoch + 1, batch_total, cur_lr))
             real_epoch += 1
-
+        '''
         if args.n_gpu > 1:
             dist.barrier()
+        '''
         torch.cuda.empty_cache()
 
     if args.local_rank in [0, -1]:
