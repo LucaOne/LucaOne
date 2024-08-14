@@ -89,6 +89,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
     done_sample_num = 0
 
     for step, batch in enumerate(test_dataloader):
+        if "sample_ids" in batch:
+            del batch["sample_ids"]
         # testing
         with torch.no_grad():
             batch, cur_sample_num = to_device(args.device, batch)
