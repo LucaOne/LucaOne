@@ -80,6 +80,8 @@ def evaluate(args, model, parse_row_func, batch_data_func, prefix="", log_fp=Non
     done_sample_num = 0
     model.eval()
     for step, batch in enumerate(dev_dataloader):
+        if "sample_ids" in batch:
+            del batch["sample_ids"]
         # evaluate
         with torch.no_grad():
             batch, cur_sample_num = to_device(args.device, batch)
