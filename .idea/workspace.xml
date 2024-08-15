@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/pooling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/pooling.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +83,8 @@
       <workItem from="1722907597676" duration="67000" />
       <workItem from="1722928609015" duration="613000" />
       <workItem from="1723554933740" duration="22000" />
-      <workItem from="1723619281351" duration="45000" />
+      <workItem from="1723619281351" duration="188000" />
+      <workItem from="1723704321961" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -128,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1722907645643</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feature: optimized code">
+      <created>1723619433731</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723619433731</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

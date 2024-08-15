@@ -47,7 +47,7 @@ class GlobalMaskMinPooling1D(nn.Module):
 
 
 class GlobalMaskAvgPooling1D(nn.Module):
-    def __init__(self, ):
+    def __init__(self):
         super(GlobalMaskAvgPooling1D, self).__init__()
 
     def forward(self, x, mask=None):
@@ -55,7 +55,9 @@ class GlobalMaskAvgPooling1D(nn.Module):
             # (B, Seq_len) -> (B, Seq_len, 1)
             mask = torch.unsqueeze(mask, dim=-1)
             x *= mask
-        return torch.sum(x, dim=1)/torch.sum(mask, dim=1)
+            return torch.sum(x, dim=1)/torch.sum(mask, dim=1)
+        else:
+            return torch.mean(x, dim=1)
 
 
 class GlobalMaskSumPooling1D(nn.Module):
