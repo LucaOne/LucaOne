@@ -150,14 +150,17 @@ def create_loss_function(config,
                                         ignore_value=ignore_index * 1.0 if ignore_index else None)
         elif output_mode in ["multi_label", "multi-label"]:
             if loss_type == "bce":
-                if pos_weight and pos_weight > 0:
-                    if isinstance(pos_weight, int):
-                        pos_weight = torch.tensor([pos_weight], dtype=torch.long).to(args.device)
+                if pos_weight:
+                    if isinstance(pos_weight, str) or isinstance(pos_weight, int):
+                        pos_weight = [float(pos_weight)] * num_labels
                     elif isinstance(pos_weight, float):
-                        pos_weight = torch.tensor([pos_weight], dtype=torch.float32).to(args.device)
-                    print("pos_weight:")
+                        pos_weight = [pos_weight] * num_labels
+                    pos_weight = torch.tensor(pos_weight, dtype=torch.float32).to(args.device)
+                    print("multi_label pos_weight:")
                     print(pos_weight)
-                    assert pos_weight.ndim == 1 and pos_weight.shape[0] == 1
+                    assert pos_weight.ndim == 1 and pos_weight.shape[0] == num_labels
+                    print("multi_label reduction:")
+                    print(reduction)
                     loss_fct = MaskedBCEWithLogitsLoss(pos_weight=pos_weight, reduction=reduction,
                                                        ignore_nans=True, ignore_value=ignore_index)
                 else:
@@ -186,12 +189,12 @@ def create_loss_function(config,
                                                ignore_value=ignore_index)
         elif output_mode in ["binary_class", "binary-class"]:
             if loss_type == "bce":
-                if pos_weight and pos_weight > 0:
-                    if isinstance(pos_weight, int):
-                        pos_weight = torch.tensor([pos_weight], dtype=torch.long).to(args.device)
+                if pos_weight:
+                    if isinstance(pos_weight, str) or isinstance(pos_weight, int):
+                        pos_weight = torch.tensor([float(pos_weight)], dtype=torch.long).to(args.device)
                     elif isinstance(pos_weight, float):
                         pos_weight = torch.tensor([pos_weight], dtype=torch.float32).to(args.device)
-                    print("pos_weight:")
+                    print("binary_class pos_weight:")
                     print(pos_weight)
                     assert pos_weight.ndim == 1 and pos_weight.shape[0] == 1
                     loss_fct = MaskedBCEWithLogitsLoss(pos_weight=pos_weight, reduction=reduction, ignore_nans=True,
@@ -208,12 +211,12 @@ def create_loss_function(config,
         elif output_mode in ["multi_class", "multi-class"]:
             if weight:
                 # [1, 1, 1, ,1, 1...] length: num_labels
-                if isinstance(weight, str):
+                if isinstance(weight, str) or isinstance(weight, int):
                     weight = [float(weight)] * num_labels
-                if isinstance(weight, float):
+                elif isinstance(weight, float):
                     weight = [weight] * num_labels
                 weight = torch.tensor(weight, dtype=torch.float32).to(args.device)
-                print("weight:")
+                print("multi_class weight:")
                 print(weight)
                 assert weight.ndim == 1 and weight.shape[0] == num_labels
                 if ignore_index is None:
