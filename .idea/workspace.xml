@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/pooling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/pooling.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +89,16 @@
       <workItem from="1723714624820" duration="47000" />
       <workItem from="1724222950821" duration="133000" />
       <workItem from="1724225317082" duration="748000" />
+      <workItem from="1724232092640" duration="54000" />
+      <workItem from="1724233063114" duration="109000" />
+      <workItem from="1724234055021" duration="71000" />
+      <workItem from="1724234129381" duration="108000" />
+      <workItem from="1724234240420" duration="101000" />
+      <workItem from="1724234344030" duration="103000" />
+      <workItem from="1724234467790" duration="122000" />
+      <workItem from="1724377081272" duration="24000" />
+      <workItem from="1724637920262" duration="25000" />
+      <workItem from="1724741556145" duration="40000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -146,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1723712963478</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feature: optimized code">
+      <created>1724232142048</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1724232142048</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
