@@ -13,10 +13,6 @@
 import sys
 import itertools
 from typing import Sequence, List
-try:
-    from ..batch_converter import BatchConverter
-except ImportError as err:
-    from src.batch_converter import BatchConverter
 
 gene_standard_toks = ['1', '2', '3', '4', '5', '.', '-', '*']
 
@@ -72,14 +68,6 @@ class Alphabet(object):
 
     def to_dict(self):
         return self.tok_to_idx.copy()
-
-    def get_batch_converter(self, no_position_embeddings, no_token_type_embeddings, truncation_seq_length: int = None, ignore_index: int = -100, mlm_probability=0.15):
-        return BatchConverter(self,
-                              no_position_embeddings=no_position_embeddings,
-                              no_token_type_embeddings=no_token_type_embeddings,
-                              truncation_seq_length=truncation_seq_length,
-                              ignore_index=ignore_index,
-                              mlm_probability=mlm_probability)
 
     @classmethod
     def from_predefined(cls, name: str):
