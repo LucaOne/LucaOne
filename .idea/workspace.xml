@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/loss.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/loss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +95,19 @@
       <workItem from="1723714624820" duration="47000" />
       <workItem from="1724222950821" duration="133000" />
       <workItem from="1724225317082" duration="748000" />
+      <workItem from="1724232092640" duration="54000" />
+      <workItem from="1724233063114" duration="109000" />
+      <workItem from="1724234055021" duration="71000" />
+      <workItem from="1724234129381" duration="108000" />
+      <workItem from="1724234240420" duration="101000" />
+      <workItem from="1724234344030" duration="103000" />
+      <workItem from="1724234467790" duration="122000" />
+      <workItem from="1724377081272" duration="24000" />
+      <workItem from="1724637920262" duration="25000" />
+      <workItem from="1724741556145" duration="75000" />
+      <workItem from="1725010342674" duration="22000" />
+      <workItem from="1725424313452" duration="12000" />
+      <workItem from="1725595353966" duration="737000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -146,7 +165,21 @@
       <option name="project" value="LOCAL" />
       <updated>1723712963478</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feature: optimized code">
+      <created>1724232142048</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1724232142048</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feature: optimized code">
+      <created>1724741608076</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1724741608076</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

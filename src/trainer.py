@@ -538,7 +538,7 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             best_metric_value = 0.0
         best_metric_model_info = {}
         run_begin_time = time.time()
-        total_loss, logging_loss = 0.0, 0.0
+        total_loss, logging_loss = args.global_loss, 0.0
         real_epoch = 0
         total_use_time = 0
         done_sample_num = 0
@@ -554,7 +554,7 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
         batch_total = 0
 
         cur_epoch_step = 0
-        cur_epoch_loss = 0.0
+        cur_epoch_loss = args.epoch_loss
         cur_epoch_time = 0.0
         # total_step = 0
         # num = 0
