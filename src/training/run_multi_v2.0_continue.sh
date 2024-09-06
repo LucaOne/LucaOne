@@ -1,27 +1,78 @@
-# sh
+#!/bin/bash
+# for dataset
+## the dataset name
+## the dataset contain the entire dataset(gene+prot)
 DATASET_NAME="lucagplm"
+## the dataset version
 DATASET_TYPE="v2.0"
+
+# for pretrain tasks
+## pretraining task levels
 TASK_TYPE="token_level,span_level,seq_level,structure_level"
+## pretraining task names
 PRETRAIN_TASK_LEVEL_NAME="gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_homo,prot_domain,prot_taxonomy,prot_keyword,prot_structure"
 
+# for input
+## max seq length
 MAX_LENGTH=1280
+## padding strategy
 PADDING_TYPE="right"
+## truncation strategy
 TRUNCATION_TYPE="right"
-POOLING_TYPE="value_attention"
-MODEL_TYPE="lucaone_gplm"
-BEST_METRIC_TYPE="loss"
-HIDDEN_SIZE=2560
-NUM_ATTENTION_LAYERS=20
-NUM_ATTENTION_HEADS=40
 
+# for dataloader
+# 流式加载的缓存大小
+buffer_size=10240
+# 数据加载器worker数
+worker_num=8
+# seed 用于复现或者中间训练出错保护现场(因为是伪随机)
+seed=1111
+
+
+# for model
+## model type
+MODEL_TYPE="lucaone_gplm"
+## embedding dim
+HIDDEN_SIZE=2560
+## num layers(transformer blocks)
+NUM_ATTENTION_LAYERS=20
+## num heads(transformer heads)
+NUM_ATTENTION_HEADS=40
+## pooling type(not use)
+POOLING_TYPE="value_attention"
+## best metric type for model finalization
+BEST_METRIC_TYPE="loss"
+
+# for training
+## max epochs
+num_train_epochs=5
+## accumulation gradient steps
 gradient_accumulation_steps=32
+# 间隔多少个step在log文件中写入loss（实际上是gradient_accumulation_steps与loss_logging_steps的最小公倍数, 这里是4000）
 loss_logging_steps=1000
+# 间隔多少个step在log文件中写入信息（实际上是gradient_accumulation_steps与logging_steps的最小公倍数, 这里是32000）
 logging_steps=32000
+# checkpoint的间隔step数
 save_steps=200000
+# warmup_steps个step到达peak lr，实际上是warmup_steps=warmup_steps/gradient_accumulation_steps
 warmup_steps=64000
+# 最大迭代step次数(这么多次后，peak lr1变为lr2, 需要根据epoch,样本数量,n_gpu,batch_size,gradient_accumulation_steps进行估算）
+# 最后想要变成多大的值比如从lr1->lr2，那么就是(max_epochs*sample_cnt)*lr1/(n_gpu * batch_size * gradient_accumulation_steps*lr2))进行估算
 max_steps=16000000
+# batch size for one GPU
 batch_size=1
+# 最大学习速率(peak learning rate)
 learning_rate=2e-4
+
+# for continue training
+## trained & saved checkpoint
+trained_checkpoint=17600000
+## training epoch
+trained_epoch=1
+## global_avg_loss = 1.40584785 * 17600000
+global_loss=24742922.16
+## the training epoch_loss = 1.40584785 * 17600000
+epoch_loss=24742922.16
 
 time_str=$(date "+%Y%m%d%H%M%S")
 
@@ -107,15 +158,15 @@ python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_pe
        --prot_secondary_weight 1.0 \
        --prot_contact_weight 1.0 \
        --trans_weight 1.0 \
-       --buffer_size 10240 \
-       --worker_num 8 \
-       --seed 1111 \
+       --buffer_size $buffer_size \
+       --worker_num $worker_num \
+       --seed $seed \
        --pretrain_task_level_type $TASK_TYPE \
        --pretrain_task_level_name $PRETRAIN_TASK_LEVEL_NAME \
        --per_gpu_train_batch_size $batch_size \
        --per_gpu_eval_batch_size $batch_size \
        --learning_rate $learning_rate \
-       --num_train_epochs 5 \
+       --num_train_epochs $num_train_epochs \
        --do_train \
        --do_eval \
        --do_test \
@@ -139,5 +190,8 @@ python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_pe
        --weight_decay 0.01 \
        --no_use_embed_layer_norm \
        --loss_logging_steps $loss_logging_steps \
-       --trained_checkpoint 17600000 \
-       --model_dirpath /mnt/sanyuan.hy/workspace/LucaOne/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045/checkpoint-step17600000
+       --trained_checkpoint $trained_checkpoint \
+       --trained_epoch $trained_epoch \
+       --global_loss $global_loss \
+       --epoch_loss $epoch_loss \
+       --model_dirpath /mnt/sanyuan.hy/workspace/LucaOne/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045/checkpoint-step$trained_checkpoint
