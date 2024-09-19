@@ -334,6 +334,7 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
                     print_batch(batch, key=None, debug_path=debug_path, wfp=afp, local_rank=args.local_rank)
                     afp.flush()
+                raise Exception(e)
         # 一个epoch完成
         if not no_grad_gradient_accumulation_step:
             optimizer.step()
@@ -769,6 +770,7 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
                     print_batch(batch, key=None, debug_path=debug_path, wfp=afp, local_rank=args.local_rank)
                     afp.flush()
+                raise Exception(e)
         # 一个epoch完成
         if not no_grad_gradient_accumulation_step:
             optimizer.step()
