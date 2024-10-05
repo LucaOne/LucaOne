@@ -11,9 +11,11 @@
 @desc: utils for LucaOne
 '''
 import torch
+import requests
 import numpy as np
 import random
-import os, torch, sys
+import os, sys
+import pynvml
 from collections import OrderedDict
 sys.path.append("..")
 sys.path.append("../src")
@@ -343,6 +345,40 @@ def get_labels(label_filepath, header=True):
         return labels
 
 
+def available_gpu_id():
+    """
+    计算可用的GPU id
+    :return:
+    """
+    pynvml.nvmlInit()
+    if not torch.cuda.is_available():
+        print("GPU not available")
+        return -1
+    # 获取GPU数量
+    device_count = pynvml.nvmlDeviceGetCount()
+    max_available_gpu = -1
+    max_available_rate = 0
+
+    # 遍历所有GPU并检查可用性
+    for i in range(device_count):
+        handle = pynvml.nvmlDeviceGetHandleByIndex(i)
+        memory_info = pynvml.nvmlDeviceGetMemoryInfo(handle)
+        utilization = pynvml.nvmlDeviceGetUtilizationRates(handle)
+        # 假设如果GPU利用率小于某个阈值（例如10%），我们认为这个GPU目前是空闲的
+        if utilization.gpu < 10 and max_available_rate < 100 - utilization.gpu:
+            max_available_rate = 100 - utilization.gpu
+            max_available_gpu = i
+    # 打印可用的GPU ID
+    if max_available_gpu > -1:
+        print("Available GPU ID: %d, Free Rate: %0.2f%%" % (max_available_gpu, max_available_rate))
+    else:
+        print("No Available GPU!")
+
+    # Shutdown NVML
+    pynvml.nvmlShutdown()
+    return max_available_gpu
+
+
 def eval_metrics(output_mode, truths, preds, threshold=0.5):
     '''
     eval metrics
@@ -392,7 +428,7 @@ def metrics_merge(results, all_results):
 
 
 def eval_bak2(output_mode, task_type, ground_truth_ids, pred_scores, label_list=None, ignore_index=None, threshold=0.5,
-             output_dir=None, output_filename=None):
+              output_dir=None, output_filename=None):
     '''
     eval metrics
     :param output_mode:
@@ -486,7 +522,7 @@ def eval_bak2(output_mode, task_type, ground_truth_ids, pred_scores, label_list=
 
 
 def eval_bak(output_mode, task_type, ground_truth_ids, pred_scores, label_list=None, ignore_index=None, threshold=0.5,
-         output_dir=None, output_filename=None):
+             output_dir=None, output_filename=None):
     '''
     eval metrics
     :param output_mode:
@@ -1096,6 +1132,36 @@ aa_d3to1 = {
 }
 
 
+def seq_type_is_match_seq(seq_type, seq):
+    """
+    判断序列内容与序列类型是否匹配
+    :param seq_type:
+    :param seq:
+    :return:
+    """
+    if seq_type is None or seq is None:
+        return False
+    seq = seq.strip().upper()
+    atcgu_num = 0
+    total_num = 0
+    for ch in seq:
+        if ch < 'A' or ch > 'Z':
+            continue
+        total_num += 1
+        if ch in {"A", "T", "C", "G", "U", "N"}:
+            atcgu_num += 1
+
+    is_gene = False
+    if total_num == atcgu_num or atcgu_num >= 0.8 * total_num:
+        is_gene = True
+
+    if is_gene and seq_type == "gene":
+        return True
+    if not is_gene and seq_type == "prot":
+        return True
+    return False
+
+
 def gene_seq_replace_re(seq):
     '''
     Nucleic acid 还原
@@ -1547,6 +1613,28 @@ def load_trained_model(model_config, args, model_class, model_dirpath):
     return model
 
 
+def clean_seq(protein_id, seq, return_rm_index=False):
+    seq = seq.upper()
+    new_seq = ""
+    has_invalid_char = False
+    invalid_char_set = set()
+    return_rm_index_set = set()
+    for idx, ch in enumerate(seq):
+        if 'A' <= ch <= 'Z' and ch not in ['J']:
+            new_seq += ch
+        else:
+            invalid_char_set.add(ch)
+            return_rm_index_set.add(idx)
+            has_invalid_char = True
+    if has_invalid_char:
+        print("id: %s. Seq: %s" % (protein_id, seq))
+        print("invalid char set:", invalid_char_set)
+        print("return_rm_index:", return_rm_index_set)
+    if return_rm_index:
+        return new_seq, return_rm_index_set
+    return new_seq
+
+
 def gcd(x, y):
     '''
     最大公约数
@@ -1644,3 +1732,108 @@ def write_processed_sample_ids(dataset_type, time_str, sample_ids, epoch, local_
             for sample_id in sample_ids:
                 afp.write("%s\n" % str(sample_id))
             print("Wrote %d into %s." % (size, file_path))
+
+
+def calc_emb_filename_by_seq_id(seq_id, embedding_type):
+    """
+    根据seq_id得到emb_filename
+    :param seq_id:
+    :param embedding_type:
+    :return:
+    """
+    if seq_id[0] == ">":
+        seq_id = seq_id[1:]
+    if "|" in seq_id:
+        strs = seq_id.split("|")
+        if len(strs) > 1:
+            emb_filename = embedding_type + "_" + strs[1].strip() + ".pt"
+        else:
+            emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_") + ".pt"
+    else:
+        emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_") + ".pt"
+    return emb_filename
+
+
+def download_file(url, local_filename):
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        dir_name = os.path.dirname(local_filename)
+        if not os.path.exists(dir_name):
+            os.makedirs(dir_name)
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+    return local_filename
+
+
+def download_folder(base_url, file_names, local_dir):
+    if not os.path.exists(local_dir):
+        os.makedirs(local_dir)
+
+    for file_name in file_names:
+        print(f"Downloading {file_name}...")
+        file_url = f"{base_url}/{file_name}"
+        local_filename = os.path.join(local_dir, file_name)
+        download_file(file_url, local_filename)
+        print(f"Downloaded {file_name}")
+
+
+def download_trained_checkpoint_lucaone(
+        llm_dir,
+        llm_type="lucaone_gplm",
+        llm_version="v2.0",
+        llm_task_level="token_level,span_level,seq_level,structure_level",
+        llm_time_str="20231125113045",
+        llm_step="17600000",
+        base_url="http://47.93.21.181/lucaone/TrainedCheckPoint"
+):
+    try:
+        logs_file_names = ["logs.txt"]
+        models_file_names = ["config.json", "pytorch.pth", "training_args.bin", "tokenizer/alphabet.pkl"]
+        logs_path = "logs/lucagplm/%s/%s/%s/%s" % (llm_version, llm_task_level, llm_type, llm_time_str)
+        models_path = "models/lucagplm/%s/%s/%s/%s/checkpoint-step%s" % (llm_version, llm_task_level, llm_type, llm_time_str, llm_step)
+        logs_local_dir = os.path.join(llm_dir, logs_path)
+        print("llm_dir: %s" % llm_dir)
+        print("logs_local_dir: %s" % logs_local_dir)
+
+        exists = True
+        for logs_file_name in logs_file_names:
+            filepath = os.path.join(logs_local_dir, logs_file_name)
+            if not os.path.exists(filepath):
+                exists = False
+                break
+            else:
+                print("file: %s exists: %s." % (logs_file_name, filepath))
+        models_local_dir = os.path.join(llm_dir, models_path)
+        print("models_local_dir: %s" % models_local_dir)
+
+        if exists:
+            for models_file_name in models_file_names:
+                filepath = os.path.join(models_local_dir, models_file_name)
+                if not os.path.exists(filepath):
+                    exists = False
+                    break
+                else:
+                    print("file: %s exists: %s." % (models_file_name, filepath))
+        if not exists:
+            print("*" * 20 + "Downloading" + "*" * 20)
+            print("Downloading LucaOne TrainedCheckPoint: LucaOne-%s-%s-%s ..." % (llm_version, llm_time_str, llm_step))
+            print("Wait a moment(total 8GB), please.")
+            # download logs
+            if not os.path.exists(logs_local_dir):
+                os.makedirs(logs_local_dir)
+            logs_base_url = os.path.join(base_url, logs_path)
+            download_folder(logs_base_url, logs_file_names, logs_local_dir)
+            # download models
+            if not os.path.exists(models_local_dir):
+                os.makedirs(models_local_dir)
+            models_base_url = os.path.join(base_url, models_path)
+            download_folder(models_base_url, models_file_names, models_local_dir)
+            print("LucaOne Downloaded.")
+            print("*" * 50)
+    except Exception as e:
+        print(e)
+        print("Download automatically LucaOne Trained CheckPoint failed!")
+        print("You can manually download 'logs/' and 'models/' into local directory: %s/ from %s" % (os.path.abspath(llm_dir), os.path.join(base_url, "TrainedCheckPoint/")))
+        raise Exception(e)

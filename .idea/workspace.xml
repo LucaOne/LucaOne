@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add comments to the training shell script">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: optimized embedding inference code: 'src/get_embedding.py'">
+      <change afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/lucaone_gplm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lucaone_gplm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +31,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/training" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -41,6 +43,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/training" />
     </key>
   </component>
@@ -107,7 +110,11 @@
       <workItem from="1725612587180" duration="172000" />
       <workItem from="1725612793034" duration="22000" />
       <workItem from="1726720453963" duration="386000" />
-      <workItem from="1726722158630" duration="76000" />
+      <workItem from="1726722158630" duration="280000" />
+      <workItem from="1726738843911" duration="226000" />
+      <workItem from="1727265548594" duration="6000" />
+      <workItem from="1727409251814" duration="854000" />
+      <workItem from="1728108888044" duration="1900000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -193,7 +200,14 @@
       <option name="project" value="LOCAL" />
       <updated>1725612604916</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feature: add comments to the training shell script">
+      <created>1726722271335</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1726722271335</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +228,7 @@
     <MESSAGE value="feature: add `continue training when failure`" />
     <MESSAGE value="feature: optimized code" />
     <MESSAGE value="feature: add comments to the training shell script" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: add comments to the training shell script" />
+    <MESSAGE value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
   </component>
 </project>
