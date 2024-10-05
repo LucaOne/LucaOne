@@ -59,12 +59,17 @@ class LucaGPLM(nn.Module):
         self.use_last_layer_norm = config.use_last_layer_norm
         self.embed_scale = config.embed_scale
         self.pretrained_model_name = args.pretrained_model_name
+        # 如果只用于embedding 推理则有些层不加载与构建
+        if hasattr(args, "embedding_inference"):
+            self.embedding_inference = args.embedding_inference
+        else:
+            self.embedding_inference = False
         self._init_submodules()
         if self.pretrained_model_name is not None:
             # print("Load pretrained_model_name=%s" % self.pretrained_model_name)
             self._init_submodules_new(self.pretrained_model_name)
 
-        if args is not None:
+        if not self.embedding_inference and args is not None:
             self.pretrain_tasks = args.pretrain_tasks
             self.label_size = args.label_size
             self.loss_type = args.loss_type
@@ -171,22 +176,23 @@ class LucaGPLM(nn.Module):
         )
         self.layer_size = len(self.layers)
 
-        self.contact_head = ContactPredictionHead(
-            self.num_layers * self.attention_heads,
-            self.prepend_bos,
-            self.append_eos,
-            eos_idx=self.eos_idx,
-            )
+        if not self.embedding_inference:
+            self.contact_head = ContactPredictionHead(
+                self.num_layers * self.attention_heads,
+                self.prepend_bos,
+                self.append_eos,
+                eos_idx=self.eos_idx,
+                )
         if self.use_last_layer_norm:
             self.last_layer_norm = LucaGPLM1bLayerNorm(self.embed_dim)
         else:
             self.last_layer_norm = None
-
-        self.lm_head = RobertaLMHead(
-            embed_dim=self.embed_dim,
-            output_dim=self.alphabet_size,
-            weight=self.embed_tokens.weight,
-        )
+        if not self.embedding_inference:
+            self.lm_head = RobertaLMHead(
+                embed_dim=self.embed_dim,
+                output_dim=self.alphabet_size,
+                weight=self.embed_tokens.weight,
+            )
 
     def _init_embedding(self, pretrained_token_matrix, token_matrix):
         '''
@@ -251,7 +257,6 @@ class LucaGPLM(nn.Module):
         new_state_dict.update(our_model_state_dict)
         self.load_state_dict(new_state_dict)
 
-
     def __calc_loss__(self, task_level_type, output_mode, logits, label, label_size, loss_fct, loss_reduction):
         if output_mode in ["regression"]:
             if task_level_type not in ["seq_level"] and loss_reduction == "meanmean":
@@ -302,7 +307,6 @@ class LucaGPLM(nn.Module):
         else:
             raise Exception("Not support output_mode=%s" % output_mode)
         return loss
-
 
     def __forword__(self,
                     input_ids: Optional[torch.Tensor] = None,
@@ -391,7 +395,8 @@ class LucaGPLM(nn.Module):
         representation_matrix = hidden_representations[self.layer_size]
         # mask 任务
         # B * Seq_len * vocab_size
-        lm_mask_logits = self.lm_head(x)
+        if not self.embedding_inference:
+            lm_mask_logits = self.lm_head(x)
         # lm head的输出向量作为表征向量
         # (B, E)
         representation_vector = representation_matrix[:, 0, :]
@@ -413,14 +418,15 @@ class LucaGPLM(nn.Module):
                 attentions = attentions * attention_mask[:, None, None, :, :]
             representations["attentions"] = attentions
             # 预测contact矩阵
-            if return_contacts:
+            if return_contacts and hasattr(self, "contact_head") \
+                    and not self.embedding_inference:
                 contacts = self.contact_head(input_ids, attentions)
                 representations["contacts"] = contacts
         '''
         print("output_keys:")
         print(output_keys)
         '''
-        if output_keys:
+        if not self.embedding_inference and output_keys:
             for item in output_keys.items():
                 cur_task_level_type = item[0]
                 if cur_task_level_type not in logits:
@@ -550,78 +556,102 @@ class LucaGPLM(nn.Module):
                 use_last_layer_norm=use_last_layer_norm
             )
             has_pair_b = True
-        if has_pair and has_pair_b and pair_output_keys and len(pair_output_keys) > 0:
-            cur_representation_vector = encoding["representation_vector"]
-            cur_representation_vector_b = encoding_b["representation_vector"]
 
-            pair_logits = {}
-            pair_outputs = {}
-            for item1 in pair_output_keys.items():
-                cur_task_level_type = item1[0]
-                if cur_task_level_type not in pair_outputs:
-                    pair_outputs[cur_task_level_type] = {}
-                    pair_logits[cur_task_level_type] = {}
-                for cur_task_level_name in item1[1]:
-                    cur_logits = self.classifier_dropout[cur_task_level_type][cur_task_level_name](
-                        torch.cat((cur_representation_vector, cur_representation_vector_b), dim=-1)
-                    )
-                    cur_hidden_layer = self.hidden_layer[cur_task_level_type][cur_task_level_name]
-                    if cur_hidden_layer is not None:
-                        cur_logits = cur_hidden_layer(cur_logits)
-                    cur_logits = self.classifier[cur_task_level_type][cur_task_level_name](cur_logits)
-                    pair_logits[cur_task_level_type][cur_task_level_name] = cur_logits
-                    pair_outputs[cur_task_level_type][cur_task_level_name] = self.output[cur_task_level_type][cur_task_level_name](cur_logits)
+        if not self.embedding_inference:
+            if has_pair and has_pair_b and pair_output_keys and len(pair_output_keys) > 0:
+                cur_representation_vector = encoding["representation_vector"]
+                cur_representation_vector_b = encoding_b["representation_vector"]
 
-            if pair_label is not None:
-                pair_loss = {}
+                pair_logits = {}
+                pair_outputs = {}
                 for item1 in pair_output_keys.items():
                     cur_task_level_type = item1[0]
-                    if cur_task_level_type not in pair_label:
-                        continue
-                    if cur_task_level_type in pair_label:
-                        pair_loss[cur_task_level_type] = {}
+                    if cur_task_level_type not in pair_outputs:
+                        pair_outputs[cur_task_level_type] = {}
+                        pair_logits[cur_task_level_type] = {}
                     for cur_task_level_name in item1[1]:
-                        if cur_task_level_name not in pair_label[cur_task_level_type]:
-                            continue
-                        cur_label = pair_label[cur_task_level_type][cur_task_level_name]
-                        cur_label_size = self.label_size[cur_task_level_type][cur_task_level_name]
-                        cur_output_mode = self.output_mode[cur_task_level_type][cur_task_level_name]
-                        cur_loss_fct = self.loss_fct[cur_task_level_type][cur_task_level_name]
-                        cur_logits = pair_logits[cur_task_level_type][cur_task_level_name]
-                        cur_loss = self.__calc_loss__(
-                            task_level_type=cur_task_level_type,
-                            output_mode=cur_output_mode, logits=cur_logits,
-                            label=cur_label, label_size=cur_label_size, loss_fct=cur_loss_fct,
-                            loss_reduction="meanmean")
-                        pair_loss[cur_task_level_type][cur_task_level_name] = cur_loss
+                        cur_logits = self.classifier_dropout[cur_task_level_type][cur_task_level_name](
+                            torch.cat((cur_representation_vector, cur_representation_vector_b), dim=-1)
+                        )
+                        cur_hidden_layer = self.hidden_layer[cur_task_level_type][cur_task_level_name]
+                        if cur_hidden_layer is not None:
+                            cur_logits = cur_hidden_layer(cur_logits)
+                        cur_logits = self.classifier[cur_task_level_type][cur_task_level_name](cur_logits)
+                        pair_logits[cur_task_level_type][cur_task_level_name] = cur_logits
+                        pair_outputs[cur_task_level_type][cur_task_level_name] = self.output[cur_task_level_type][cur_task_level_name](cur_logits)
 
+                if pair_label is not None:
+                    pair_loss = {}
+                    for item1 in pair_output_keys.items():
+                        cur_task_level_type = item1[0]
+                        if cur_task_level_type not in pair_label:
+                            continue
+                        if cur_task_level_type in pair_label:
+                            pair_loss[cur_task_level_type] = {}
+                        for cur_task_level_name in item1[1]:
+                            if cur_task_level_name not in pair_label[cur_task_level_type]:
+                                continue
+                            cur_label = pair_label[cur_task_level_type][cur_task_level_name]
+                            cur_label_size = self.label_size[cur_task_level_type][cur_task_level_name]
+                            cur_output_mode = self.output_mode[cur_task_level_type][cur_task_level_name]
+                            cur_loss_fct = self.loss_fct[cur_task_level_type][cur_task_level_name]
+                            cur_logits = pair_logits[cur_task_level_type][cur_task_level_name]
+                            cur_loss = self.__calc_loss__(
+                                task_level_type=cur_task_level_type,
+                                output_mode=cur_output_mode, logits=cur_logits,
+                                label=cur_label, label_size=cur_label_size, loss_fct=cur_loss_fct,
+                                loss_reduction="meanmean")
+                            pair_loss[cur_task_level_type][cur_task_level_name] = cur_loss
+
+                    if not return_dict:
+                        return [[losses, losses_b, pair_loss], [outputs, outputs_b, pair_outputs]] + [[encoding, encoding_b]]
+                    return AllOutput(
+                        losses=losses,
+                        outputs=outputs,
+                        hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
+                        attentions=encoding["attentions"] if "attentions" in encoding else None,
+                        global_attentions=None,
+                        contacts=encoding["contacts"] if "contacts" in encoding else None,
+                        losses_b=losses_b,
+                        outputs_b=outputs_b,
+                        hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
+                        attentions_b=encoding_b["attentions"] if "hidden_states" in encoding_b else None,
+                        global_attentions_b=None,
+                        contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None,
+                        pair_outputs=pair_outputs,
+                        pair_losses=pair_loss)
+                else:
+                    if not return_dict:
+                        return [[losses, losses_b], [outputs, outputs_b]] + [[encoding, encoding_b]]
+                    return AllOutput(
+                        losses=losses,
+                        outputs=outputs,
+                        hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
+                        attentions=encoding["attentions"] if "attentions" in encoding else None,
+                        global_attentions=None,
+                        contacts=encoding["contacts"] if "contacts" in encoding else None,
+                        losses_b=losses_b,
+                        outputs_b=outputs_b,
+                        hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
+                        attentions_b=encoding_b["attentions"] if "attentions" in encoding_b else None,
+                        global_attentions_b=None,
+                        contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None
+                    )
+            elif has_pair:
                 if not return_dict:
-                    return [[losses, losses_b, pair_loss], [outputs, outputs_b, pair_outputs]] + [[encoding, encoding_b]]
+                    return [[losses], [outputs], [encoding]]
                 return AllOutput(
                     losses=losses,
                     outputs=outputs,
                     hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
                     attentions=encoding["attentions"] if "attentions" in encoding else None,
                     global_attentions=None,
-                    contacts=encoding["contacts"] if "contacts" in encoding else None,
-                    losses_b=losses_b,
-                    outputs_b=outputs_b,
-                    hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
-                    attentions_b=encoding_b["attentions"] if "hidden_states" in encoding_b else None,
-                    global_attentions_b=None,
-                    contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None,
-                    pair_outputs=pair_outputs,
-                    pair_losses=pair_loss)
+                    contacts=encoding["contacts"] if "contacts" in encoding else None
+                )
             else:
                 if not return_dict:
-                    return [[losses, losses_b], [outputs, outputs_b]] + [[encoding, encoding_b]]
+                    return [[losses_b], [outputs_b], [encoding_b]]
                 return AllOutput(
-                    losses=losses,
-                    outputs=outputs,
-                    hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
-                    attentions=encoding["attentions"] if "attentions" in encoding else None,
-                    global_attentions=None,
-                    contacts=encoding["contacts"] if "contacts" in encoding else None,
                     losses_b=losses_b,
                     outputs_b=outputs_b,
                     hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
@@ -629,28 +659,50 @@ class LucaGPLM(nn.Module):
                     global_attentions_b=None,
                     contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None
                 )
-        elif has_pair:
-            if not return_dict:
-                return [[losses], [outputs], [encoding]]
-            return AllOutput(
-                losses=losses,
-                outputs=outputs,
-                hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
-                attentions=encoding["attentions"] if "attentions" in encoding else None,
-                global_attentions=None,
-                contacts=encoding["contacts"] if "contacts" in encoding else None
-            )
         else:
-            if not return_dict:
-                return [[losses_b], [outputs_b], [encoding_b]]
-            return AllOutput(
-                losses_b=losses_b,
-                outputs_b=outputs_b,
-                hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
-                attentions_b=encoding_b["attentions"] if "attentions" in encoding_b else None,
-                global_attentions_b=None,
-                contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None
-            )
+            if has_pair and has_pair_b:
+                if not return_dict:
+                    return [[None, None], [None, None]] + [[encoding, encoding_b]]
+                return AllOutput(
+                    losses=None,
+                    outputs=None,
+                    hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
+                    attentions=encoding["attentions"] if "attentions" in encoding else None,
+                    global_attentions=None,
+                    contacts=encoding["contacts"] if "contacts" in encoding else None,
+                    losses_b=None,
+                    outputs_b=None,
+                    hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
+                    attentions_b=encoding_b["attentions"] if "attentions" in encoding_b else None,
+                    global_attentions_b=None,
+                    contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None
+                )
+            elif has_pair:
+                if not return_dict:
+                    return [[None], [None], [encoding]]
+                return AllOutput(
+                    losses=None,
+                    outputs=None,
+                    hidden_states=encoding["representation_matrix"] if "representation_matrix" in encoding else None,
+                    attentions=encoding["attentions"] if "attentions" in encoding else None,
+                    global_attentions=None,
+                    contacts=encoding["contacts"] if "contacts" in encoding else None
+                )
+            else:
+                if not return_dict:
+                    return [[None], [None], [encoding_b]]
+                return AllOutput(
+                    losses_b=None,
+                    outputs_b=None,
+                    hidden_states_b=encoding_b["representation_matrix"] if "representation_matrix" in encoding_b else None,
+                    attentions_b=encoding_b["attentions"] if "attentions" in encoding_b else None,
+                    global_attentions_b=None,
+                    contacts_b=encoding_b["contacts"] if "contacts" in encoding_b else None
+                )
 
     def predict_contacts(self, input_ids, position_ids=None, token_type_ids=None):
-        return self(input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids, return_contacts=True)["contacts"]
+        return self(
+            input_ids=input_ids,
+            position_ids=position_ids,
+            token_type_ids=token_type_ids,
+            return_contacts=True)["contacts"]
