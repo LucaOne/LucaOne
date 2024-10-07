@@ -807,10 +807,11 @@ def main(model_args):
             emb_filename = calc_emb_filename_by_seq_id(seq_id=seq_id, embedding_type=embedding_type)
             embedding_filepath = os.path.join(emb_save_path, emb_filename)
             if not os.path.exists(embedding_filepath):
+                input_seq_len = len(seq)
                 if model_args.embedding_complete:
-                    truncation_seq_length = len(seq)
+                    truncation_seq_length = input_seq_len
                 else:
-                    truncation_seq_length = min(len(seq), model_args.truncation_seq_length)
+                    truncation_seq_length = min(input_seq_len, model_args.truncation_seq_length)
                 while True:
                     # 设置了一次性推理长度
                     if model_args.embedding_fixed_len_a_time and model_args.embedding_fixed_len_a_time > 0:
@@ -838,7 +839,7 @@ def main(model_args):
                                 matrix_add_special_token=model_args.matrix_add_special_token
                             )
                             use_cpu = True
-                        if emb is not None:
+                        if emb is not None and input_seq_len > model_args.embedding_fixed_len_a_time:
                             emb = complete_embedding_matrix(
                                 seq_id,
                                 seq_type,
@@ -849,7 +850,8 @@ def main(model_args):
                                 embedding_type,
                                 use_cpu=use_cpu
                             )
-                        print("use_cpu: %r" % use_cpu)
+                        if use_cpu:
+                            print("use_cpu: %r" % use_cpu)
                     else:
                         emb, processed_seq_len = predict_embedding(
                             global_model_dirpath,
@@ -861,8 +863,21 @@ def main(model_args):
                             device=model_args.device,
                             matrix_add_special_token=model_args.matrix_add_special_token
                         )
+                        use_cpu = False
+                        if emb is None:
+                            emb, processed_seq_len = predict_embedding(
+                                global_model_dirpath,
+                                [seq_id, seq_type, seq],
+                                model_args.trunc_type,
+                                embedding_type,
+                                repr_layers=[-1],
+                                truncation_seq_length=truncation_seq_length,
+                                device=torch.device("cpu"),
+                                matrix_add_special_token=model_args.matrix_add_special_token
+                            )
+                            use_cpu = True
                         # embedding全
-                        if emb is not None:
+                        if emb is not None and input_seq_len > truncation_seq_length:
                             emb = complete_embedding_matrix(
                                 seq_id,
                                 seq_type,
@@ -871,14 +886,20 @@ def main(model_args):
                                 emb,
                                 model_args,
                                 embedding_type,
-                                use_cpu=False
+                                use_cpu=use_cpu
                             )
+                        if use_cpu:
+                            print("use_cpu: %r" % use_cpu)
                     if emb is not None:
                         # print("seq_len: %d" % len(seq))
                         # print("emb shape:", embedding_info.shape)
                         torch.save(emb, embedding_filepath)
                         break
-                    print("%s embedding error, max_len from %d truncate to %d" % (seq_id, truncation_seq_length, int(truncation_seq_length * 0.95)))
+                    print("%s embedding error, max_len from %d truncate to %d" % (
+                        seq_id,
+                        truncation_seq_length,
+                        int(truncation_seq_length * 0.95)
+                    ))
                     truncation_seq_length = int(truncation_seq_length * 0.95)
             else:
                 print("%s exists." % embedding_filepath)
@@ -893,10 +914,11 @@ def main(model_args):
         if not seq_type_is_match_seq(model_args.seq_type, model_args.seq):
             print("Error! the input seq(seq_id=%s) not match the arg: --seq_type=%s: %s" % (model_args.seq_id, seq_type, model_args.seq))
             sys.exit(-1)
+        input_seq_len = len(model_args.seq)
         if model_args.embedding_complete:
-            truncation_seq_length = len(model_args.seq)
+            truncation_seq_length = input_seq_len
         else:
-            truncation_seq_length = min(len(model_args.seq), model_args.truncation_seq_length)
+            truncation_seq_length = min(input_seq_len, model_args.truncation_seq_length)
         while True:
             emb, processed_seq_len = predict_embedding(
                 global_model_dirpath,
@@ -908,8 +930,21 @@ def main(model_args):
                 device=model_args.device,
                 matrix_add_special_token=model_args.matrix_add_special_token
             )
+            use_cpu = False
+            if emb is None:
+                emb, processed_seq_len = predict_embedding(
+                    global_model_dirpath,
+                    [model_args.seq_id, model_args.seq_type, model_args.seq],
+                    model_args.trunc_type,
+                    embedding_type,
+                    repr_layers=[-1],
+                    truncation_seq_length=truncation_seq_length,
+                    device=torch.device("cpu"),
+                    matrix_add_special_token=model_args.matrix_add_special_token
+                )
+                use_cpu = True
             # embedding全
-            if emb is not None:
+            if emb is not None and input_seq_len > truncation_seq_length:
                 emb = complete_embedding_matrix(
                     seq_id=model_args.seq_id,
                     seq_type=model_args.seq_type,
@@ -918,12 +953,18 @@ def main(model_args):
                     init_emb=emb,
                     model_args=model_args,
                     embedding_type=embedding_type,
-                    use_cpu=False
+                    use_cpu=use_cpu
                 )
+            if use_cpu:
+                print("use_cpu: %r" % use_cpu)
             if emb is not None:
                 print("processed seq length: %d, truncation seq length: %d" % (processed_seq_len, truncation_seq_length))
                 break
-            print("%s embedding error, max_len from %d truncate to %d" % (model_args.seq_id, truncation_seq_length, int(truncation_seq_length * 0.95)))
+            print("%s embedding error, max_len from %d truncate to %d" % (
+                model_args.seq_id,
+                truncation_seq_length,
+                int(truncation_seq_length * 0.95)
+            ))
             truncation_seq_length = int(truncation_seq_length * 0.95)
         print("seq: %s" % model_args.seq_id)
         print("seq: %s" % model_args.seq)
