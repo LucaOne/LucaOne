@@ -22,7 +22,7 @@ sys.path.append("../src")
 try:
     from .args import Args
     from .file_operator import fasta_reader, csv_reader, tsv_reader
-    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, clean_seq, \
+    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
         download_trained_checkpoint_lucaone, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
     from .models.lucaone_gplm import LucaGPLM
     from .models.lucaone_gplm_config import LucaGPLMConfig
@@ -31,7 +31,7 @@ try:
 except ImportError as e:
     from src.args import Args
     from src.file_operator import fasta_reader, csv_reader, tsv_reader
-    from src.utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, clean_seq, \
+    from src.utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
         download_trained_checkpoint_lucaone, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.lucaone_gplm_config import LucaGPLMConfig
@@ -382,10 +382,7 @@ def predict_embedding(
                 global_tokenizer[key] = tmp_tokenizer
             global_args_info[key]["max_length"] = truncation_seq_length
 
-    if seq_type == "prot":
-        processed_seq = clean_seq(seq_id, seq)
-    else:
-        processed_seq = seq.strip()
+    processed_seq = seq.strip()
     if len(processed_seq) > truncation_seq_length:
         if trunc_type == "left":
             processed_seq = processed_seq[-truncation_seq_length:]
