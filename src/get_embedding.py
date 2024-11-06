@@ -763,7 +763,8 @@ def main(model_args):
     if model_args.gpu_id >= 0:
         gpu_id = model_args.gpu_id
     else:
-        gpu_id = available_gpu_id()
+        # gpu_id = available_gpu_id()
+        gpu_id = -1
         print("gpu_id: ", gpu_id)
 
     model_args.device = torch.device("cuda:%d" % gpu_id if gpu_id > -1 else "cpu")

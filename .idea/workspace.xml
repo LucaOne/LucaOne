@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add clean_seq_luca">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/downstream/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +126,10 @@
       <workItem from="1730095821904" duration="25000" />
       <workItem from="1730115676674" duration="434000" />
       <workItem from="1730195766500" duration="1321000" />
-      <workItem from="1730197226616" duration="513000" />
+      <workItem from="1730197226616" duration="2158000" />
+      <workItem from="1730290320335" duration="32000" />
+      <workItem from="1730426936446" duration="673000" />
+      <workItem from="1730693113639" duration="609000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -277,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1730196933715</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="feature: add clean_seq_luca">
+      <created>1730200033630</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1730200033630</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -300,6 +308,7 @@
     <MESSAGE value="feature: add comments to the training shell script" />
     <MESSAGE value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
     <MESSAGE value="feature: update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
+    <MESSAGE value="feature: add clean_seq_luca" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: add clean_seq_luca" />
   </component>
 </project>

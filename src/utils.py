@@ -32,7 +32,7 @@ except ImportError:
 
 def set_seed(args):
     '''
-    set seed
+    Set seed for reproducibility
     :param args:
     :return:
     '''
