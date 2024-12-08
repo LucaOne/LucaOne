@@ -662,7 +662,7 @@ def get_args():
 
     # for many
     parser.add_argument("--input_file", type=str, default=None,
-                        help="the input file（format: fasta or csv)")
+                        help="the input file（format: fasta or csv or tsv)")
     # for input csv
     parser.add_argument("--id_idx", type=int, default=None,
                         help="id col idx(0 start)")

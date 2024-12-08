@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add clean_seq_luca">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/downstream/README.md" afterDir="false" />
-    </list>
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -133,7 +129,7 @@
       <workItem from="1730693113639" duration="609000" />
       <workItem from="1730900299386" duration="8000" />
       <workItem from="1730901555824" duration="19000" />
-      <workItem from="1731656213495" duration="48000" />
+      <workItem from="1731656213495" duration="346000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -289,7 +285,14 @@
       <option name="project" value="LOCAL" />
       <updated>1730200033630</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="feature: update readme">
+      <created>1731656287515</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1731656287515</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,8 +314,8 @@
     <MESSAGE value="feature: optimized code" />
     <MESSAGE value="feature: add comments to the training shell script" />
     <MESSAGE value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
-    <MESSAGE value="feature: update readme" />
     <MESSAGE value="feature: add clean_seq_luca" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: add clean_seq_luca" />
+    <MESSAGE value="feature: update readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
   </component>
 </project>
