@@ -68,6 +68,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
     nb_steps = 0
     # loss
     total_losses = {}
+    # step
+    total_steps = {}
 
     # truth
     truths = {}
@@ -137,7 +139,12 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
                     outputs.append(output.pair_outputs)
             else:
                 losses, outputs = output[:2]
-            current_losses, total_losses, total_loss, cur_loss = calc_eval_test_loss(losses, total_losses, total_loss)
+            current_losses, total_losses, total_steps, total_loss, cur_loss = calc_eval_test_loss(
+                losses,
+                total_losses,
+                total_steps,
+                total_loss
+            )
 
             print("\rTest, Batch: %06d, Sample Num: %d, Cur Loss: %0.6f, Avg Loss: %0.6f" %
                   (step + 1, done_sample_num, cur_loss, total_loss/(nb_steps + 1)),
@@ -163,7 +170,7 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
                                                               outputs[outputs_idx], pair_truths, pair_preds,
                                                               ignore_index=args.ignore_index, keep_seq=False)
 
-    all_result, loss, loss_detail = calc_avg_loss(total_losses, nb_steps)
+    all_result, loss, loss_detail = calc_avg_loss(total_losses, nb_steps, total_steps=total_steps)
     if args.do_metrics:
         if truths is not None and len(truths) > 0:
             results = eval_metrics(args.output_mode, truths, preds, threshold=0.5)
