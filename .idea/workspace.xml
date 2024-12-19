@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme" />
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update writer_info_tb">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -130,6 +133,9 @@
       <workItem from="1730900299386" duration="8000" />
       <workItem from="1730901555824" duration="19000" />
       <workItem from="1731656213495" duration="346000" />
+      <workItem from="1733635555903" duration="169000" />
+      <workItem from="1734490213235" duration="249000" />
+      <workItem from="1734574595801" duration="1062000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -292,7 +298,21 @@
       <option name="project" value="LOCAL" />
       <updated>1731656287515</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="feature: update readme">
+      <created>1733635604222</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1733635604222</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feature: update writer_info_tb">
+      <created>1734574733415</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1734574733415</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,6 +336,7 @@
     <MESSAGE value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
     <MESSAGE value="feature: add clean_seq_luca" />
     <MESSAGE value="feature: update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
+    <MESSAGE value="feature: update writer_info_tb" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: update writer_info_tb" />
   </component>
 </project>

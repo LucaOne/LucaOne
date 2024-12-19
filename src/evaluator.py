@@ -69,6 +69,8 @@ def evaluate(args, model, parse_row_func, batch_data_func, prefix="", log_fp=Non
 
     # total losses
     total_losses = {}
+    # total steps
+    total_steps = {}
 
     # predicted prob
     pred_scores = None
@@ -127,7 +129,9 @@ def evaluate(args, model, parse_row_func, batch_data_func, prefix="", log_fp=Non
                     outputs.append(output.pair_outputs)
             else:
                 losses, outputs = output[:2]
-            current_losses, total_losses, total_loss, cur_loss = calc_eval_test_loss(losses, total_losses, total_loss)
+            current_losses, total_losses, total_steps, total_loss, cur_loss = calc_eval_test_loss(
+                losses, total_losses, total_steps, total_loss
+            )
 
             print("\rEval, Batch: %06d, Sample Num: %d, Cur Loss: %0.6f, Avg Loss: %0.6f" % (step + 1, done_sample_num,
                                                                                              cur_loss, total_loss/(nb_steps + 1)),
@@ -137,7 +141,7 @@ def evaluate(args, model, parse_row_func, batch_data_func, prefix="", log_fp=Non
             if pred_scores is not None:
                 pred_scores = concat_output(batch["token"], outputs, out_label_ids, pred_scores)
             '''
-    all_result, loss, loss_detail = calc_avg_loss(total_losses, nb_steps)
+    all_result, loss, loss_detail = calc_avg_loss(total_losses, nb_steps, total_steps=total_steps)
     with open(os.path.join(save_output_dir, "dev_metrics.txt"), "w") as writer:
         writer.write("***** Dev results {} *****\n".format(prefix))
         writer.write("Dev average loss = %0.6f\n" % loss)

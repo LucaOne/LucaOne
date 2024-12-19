@@ -1066,22 +1066,27 @@ def writer_info_tb(tb_writer, logs, global_step, prefix=None):
     :param prefix:
     :return:
     '''
+    if prefix is None:
+        prefix = ""
+    else:
+        prefix = prefix + "_"
     for key, value in logs.items():
         if isinstance(value, dict):
             '''
             for key1, value1 in value.items():
                 tb_writer.add_scalar(key + "_" + key1, value1, global_step)
             '''
-            writer_info_tb(tb_writer, value, global_step, prefix=key)
+            writer_info_tb(tb_writer, value, global_step, prefix=prefix + key)
         else:
-            tb_writer.add_scalar(prefix + "_" + key if prefix else key, value, global_step)
+            tb_writer.add_scalar(prefix + key, value, global_step)
 
 
-def calc_avg_loss(total_losses, nb_steps):
+def calc_avg_loss(total_losses, nb_steps, total_steps=None):
     '''
     计算多种loss得平均loss与总loss
     :param total_losses:
     :param nb_steps:
+    :param total_steps
     :return:
     '''
     loss_detail = {}
@@ -1092,7 +1097,14 @@ def calc_avg_loss(total_losses, nb_steps):
             loss_detail[key1] = {}
         for item2 in item1[1].items():
             key2 = item2[0]
-            v = item2[1] / nb_steps
+            steps = total_steps[key1][key2] if total_steps is not None \
+                                               and key1 in total_steps \
+                                               and key2 in total_steps[key1] \
+                                               and total_steps[key1][key2] > 0 else nb_steps
+            if steps > 0:
+                v = item2[1] / steps
+            else:
+                v = 0.0
             if key2 not in loss_detail[key1]:
                 loss_detail[key1][key2] = float(v)
             else:
@@ -1436,7 +1448,7 @@ def re_positional(seq, tokens, tokenizer, special_tokens, labels, ignore_index=-
     return tokens, labels
 
 
-def calc_eval_test_loss(losses, total_losses, total_loss):
+def calc_eval_test_loss(losses, total_losses, total_steps, total_loss):
     cur_loss = 0.0
     current_losses = {}
     for cur_losses in losses:
@@ -1446,6 +1458,8 @@ def calc_eval_test_loss(losses, total_losses, total_loss):
                 total_losses[key1] = {}
             if key1 not in current_losses:
                 current_losses[key1] = {}
+            if key1 not in total_steps:
+                total_steps[key1] = {}
             for item2 in item1[1].items():
                 key2 = item2[0]
                 if item2[1] is not None:
@@ -1461,9 +1475,14 @@ def calc_eval_test_loss(losses, total_losses, total_loss):
                         current_losses[key1][key2] = v
                     else:
                         current_losses[key1][key2] += v
+                    if v > 1e-12:
+                        if key2 not in total_steps[key1]:
+                            total_steps[key1][key2] = 1
+                        else:
+                            total_steps[key1][key2] += 1
                     total_loss += v
                     cur_loss += v
-    return current_losses, total_losses, total_loss, cur_loss
+    return current_losses, total_losses, total_steps, total_loss, cur_loss
 
 
 def print_shape(item):
