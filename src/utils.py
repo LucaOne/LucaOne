@@ -1097,8 +1097,14 @@ def calc_avg_loss(total_losses, nb_steps, total_steps=None):
             loss_detail[key1] = {}
         for item2 in item1[1].items():
             key2 = item2[0]
-            steps = total_steps[key1][key2] if total_steps is not None and key1 in total_steps and key2 in total_steps[key1] else nb_steps
-            v = item2[1] / steps
+            steps = total_steps[key1][key2] if total_steps is not None \
+                                               and key1 in total_steps \
+                                               and key2 in total_steps[key1] \
+                                               and total_steps[key1][key2] > 0 else nb_steps
+            if steps > 0:
+                v = item2[1] / steps
+            else:
+                v = 0.0
             if key2 not in loss_detail[key1]:
                 loss_detail[key1][key2] = float(v)
             else:
@@ -1469,10 +1475,11 @@ def calc_eval_test_loss(losses, total_losses, total_steps, total_loss):
                         current_losses[key1][key2] = v
                     else:
                         current_losses[key1][key2] += v
-                    if key2 not in total_steps[key1]:
-                        total_steps[key1][key2] = 1
-                    else:
-                        total_steps[key1][key2] += 1
+                    if v > 1e-12:
+                        if key2 not in total_steps[key1]:
+                            total_steps[key1][key2] = 1
+                        else:
+                            total_steps[key1][key2] += 1
                     total_loss += v
                     cur_loss += v
     return current_losses, total_losses, total_steps, total_loss, cur_loss
