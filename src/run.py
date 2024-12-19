@@ -789,7 +789,10 @@ def get_model(args):
                     name = k[7:]
                 else:
                     name = k
-                new_state_dict[name] = v
+                if name in model_state_dict_keys:
+                    new_state_dict[name] = v
+                else:
+                    print("name: %s" % name)
             print("diff:")
             print(model_state_dict_keys.difference(new_state_dict.keys()))
             model.load_state_dict(new_state_dict)

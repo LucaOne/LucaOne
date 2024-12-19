@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update writer_info_tb">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,7 +136,10 @@
       <workItem from="1731656213495" duration="346000" />
       <workItem from="1733635555903" duration="169000" />
       <workItem from="1734490213235" duration="249000" />
-      <workItem from="1734574595801" duration="1062000" />
+      <workItem from="1734574595801" duration="1193000" />
+      <workItem from="1734587758782" duration="38000" />
+      <workItem from="1734594941900" duration="29000" />
+      <workItem from="1734595014507" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -312,7 +316,14 @@
       <option name="project" value="LOCAL" />
       <updated>1734574733415</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="feature: update writer_info_tb">
+      <created>1734575883698</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1734575883698</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

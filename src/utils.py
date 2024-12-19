@@ -1068,17 +1068,15 @@ def writer_info_tb(tb_writer, logs, global_step, prefix=None):
     '''
     if prefix is None:
         prefix = ""
-    else:
+    elif prefix != "":
         prefix = prefix + "_"
     for key, value in logs.items():
         if isinstance(value, dict):
-            '''
-            for key1, value1 in value.items():
-                tb_writer.add_scalar(key + "_" + key1, value1, global_step)
-            '''
             writer_info_tb(tb_writer, value, global_step, prefix=prefix + key)
-        else:
+        elif not math.isnan(value) and not math.isinf(value):
             tb_writer.add_scalar(prefix + key, value, global_step)
+        else:
+            print("writer_info_tb NaN or Inf, Key-Value: %s=%s" % (key, value))
 
 
 def calc_avg_loss(total_losses, nb_steps, total_steps=None):
