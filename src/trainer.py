@@ -21,14 +21,14 @@ sys.path.append("..")
 sys.path.append("../src")
 try:
     from common.multi_task_loss import *
-    from utils import to_device, get_lr, calc_loss, calc_loss_index, writer_info_tb, \
-        print_batch_input, print_batch_output, print_batch, lcm, write_processed_sample_ids
+    from utils import to_device, get_lr, calc_loss, calc_loss_index, writer_info_tb, print_batch_input, \
+        print_batch_output, print_batch, lcm, write_processed_sample_ids, calc_detail_losses, calc_avg_loss
     from evaluator import evaluate
     from tester import test
 except ImportError:
     from src.common.multi_task_loss import *
-    from src.utils import to_device, get_lr, calc_loss, calc_loss_index, writer_info_tb, \
-        print_batch_input, print_batch_output, print_batch, lcm, write_processed_sample_ids
+    from src.utils import to_device, get_lr, calc_loss, calc_loss_index, writer_info_tb, print_batch_input,\
+        print_batch_output, print_batch, lcm, write_processed_sample_ids, calc_detail_losses, calc_avg_loss
     from src.evaluator import evaluate
     from src.tester import test
 
@@ -47,18 +47,29 @@ def reduce_tensor(tensor, world_size):
     return rt
 
 
-def train(args, model, model_config, dataloader, label_size_dict, parse_row_func, batch_data_func, tokenizer, train_sampler=None, log_fp=None):
+def train(
+        args,
+        model,
+        model_config,
+        dataloader,
+        label_size_dict,
+        parse_row_func,
+        batch_data_func,
+        tokenizer,
+        train_sampler=None,
+        log_fp=None
+):
     # logger
     if args.local_rank in [0, -1]:
         tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
         if log_fp is None:
             log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
+        output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(0))
+        save_check_point(args, model, model_config, tokenizer, output_dir)
     no_decay = ["bias", "layer_norm.weight"]
     no_decay_keys = [n for n, _ in model.named_parameters() if any(nd in n.lower() for nd in no_decay)]
-    '''
     print("no_decay_keys: ")
     print(no_decay_keys)
-    '''
     optimizer_grouped_parameters = [
         {
             "params": [p for n, p in model.named_parameters() if not any(nd in n.lower() for nd in no_decay)],
@@ -76,10 +87,12 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             "weight_decay": 0.0
         })
 
-    optimizer = AdamW(optimizer_grouped_parameters,
-                      lr=args.learning_rate,
-                      betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
-                      eps=args.adam_epsilon)
+    optimizer = AdamW(
+        optimizer_grouped_parameters,
+        lr=args.learning_rate,
+        betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
+        eps=args.adam_epsilon
+    )
     print("Init lr: ", get_lr(optimizer))
     print("Peak lr: ", args.learning_rate)
     print("Scheduler_type: %s" % args.scheduler_type)
@@ -94,14 +107,18 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
         num_training_steps：整个训练过程的总步数
         '''
         print("Use Warmup, warmup_steps=%d, max_steps=%d" % (args.warmup_steps, args.max_steps))
-        scheduler = get_linear_schedule_with_warmup(optimizer,
-                                                    num_warmup_steps=args.warmup_steps,
-                                                    num_training_steps=args.max_steps)
+        scheduler = get_linear_schedule_with_warmup(
+            optimizer,
+            num_warmup_steps=args.warmup_steps,
+            num_training_steps=args.max_steps
+        )
     else:
         print("Use ExponentialLR")
         args.scheduler_type = "epoch"
-        scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer,
-                                                           gamma=args.decay_rate if args.decay_rate > 0 else 0.9)
+        scheduler = torch.optim.lr_scheduler.ExponentialLR(
+            optimizer,
+            gamma=args.decay_rate if args.decay_rate > 0 else 0.9
+        )
     if args.fp16:
         try:
             from apex import amp
@@ -116,10 +133,12 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             find_unused_parameters = False
         else:
             find_unused_parameters = True
-        model = torch.nn.parallel.DistributedDataParallel(model,
-                                                          device_ids=[args.local_rank],
-                                                          output_device=args.local_rank,
-                                                          find_unused_parameters=find_unused_parameters)
+        model = torch.nn.parallel.DistributedDataParallel(
+            model,
+            device_ids=[args.local_rank],
+            output_device=args.local_rank,
+            find_unused_parameters=find_unused_parameters
+        )
     optimizer.zero_grad()
     if args.local_rank in [0, -1]:
         global_step = 0
@@ -138,6 +157,11 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
         real_epoch = 0
         total_use_time = 0
         done_sample_num = 0
+        total_losses = {}
+        total_steps = {}
+        log_total_steps = {}
+        log_total_losses = {}
+
     total_loss_detail = {}
     last_last_loss_list = None
     last_loss_list = None
@@ -163,11 +187,13 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             sample_ids = batch["sample_ids"]
             trained_sample_ids.extend(sample_ids)
             if len(trained_sample_ids) >= args.processed_sample_cnt and (cur_global_steps + 1) % args.save_steps == 0:
-                write_processed_sample_ids(dataset_type="train",
-                                           sample_ids=trained_sample_ids,
-                                           time_str=args.time_str,
-                                           epoch=epoch + 1,
-                                           local_rank=args.local_rank)
+                write_processed_sample_ids(
+                    dataset_type="train",
+                    sample_ids=trained_sample_ids,
+                    time_str=args.time_str,
+                    epoch=epoch + 1,
+                    local_rank=args.local_rank
+                )
                 trained_sample_ids = []
             del batch["sample_ids"]
 
@@ -209,7 +235,12 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 # print_batch_output(outputs)
                 # print(losses)
                 # print("#####" * 10)
-                loss = calc_loss(args, losses, last_last_loss_list=last_last_loss_list, last_loss_list=last_loss_list)
+                loss = calc_loss(
+                    args,
+                    losses,
+                    last_last_loss_list=last_last_loss_list,
+                    last_loss_list=last_loss_list
+                )
                 '''
                 if args.n_gpu > 1:
                     reduced_loss = reduce_tensor(loss.data, dist.get_world_size())
@@ -229,19 +260,28 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                     global_step += 1
                     cur_epoch_step += 1
 
+                    # 计算当前的累计
+                    current_losses, total_losses, total_steps, log_total_losses, log_total_steps = calc_detail_losses(
+                        losses,
+                        total_losses,
+                        total_steps,
+                        log_total_losses,
+                        log_total_steps,
+                    )
+
                     # print(str(losses))
                     # print(str(loss))
                     if global_step % args.gradient_accumulation_steps == 0:
                         print("\rTraining, Epoch: %04d, Batch: %06d, Sample Num: %d, Cur Loss: %.08f, Avg Loss: %.08f" % (
-                            epoch + 1,
-                            cur_epoch_step,
-                            done_sample_num,
-                            cur_loss,
-                            total_loss/global_step), end="", flush=True
-                              )
+                                epoch + 1,
+                                cur_epoch_step,
+                                done_sample_num,
+                                cur_loss,
+                                total_loss/global_step), end="", flush=True
+                        )
                         if global_step == 1 or global_step % args.loss_logging_steps == 0:
                             writer_info_tb(tb_writer, {
-                                "loss": cur_loss
+                                "cur_merged_loss": cur_loss
                             }, global_step, prefix="training")
                         if global_step % args.logging_steps == 0:
                             log_fp.write("Training, Epoch: %04d, Batch: %06d, Sample Num: %d, Cur Loss: %.08f, Log Avg loss: %.08f, Global Avg Loss: %.08f, Time: %0.4f\n"
@@ -252,8 +292,10 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                                              cur_loss,
                                              logging_loss / lcm(args.logging_steps, args.gradient_accumulation_steps),
                                              total_loss / global_step,
-                                             cur_use_time)
+                                             cur_use_time
                                          )
+                            )
+                            log_fp.write("losses:\n")
                             log_fp.write(str(losses) + "\n")
                             log_fp.flush()
                             writer_info_tb(tb_writer,
@@ -269,6 +311,62 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                                                "log_avg_loss": logging_loss / lcm(args.logging_steps, args.gradient_accumulation_steps),
                                            }, global_step, prefix="logging")
                             logging_loss = 0.0
+                            all_result, merged_loss, loss_detail = calc_avg_loss(
+                                total_losses, global_step, total_steps=total_steps
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                loss_detail,
+                                global_step,
+                                prefix="training_global_avg"
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                total_steps,
+                                global_step,
+                                prefix="training_global_steps"
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                {
+                                    "merged_loss": merged_loss
+                                },
+                                global_step,
+                                prefix="training_global_avg"
+                            )
+                            log_fp.write("all_result:\n")
+                            log_fp.write(str(all_result) + "\n")
+
+                            log_all_result, log_merged_loss, log_loss_detail = calc_avg_loss(
+                                log_total_losses,
+                                lcm(args.logging_steps, args.gradient_accumulation_steps),
+                                total_steps=log_total_steps
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                log_loss_detail,
+                                global_step,
+                                prefix="training_log_avg"
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                log_total_steps,
+                                global_step,
+                                prefix="training_log_steps"
+                            )
+                            writer_info_tb(
+                                tb_writer,
+                                {
+                                    "merged_loss": log_merged_loss
+                                },
+                                global_step,
+                                prefix="training_log_avg"
+                            )
+                            log_fp.write("log_all_result:\n")
+                            log_fp.write(str(log_all_result) + "\n")
+                            log_fp.flush()
+                            log_total_losses = {}
+                            log_total_steps = {}
 
                 '''
                 for k, v in model.named_parameters():
@@ -325,7 +423,7 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 with open(os.path.join(exception_path, "train_exception_info_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(e) + "\n")
                     afp.flush()
-                with open(os.path.join("train_exception_input_%d" % args.local_rank), "a+") as afp:
+                with open(os.path.join(exception_path, "train_exception_input_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(batch) + "\n")
                     afp.flush()
                 debug_path = "../debug/train/local_rank%s/%s/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", str(epoch) + "_" + str(step))
@@ -342,12 +440,13 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             print("Has retained gard: rank=%d" % args.local_rank)
 
         if len(trained_sample_ids) > 0:
-            write_processed_sample_ids(dataset_type="train",
-                                       sample_ids=trained_sample_ids,
-                                       time_str=args.time_str,
-                                       epoch=epoch + 1,
-                                       local_rank=args.local_rank
-                                       )
+            write_processed_sample_ids(
+                dataset_type="train",
+                sample_ids=trained_sample_ids,
+                time_str=args.time_str,
+                epoch=epoch + 1,
+                local_rank=args.local_rank
+            )
         # epoch = 1的时候不调整（也就是第二次不调整，后面开始每一个epoch调整一次）
         if epoch > 1 and scheduler is not None and args.scheduler_type == "epoch":
             scheduler.step()
@@ -364,9 +463,16 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
             # Only evaluate at local_rank=0 or single GPU
             if args.local_rank in [-1, 0] and args.evaluate_during_training and args.dev_data_dir \
                     and (args.start_epoch < 0 or epoch + 1 >= args.start_epoch):
-                eval_result = evaluate(args, model, parse_row_func, batch_data_func,
-                                       prefix="checkpoint-{}".format(global_step),
-                                       log_fp=log_fp)
+                eval_result = evaluate(
+                    args,
+                    model,
+                    parse_row_func,
+                    batch_data_func,
+                    global_step=global_step,
+                    prefix="checkpoint-{}".format(global_step),
+                    tb_writer=tb_writer,
+                    log_fp=log_fp
+                )
                 print("Eval result:")
                 print(eval_result)
                 for key, value in eval_result.items():
@@ -381,9 +487,17 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
                 logs["update_flag"] = update_flag
                 if update_flag and args.test_data_dir:
                     best_metric_model_info.update({"epoch": epoch + 1, "global_step": global_step})
-                    test_result = test(args, model, label_size_dict, parse_row_func, batch_data_func,
-                                       prefix="checkpoint-{}".format(global_step),
-                                       log_fp=log_fp)
+                    test_result = test(
+                        args,
+                        model,
+                        label_size_dict,
+                        parse_row_func,
+                        batch_data_func,
+                        global_step=global_step,
+                        prefix="checkpoint-{}".format(global_step),
+                        tb_writer=tb_writer,
+                        log_fp=log_fp
+                    )
                     print("Test result:")
                     print(test_result)
                     for key, value in test_result.items():
@@ -442,7 +556,11 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
         log_fp.write(json.dumps(best_metric_model_info, ensure_ascii=False) + "\n")
         log_fp.write("#" * 50 + "\n")
         avg_time_per_epoch = round((run_end_time - run_begin_time)/real_epoch, 2)
-        log_fp.write("Total Time: %f, Avg time per epoch(%d epochs): %f\n" % (run_end_time - run_begin_time, real_epoch, avg_time_per_epoch))
+        log_fp.write("Total Time: %f, Avg time per epoch(%d epochs): %f\n" % (
+            run_end_time - run_begin_time,
+            real_epoch,
+            avg_time_per_epoch
+        ))
         log_fp.flush()
 
     if args.n_gpu > 1:
@@ -454,7 +572,18 @@ def train(args, model, model_config, dataloader, label_size_dict, parse_row_func
     return None, None, None
 
 
-def train_continue(args, model, model_config, dataloader, label_size_dict, parse_row_func, batch_data_func, tokenizer, train_sampler=None, log_fp=None):
+def train_continue(
+        args,
+        model,
+        model_config,
+        dataloader,
+        label_size_dict,
+        parse_row_func,
+        batch_data_func,
+        tokenizer,
+        train_sampler=None,
+        log_fp=None
+):
     # logger
     if args.local_rank in [0, -1]:
         tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
@@ -462,10 +591,8 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
     no_decay = ["bias", "layer_norm.weight"]
     no_decay_keys = [n for n, _ in model.named_parameters() if any(nd in n.lower() for nd in no_decay)]
-    '''
     print("no_decay_keys: ")
     print(no_decay_keys)
-    '''
     optimizer_grouped_parameters = [
         {
             "params": [p for n, p in model.named_parameters() if not any(nd in n.lower() for nd in no_decay)],
@@ -483,10 +610,12 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             "weight_decay": 0.0
         })
 
-    optimizer = AdamW(optimizer_grouped_parameters,
-                      lr=args.learning_rate,
-                      betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
-                      eps=args.adam_epsilon)
+    optimizer = AdamW(
+        optimizer_grouped_parameters,
+        lr=args.learning_rate,
+        betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
+        eps=args.adam_epsilon
+    )
     print("Init lr: ", get_lr(optimizer))
     print("Peak: ", args.learning_rate)
     print("Scheduler_type: %s" % args.scheduler_type)
@@ -501,9 +630,11 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
         num_training_steps：整个训练过程的总步数
         '''
         print("Use Warmup, warmup_steps=%d, max_steps=%d" % (args.warmup_steps, args.max_steps))
-        scheduler = get_linear_schedule_with_warmup(optimizer,
-                                                    num_warmup_steps=args.warmup_steps,
-                                                    num_training_steps=args.max_steps)
+        scheduler = get_linear_schedule_with_warmup(
+            optimizer,
+            num_warmup_steps=args.warmup_steps,
+            num_training_steps=args.max_steps
+        )
     else:
         print("Use ExponentialLR")
         args.scheduler_type = "epoch"
@@ -523,10 +654,12 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             find_unused_parameters = False
         else:
             find_unused_parameters = True
-        model = torch.nn.parallel.DistributedDataParallel(model,
-                                                          device_ids=[args.local_rank],
-                                                          output_device=args.local_rank,
-                                                          find_unused_parameters=find_unused_parameters)
+        model = torch.nn.parallel.DistributedDataParallel(
+            model,
+            device_ids=[args.local_rank],
+            output_device=args.local_rank,
+            find_unused_parameters=find_unused_parameters
+        )
     optimizer.zero_grad()
     if args.local_rank in [0, -1]:
         global_step = 0
@@ -543,6 +676,11 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
         real_epoch = 0
         total_use_time = 0
         done_sample_num = 0
+        total_losses = {}
+        total_steps = {}
+        log_total_steps = {}
+        log_total_losses = {}
+
     total_loss_detail = {}
     last_last_loss_list = None
     last_loss_list = None
@@ -569,12 +707,13 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             trained_sample_ids.extend(sample_ids)
             # 训练的样本个数超过指定大小，并且与mode save策略保持一致
             if len(trained_sample_ids) >= args.processed_sample_cnt and (cur_global_steps + 1) % args.save_steps == 0:
-                write_processed_sample_ids(dataset_type="train",
-                                           sample_ids=trained_sample_ids,
-                                           time_str=args.time_str,
-                                           epoch=epoch + 1,
-                                           local_rank=args.local_rank
-                                           )
+                write_processed_sample_ids(
+                    dataset_type="train",
+                    sample_ids=trained_sample_ids,
+                    time_str=args.time_str,
+                    epoch=epoch + 1,
+                    local_rank=args.local_rank
+                )
                 trained_sample_ids = []
             del batch["sample_ids"]
 
@@ -645,7 +784,12 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                     # print_batch_output(outputs)
                     # print(losses)
                     # print("#####" * 10)
-                    loss = calc_loss(args, losses, last_last_loss_list=last_last_loss_list, last_loss_list=last_loss_list)
+                    loss = calc_loss(
+                        args,
+                        losses,
+                        last_last_loss_list=last_last_loss_list,
+                        last_loss_list=last_loss_list
+                    )
                     '''
                     if args.n_gpu > 1:
                         reduced_loss = reduce_tensor(loss.data, dist.get_world_size())
@@ -665,6 +809,14 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                         global_step += 1
                         cur_epoch_step += 1
 
+                        # 计算当前的累计
+                        current_losses, total_losses, total_steps, log_total_losses, log_total_steps = calc_detail_losses(
+                            losses,
+                            total_losses,
+                            total_steps,
+                            log_total_losses,
+                            log_total_steps,
+                        )
                         # print(str(losses))
                         # print(str(loss))
                         if global_step % args.gradient_accumulation_steps == 0:
@@ -674,10 +826,10 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                                 done_sample_num,
                                 cur_loss,
                                 total_loss/global_step), end="", flush=True
-                                  )
+                            )
                             if global_step == 1 or global_step % args.loss_logging_steps == 0:
                                 writer_info_tb(tb_writer, {
-                                    "loss": cur_loss
+                                    "cur_merged_loss": cur_loss
                                 }, global_step, prefix="training")
                             if global_step % args.logging_steps == 0:
                                 log_fp.write("Training, Epoch: %04d, Batch: %06d, Sample Num: %d, Cur Loss: %.08f, Log Avg loss: %.08f, Global Avg Loss: %.08f, Time: %0.4f\n"
@@ -688,24 +840,82 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                                                  cur_loss,
                                                  logging_loss / lcm(args.logging_steps, args.gradient_accumulation_steps),
                                                  total_loss / global_step,
-                                                 cur_use_time)
+                                                 cur_use_time
                                              )
+                                )
+                                log_fp.write("losses:\n")
                                 log_fp.write(str(losses) + "\n")
-                                log_fp.flush()
-                                writer_info_tb(tb_writer,
-                                               {
-                                                   "epoch": epoch + 1,
-                                                   "cur_epoch_step": cur_epoch_step,
-                                                   "cur_epoch_done_sample_num": done_sample_num,
-                                                   "cur_epoch_avg_loss": cur_epoch_loss / cur_epoch_step,
-                                                   "cur_batch_loss": cur_loss,
-                                                   "global_avg_loss": total_loss / global_step,
-                                                   "cur_use_time": cur_use_time,
-                                                   "global_step": global_step,
-                                                   "log_avg_loss": logging_loss / lcm(args.logging_steps, args.gradient_accumulation_steps),
-                                               }, global_step, prefix="logging")
+                                writer_info_tb(
+                                    tb_writer,
+                                    {
+                                        "epoch": epoch + 1,
+                                        "cur_epoch_step": cur_epoch_step,
+                                        "cur_epoch_done_sample_num": done_sample_num,
+                                        "cur_epoch_avg_loss": cur_epoch_loss / cur_epoch_step,
+                                        "cur_batch_loss": cur_loss,
+                                        "global_avg_loss": total_loss / global_step,
+                                        "cur_use_time": cur_use_time,
+                                        "global_step": global_step,
+                                        "log_avg_loss": logging_loss / lcm(args.logging_steps, args.gradient_accumulation_steps),
+                                    }, global_step, prefix="logging"
+                                )
                                 logging_loss = 0.0
+                                all_result, merged_loss, loss_detail = calc_avg_loss(
+                                    total_losses, global_step, total_steps=total_steps
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    loss_detail,
+                                    global_step,
+                                    prefix="training_global_avg"
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    total_steps,
+                                    global_step,
+                                    prefix="training_global_steps"
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    {
+                                        "merged_loss": merged_loss
+                                    },
+                                    global_step,
+                                    prefix="training_global_avg"
+                                )
+                                log_fp.write("all_result:\n")
+                                log_fp.write(str(all_result) + "\n")
 
+                                log_all_result, log_merged_loss, log_loss_detail = calc_avg_loss(
+                                    log_total_losses,
+                                    lcm(args.logging_steps, args.gradient_accumulation_steps),
+                                    total_steps=log_total_steps
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    log_loss_detail,
+                                    global_step,
+                                    prefix="training_log_avg"
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    log_total_steps,
+                                    global_step,
+                                    prefix="training_log_steps"
+                                )
+                                writer_info_tb(
+                                    tb_writer,
+                                    {
+                                        "merged_loss": log_merged_loss
+                                    },
+                                    global_step,
+                                    prefix="training_log_avg"
+                                )
+                                log_fp.write("log_all_result:\n")
+                                log_fp.write(str(log_all_result) + "\n")
+                                log_fp.flush()
+                                log_total_losses = {}
+                                log_total_steps = {}
                     '''
                     for k, v in model.named_parameters():
                         print(k)
@@ -778,12 +988,13 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             print("Has retained gard: rank=%d" % args.local_rank)
 
         if len(trained_sample_ids) > 0:
-            write_processed_sample_ids(dataset_type="train",
-                                       sample_ids=trained_sample_ids,
-                                       time_str=args.time_str,
-                                       epoch=epoch + 1,
-                                       local_rank=args.local_rank
-                                       )
+            write_processed_sample_ids(
+                dataset_type="train",
+                sample_ids=trained_sample_ids,
+                time_str=args.time_str,
+                epoch=epoch + 1,
+                local_rank=args.local_rank
+            )
         # epoch = 1的时候不调整（也就是第二次不调整，后面开始每一个epoch调整一次）
         if epoch > 1 and scheduler is not None and args.scheduler_type == "epoch":
             scheduler.step()
@@ -800,9 +1011,16 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
             # Only evaluate at local_rank=0 or single GPU
             if args.local_rank in [-1, 0] and args.evaluate_during_training and args.dev_data_dir \
                     and (args.start_epoch < 0 or epoch + 1 >= args.start_epoch):
-                eval_result = evaluate(args, model, parse_row_func, batch_data_func,
-                                       prefix="checkpoint-{}".format(global_step),
-                                       log_fp=log_fp)
+                eval_result = evaluate(
+                    args,
+                    model,
+                    parse_row_func,
+                    batch_data_func,
+                    global_step=global_step,
+                    prefix="checkpoint-{}".format(global_step),
+                    tb_writer=tb_writer,
+                    log_fp=log_fp
+                )
                 print("Eval result:")
                 print(eval_result)
                 for key, value in eval_result.items():
@@ -817,9 +1035,17 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
                 logs["update_flag"] = update_flag
                 if update_flag and args.test_data_dir:
                     best_metric_model_info.update({"epoch": epoch + 1, "global_step": global_step})
-                    test_result = test(args, model, label_size_dict, parse_row_func, batch_data_func,
-                                       prefix="checkpoint-{}".format(global_step),
-                                       log_fp=log_fp)
+                    test_result = test(
+                        args,
+                        model,
+                        label_size_dict,
+                        parse_row_func,
+                        batch_data_func,
+                        global_step=global_step,
+                        prefix="checkpoint-{}".format(global_step),
+                        tb_writer=tb_writer,
+                        log_fp=log_fp
+                    )
                     print("Test result:")
                     print(test_result)
                     for key, value in test_result.items():
@@ -878,7 +1104,11 @@ def train_continue(args, model, model_config, dataloader, label_size_dict, parse
         log_fp.write(json.dumps(best_metric_model_info, ensure_ascii=False) + "\n")
         log_fp.write("#" * 50 + "\n")
         avg_time_per_epoch = round((run_end_time - run_begin_time)/real_epoch, 2)
-        log_fp.write("Total Time: %f, Avg time per epoch(%d epochs): %f\n" % (run_end_time - run_begin_time, real_epoch, avg_time_per_epoch))
+        log_fp.write("Total Time: %f, Avg time per epoch(%d epochs): %f\n" % (
+            run_end_time - run_begin_time,
+            real_epoch,
+            avg_time_per_epoch
+        ))
         log_fp.flush()
 
     if args.n_gpu > 1:
@@ -904,7 +1134,6 @@ def save_check_point(args, model, model_config, tokenizer, output_dir):
     :param output_dir:
     :return:
     '''
-
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     # Take care of distributed/parallel training

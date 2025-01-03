@@ -7,10 +7,9 @@
 @tel: 137****6540
 @datetime: 2023/7/24 15:14
 @project: LucaOne
-@file: batch_converter
-@desc: batch converter
+@file: batch_converter_for_eval_mask
+@desc: xxxx
 '''
-import random
 import torch
 from typing import Sequence
 
@@ -93,126 +92,6 @@ class BatchConverter(object):
                         raise Exception("not support task_level=%s" % level1_name)
         return new_encoded_labels
 
-    def __mask_tokens__(self, input_ids, seq_len):
-        labels = input_ids.clone()
-        probability_matrix = torch.full(labels.shape, self.mlm_probability)
-
-        # 特殊字符处为1
-        special_tokens_mask = [
-            1 if v in self.alphabet.all_special_token_idx_list else 0 for v in labels.tolist()
-        ]
-        special_tokens_mask = torch.tensor(special_tokens_mask, dtype=torch.bool)
-        # 将特殊字符处填充为0.0
-        probability_matrix.masked_fill_(special_tokens_mask, value=0.0)
-
-        # 非特殊字符的位置
-        masked_indices = torch.bernoulli(probability_matrix).bool()
-        # 特殊字符处为-100
-        labels[~masked_indices] = self.ignore_index  # We only compute loss on masked tokens
-
-        # 80% of the time, we replace masked input tokens with alphabet.mask_token ([MASK])
-        indices_replaced = torch.bernoulli(torch.full(labels.shape, 0.8)).bool() & masked_indices
-        input_ids[indices_replaced] = self.alphabet.mask_idx
-
-        # 10% of the time, we replace masked input tokens with random word
-        indices_random = torch.bernoulli(torch.full(labels.shape, 0.5)).bool() & masked_indices & ~indices_replaced
-        random_words = torch.randint(len(self.alphabet), labels.shape, dtype=torch.long)
-        input_ids[indices_random] = random_words[indices_random]
-
-        # The rest of the time (10% of the time) we keep the masked input tokens unchanged
-        if torch.any(labels != self.ignore_index):
-            return input_ids, labels
-        else:
-            # non [MASK]， random one position, convect to [MASK]
-            rand_idx = random.randint(int(self.alphabet.prepend_bos), seq_len + int(self.alphabet.prepend_bos) - 1)
-            labels[rand_idx] = input_ids[rand_idx]
-            input_ids[rand_idx] = self.alphabet.mask_idx
-            return input_ids, labels
-
-    def __call_single__(self, batch_size, seq_types, seqs, seq_labels):
-        seq_encoded_list = [self.alphabet.encode(seq_str.upper()) for seq_str in seqs]
-        batch_size = min(batch_size, len(seq_encoded_list))
-        if self.truncation_seq_length:
-            seq_encoded_list = [encoded[:self.truncation_seq_length] for encoded in seq_encoded_list]
-        max_len = max(len(seq_encoded) for seq_encoded in seq_encoded_list)
-        max_len = max_len + int(self.alphabet.prepend_bos) + int(self.alphabet.append_eos)
-        # for input
-        input_ids = torch.empty(
-            (
-                batch_size,
-                max_len
-            ),
-            dtype=torch.int64,
-        )
-        input_ids.fill_(self.alphabet.padding_idx)
-
-        position_ids = None
-        if not self.no_position_embeddings:
-            position_ids = torch.empty(
-                (
-                    batch_size,
-                    max_len
-                ),
-                dtype=torch.int64,
-            )
-            position_ids.fill_(self.alphabet.padding_idx)
-
-        token_type_ids = None
-        if not self.no_token_type_embeddings:
-            token_type_ids = torch.empty(
-                (
-                    batch_size,
-                    max_len
-                ),
-                dtype=torch.int64,
-            )
-            token_type_ids.fill_(self.alphabet.padding_idx)
-
-        strs = []
-        labels = []
-        for i, (label, seq_type, seq_str, seq_encoded) in enumerate(
-                zip(seq_labels, seq_types, seqs, seq_encoded_list)
-        ):
-            strs.append(seq_str)
-            if self.alphabet.prepend_bos:
-                input_ids[i, 0] = self.alphabet.cls_idx
-            seq_len = len(seq_encoded)
-            seq = torch.tensor(seq_encoded, dtype=torch.int64)
-            input_ids[i, int(self.alphabet.prepend_bos): len(seq_encoded) + int(self.alphabet.prepend_bos)] = seq
-            if self.alphabet.append_eos:
-                input_ids[i, len(seq_encoded) + int(self.alphabet.prepend_bos)] = self.alphabet.eos_idx
-
-            if not self.no_position_embeddings:
-                cur_len = int(self.alphabet.prepend_bos) + len(seq_encoded) + int(self.alphabet.append_eos)
-                for idx in range(0, cur_len):
-                    position_ids[i, idx] = idx
-            if not self.no_token_type_embeddings:
-                if seq_type == "gene":
-                    type_value = 0
-                else:
-                    type_value = 1
-                cur_len = int(self.alphabet.prepend_bos) + len(seq_encoded) + int(self.alphabet.append_eos)
-                for idx in range(0, cur_len):
-                    token_type_ids[i, idx] = type_value
-            # labels
-            if label is None:
-                label = {}
-            if "token_level" not in label:
-                label["token_level"] = {}
-
-            if seq_type == "gene":
-                input_ids[i, :], label["token_level"]["gene_mask"] = self.__mask_tokens__(
-                    input_ids[i, :],
-                    seq_len=seq_len
-                )
-            else:
-                input_ids[i, :], label["token_level"]["prot_mask"] = self.__mask_tokens__(
-                    input_ids[i, :],
-                    seq_len=seq_len
-                )
-            labels.append(label)
-        return self.__process_label__(max_len, labels), strs, input_ids, position_ids, token_type_ids, max_len
-
     def __call_single_for_eval_mask__(
             self,
             batch_size,
@@ -220,10 +99,24 @@ class BatchConverter(object):
             seqs,
             seq_labels
     ):
+        for idx, label in enumerate(seq_labels):
+            assert seq_types[idx] in ["gene", "prot"]
+            if seq_types[idx] == "gene":
+                print("seq: ")
+                print(seqs[idx])
+                print("label: ")
+                print(label["token_level"]["gene_mask"])
+                print("seq len: %d" % len(seqs[idx]))
+                print("label len: %d" % len(label["token_level"]["gene_mask"]))
+                print("-" * 20)
+                assert len(seqs[idx]) == len(label["token_level"]["gene_mask"])
+            elif seq_types[idx] == "prot":
+                # print("len: %d" % len(seqs[idx]))
+                assert len(seqs[idx]) == len(label["token_level"]["prot_mask"])
         seq_encoded_list = [self.alphabet.encode_for_eval_mask(seq_str.upper()) for seq_str in seqs]
         seq_mask_label_list = [
             self.alphabet.encode(label["token_level"]["gene_mask"].upper())
-            if seq_labels[idx] == "gene" else self.alphabet.encode(label["token_level"]["prot_mask"].upper())
+            if seq_types[idx] == "gene" else self.alphabet.encode(label["token_level"]["prot_mask"].upper())
             for idx, label in enumerate(seq_labels)
         ]
         batch_size = min(batch_size, len(seq_encoded_list))
@@ -313,11 +206,11 @@ class BatchConverter(object):
                 label["token_level"] = {}
 
             mask_position = input_ids[i, :] == self.alphabet.mask_idx
-            seq_mask_label_input_ids[i, mask_position] = self.ignore_index
+            seq_mask_label_input_ids[i, ~mask_position] = self.ignore_index
             if seq_type == "gene":
-                label["token_level"]["gene_mask"] = seq_mask_label_input_ids
+                label["token_level"]["gene_mask"] = seq_mask_label_input_ids[i, :]
             else:
-                label["token_level"]["prot_mask"] = seq_mask_label_input_ids
+                label["token_level"]["prot_mask"] = seq_mask_label_input_ids[i, :]
             labels.append(label)
         return self.__process_label__(
             max_len,
@@ -330,9 +223,11 @@ class BatchConverter(object):
         # gene-prot pair
         if "gene_seq" in raw_batch[0] or "prot_seq" in raw_batch[0]:
             res = {}
+            # seq_ids = []
             seq_types = []
             seqs = []
             seq_labels = []
+            # seq_ids_b = []
             seq_types_b = []
             seqs_b = []
             seq_labels_b = []
@@ -342,6 +237,7 @@ class BatchConverter(object):
                     sample_ids.append(item["sample_id"])
                 else:
                     sample_ids.append("unknown")
+                # seq_ids.append(item["gene_id"])
                 if "gene_seq" in item:
                     seq_types.append("gene")
                     seqs.append(item["gene_seq"])
@@ -354,7 +250,7 @@ class BatchConverter(object):
                     pair_labels.append(item["pair"]["pair_label"])
             labels, strs, input_ids, position_ids, token_type_ids, max_len = None, None, None, None, None, None
             if seq_types is not None and len(seq_types) > 0:
-                labels, strs, input_ids, position_ids, token_type_ids, max_len = self.__call_single__(
+                labels, strs, input_ids, position_ids, token_type_ids, max_len = self.__call_single_for_eval_mask__(
                     batch_size,
                     seq_types,
                     seqs,
@@ -367,8 +263,10 @@ class BatchConverter(object):
                     "labels": labels
                 })
             labels_b, strs_b, input_ids_b, position_ids_b, token_type_ids_b, max_len_b = None, None, None, None, None, None
+            print("sample_ids:")
+            print(sample_ids)
             if seq_types_b is not None and len(seq_types_b) > 0:
-                labels_b, strs_b, input_ids_b, position_ids_b, token_type_ids_b, max_len_b = self.__call_single__(
+                labels_b, strs_b, input_ids_b, position_ids_b, token_type_ids_b, max_len_b = self.__call_single_for_eval_mask__(
                     batch_size,
                     seq_types_b,
                     seqs_b,
@@ -399,8 +297,9 @@ class BatchConverter(object):
                 seq_types.append(item["obj_type"])
                 seqs.append(item["obj_seq"])
                 seq_labels.append(item["obj_labels"])
-
-            labels, strs, input_ids, position_ids, token_type_ids, max_len = self.__call_single__(
+            print("sample_ids:")
+            print(sample_ids)
+            labels, strs, input_ids, position_ids, token_type_ids, max_len = self.__call_single_for_eval_mask__(
                 batch_size,
                 seq_types,
                 seqs,

@@ -10,9 +10,7 @@
 @file: utils
 @desc: utils for LucaOne
 '''
-import torch
 import requests
-import numpy as np
 import random
 import os, sys
 import pynvml
@@ -144,7 +142,29 @@ def print_batch_output(batch):
         print(batch)
 
 
-def process_outputs(output_mode, truth, pred, output_truth, output_pred, ignore_index, keep_seq=False):
+def print_batch_device(batch_input, level):
+    for item in batch_input.items():
+        print("level-%d:" % level + item[0])
+        if isinstance(item[1], dict):
+            print_batch_device(item[1], level=level+1)
+        else:
+            if item[1] is not None:
+                print(item[1].shape)
+                print(item[1].device)
+            else:
+                print("None")
+
+
+def process_outputs(
+        output_mode,
+        truth,
+        pred,
+        output_truth,
+        output_pred,
+        ignore_index,
+        keep_seq=False,
+        return_masked_truth_pred=False
+):
     # token_level/mask
     # truth: [N, max_seq_len] pred: [N, max_seq_len, vocab_size]
     # span_level/gene_type
@@ -167,7 +187,10 @@ def process_outputs(output_mode, truth, pred, output_truth, output_pred, ignore_
 
     # pair_level/trans
     # truth: [N, 1] pred: [N, 1]
+    masked_preds = {}
+    masked_truths = {}
     if keep_seq:
+        # todo
         # token_level/mask
         truth = truth.view(-1)
         truth_mask = truth != ignore_index
@@ -240,6 +263,8 @@ def process_outputs(output_mode, truth, pred, output_truth, output_pred, ignore_
     else:
         for item1 in truth.items():
             task_type_level = item1[0]
+            masked_preds[task_type_level] = {}
+            masked_truths[task_type_level] = {}
             for item2 in item1[1].items():
                 task_type_name = item2[0]
                 cur_truth = truth[task_type_level][task_type_name]
@@ -263,8 +288,10 @@ def process_outputs(output_mode, truth, pred, output_truth, output_pred, ignore_
                     cur_truth = cur_truth[cur_mask, :]
                     cur_pred = cur_pred[cur_mask, :]
                 else:
-                    raise Exception("not output mode: task_type_level=%s, task_type_name=%s, mode:%s" % (task_type_level, task_type_name, output_mode[task_type_level][task_type_name]))
-                    
+                    raise Exception("not output mode: task_type_level=%s, task_type_name=%s, mode:%s" % (
+                        task_type_level, task_type_name, output_mode[task_type_level][task_type_name]
+                    ))
+
                 if cur_mask.sum().item() > 0:
                     cur_truth = cur_truth.detach().cpu().numpy()
                     cur_pred = cur_pred.detach().cpu().numpy()
@@ -277,8 +304,23 @@ def process_outputs(output_mode, truth, pred, output_truth, output_pred, ignore_
                         output_truth[task_type_level][task_type_name] = cur_truth
                         output_pred[task_type_level][task_type_name] = cur_pred
                     else:
-                        output_truth[task_type_level][task_type_name] = np.append(output_truth[task_type_level][task_type_name], cur_truth,  axis=0)
-                        output_pred[task_type_level][task_type_name] = np.append(output_pred[task_type_level][task_type_name], cur_pred,  axis=0)
+                        output_truth[task_type_level][task_type_name] = np.append(
+                            output_truth[task_type_level][task_type_name],
+                            cur_truth,
+                            axis=0
+                        )
+                        output_pred[task_type_level][task_type_name] = np.append(
+                            output_pred[task_type_level][task_type_name],
+                            cur_pred,
+                            axis=0
+                        )
+                else:
+                    cur_truth = None
+                    cur_pred = None
+                masked_preds[task_type_level][task_type_name] = cur_pred
+                masked_truths[task_type_level][task_type_name] = cur_truth
+    if return_masked_truth_pred:
+        return output_truth, output_pred, masked_truths, masked_preds
     return output_truth, output_pred
 
 
@@ -427,8 +469,17 @@ def metrics_merge(results, all_results):
     return all_results
 
 
-def eval_bak2(output_mode, task_type, ground_truth_ids, pred_scores, label_list=None, ignore_index=None, threshold=0.5,
-              output_dir=None, output_filename=None):
+def eval_bak2(
+        output_mode,
+        task_type,
+        ground_truth_ids,
+        pred_scores,
+        label_list=None,
+        ignore_index=None,
+        threshold=0.5,
+        output_dir=None,
+        output_filename=None
+):
     '''
     eval metrics
     :param output_mode:
@@ -521,8 +572,17 @@ def eval_bak2(output_mode, task_type, ground_truth_ids, pred_scores, label_list=
     return result, true_label_names, pred_label_names
 
 
-def eval_bak(output_mode, task_type, ground_truth_ids, pred_scores, label_list=None, ignore_index=None, threshold=0.5,
-             output_dir=None, output_filename=None):
+def eval_bak(
+        output_mode,
+        task_type,
+        ground_truth_ids,
+        pred_scores,
+        label_list=None,
+        ignore_index=None,
+        threshold=0.5,
+        output_dir=None,
+        output_filename=None
+):
     '''
     eval metrics
     :param output_mode:
@@ -615,8 +675,17 @@ def eval_bak(output_mode, task_type, ground_truth_ids, pred_scores, label_list=N
     return result, true_label_names, pred_label_names
 
 
-def eval_tensor(output_mode, task_type, ground_truth_ids, pred_scores, label_list=None, ignore_index=None,
-                threshold=0.5, output_dir=None, output_filename=None):
+def eval_tensor(
+        output_mode,
+        task_type,
+        ground_truth_ids,
+        pred_scores,
+        label_list=None,
+        ignore_index=None,
+        threshold=0.5,
+        output_dir=None,
+        output_filename=None
+):
     '''
     eval metrics
     :param output_mode:
@@ -714,7 +783,15 @@ def eval_tensor(output_mode, task_type, ground_truth_ids, pred_scores, label_lis
     return result, true_label_names, pred_label_names
 
 
-def label_id_2_label_name(output_mode, label_list, prob, ground_truth, ignore_index, selected_index, threshold=0.5):
+def label_id_2_label_name(
+        output_mode,
+        label_list,
+        prob,
+        ground_truth,
+        ignore_index,
+        selected_index,
+        threshold=0.5
+):
     '''
     convect label id to label name
     :param output_mode:
@@ -1079,6 +1156,63 @@ def writer_info_tb(tb_writer, logs, global_step, prefix=None):
             print("writer_info_tb NaN or Inf, Key-Value: %s=%s" % (key, value))
 
 
+def calc_detail_losses(
+        losses,
+        total_losses,
+        total_steps,
+        log_total_losses=None,
+        log_total_steps=None
+):
+    current_losses = {}
+    for cur_losses in losses:
+        for item1 in cur_losses.items():
+            key1 = item1[0]
+            if key1 not in total_losses:
+                total_losses[key1] = {}
+            if key1 not in current_losses:
+                current_losses[key1] = {}
+            if key1 not in total_steps:
+                total_steps[key1] = {}
+            if log_total_losses is not None:
+                if key1 not in log_total_losses:
+                    log_total_losses[key1] = {}
+            if log_total_steps is not None:
+                if key1 not in log_total_steps:
+                    log_total_steps[key1] = {}
+            for item2 in item1[1].items():
+                key2 = item2[0]
+                if item2[1] is not None:
+                    if torch.is_tensor(item2[1]):
+                        v = item2[1].item()
+                    else:
+                        v = item2[1]
+                    if key2 not in total_losses[key1]:
+                        total_losses[key1][key2] = v
+                    else:
+                        total_losses[key1][key2] += v
+                    if log_total_losses is not None:
+                        if key2 not in log_total_losses[key1]:
+                            log_total_losses[key1][key2] = v
+                        else:
+                            log_total_losses[key1][key2] += v
+                    if key2 not in current_losses[key1]:
+                        current_losses[key1][key2] = v
+                    else:
+                        current_losses[key1][key2] += v
+                    if v > 0.0:
+                        if key2 not in total_steps[key1]:
+                            total_steps[key1][key2] = 1
+                        else:
+                            total_steps[key1][key2] += 1
+                        if log_total_steps is not None:
+                            if key2 not in log_total_steps[key1]:
+                                log_total_steps[key1][key2] = 1
+                            else:
+                                log_total_steps[key1][key2] += 1
+
+    return current_losses, total_losses, total_steps, log_total_losses, log_total_steps
+
+
 def calc_avg_loss(total_losses, nb_steps, total_steps=None):
     '''
     计算多种loss得平均loss与总loss
@@ -1161,6 +1295,8 @@ def seq_type_is_match_seq(seq_type, seq):
         if ch in {"A", "T", "C", "G", "U", "N"}:
             atcgu_num += 1
 
+    if len(seq) > 0 and seq[0] == "M" and seq_type == "prot":
+        return True
     is_gene = False
     if total_num == atcgu_num or atcgu_num >= 0.8 * total_num:
         is_gene = True
@@ -1210,6 +1346,30 @@ def gene_seq_replace(seq):
         elif ch in ["G", "g"]:
             new_seq += "4"
         else: # unknown
+            new_seq += "5"
+    return new_seq
+
+
+def gene_seq_replace_eval_mask(seq):
+    '''
+    Nucleic acid （gene replace: A->1, U/T->2, C->3, G->4, N->5
+    :param seq:
+    :return:
+    '''
+    new_seq = ""
+    for ch in seq:
+        if ch in ["A", "a"]:
+            new_seq += "1"
+        elif ch in ["T", "U", "t", "u"]:
+            new_seq += "2"
+        elif ch in ["C", "c"]:
+            new_seq += "3"
+        elif ch in ["G", "g"]:
+            new_seq += "4"
+        elif ch in ['-', '_']:
+            new_seq += '-'
+        else:
+            # unknown
             new_seq += "5"
     return new_seq
 
@@ -1473,7 +1633,7 @@ def calc_eval_test_loss(losses, total_losses, total_steps, total_loss):
                         current_losses[key1][key2] = v
                     else:
                         current_losses[key1][key2] += v
-                    if v > 1e-12:
+                    if v > 0.0:
                         if key2 not in total_steps[key1]:
                             total_steps[key1][key2] = 1
                         else:
@@ -1501,7 +1661,13 @@ def print_shape(item):
         print("shape:", item.shape)
 
 
-def print_batch(value, key=None, debug_path=None, wfp=None, local_rank=-1):
+def print_batch(
+        value,
+        key=None,
+        debug_path=None,
+        wfp=None,
+        local_rank=-1
+):
     '''
     print a batch
     :param value:
@@ -1713,7 +1879,13 @@ def dict_add(raw, new):
     raw.update(update_dict)
 
 
-def write_processed_sample_ids(dataset_type, time_str, sample_ids, epoch, local_rank):
+def write_processed_sample_ids(
+        dataset_type,
+        time_str,
+        sample_ids,
+        epoch,
+        local_rank
+):
     """
     将已处理的样本id写入，便于恢复现场
     :param dataset_type: 数据集类型，train，validation，
@@ -1779,6 +1951,21 @@ def calc_emb_filename_by_seq_id(seq_id, embedding_type):
     else:
         emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_") + ".pt"
     return emb_filename
+
+
+def topk_values_indices(matrix, topk):
+    assert matrix.ndim == 2
+    # Sort each row and get the indices
+    sorted_indices = np.argsort(-matrix, axis=1)
+
+    # Get the indices of the top 2 values
+    topk_indices = sorted_indices[:, :topk]
+
+    # Extract the top k values using advanced indexing
+    rows = np.arange(matrix.shape[0])[:, None]
+    topk_values = matrix[rows, topk_indices]
+
+    return topk_values, topk_indices
 
 
 def download_file(url, local_filename):

@@ -15,28 +15,29 @@ sys.path.append(".")
 sys.path.append("../")
 sys.path.append("../src")
 try:
-    from utils import gene_seq_replace, re_positional, gene_seq_replace_re
+    from utils import gene_seq_replace, re_positional, gene_seq_replace_re, gene_seq_replace_eval_mask
 except ImportError:
-    from src.utils import gene_seq_replace, re_positional, gene_seq_replace_re
+    from src.utils import gene_seq_replace, re_positional, gene_seq_replace_re, gene_seq_replace_eval_mask
 
 
 class Encoder(object):
-    def __init__(self,
-                 config,
-                 tokenizer,
-                 tokenization,
-                 no_token_type_embeddings,
-                 non_ignore,
-                 ignore_index,
-                 model_type,
-                 special_tokens=["[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"],
-                 max_coord_x=None,
-                 min_coord_x=None,
-                 max_coord_y=None,
-                 min_coord_y=None,
-                 max_coord_z=None,
-                 min_coord_z=None
-                 ):
+    def __init__(
+            self,
+            config,
+            tokenizer,
+            tokenization,
+            no_token_type_embeddings,
+            non_ignore,
+            ignore_index,
+            model_type,
+            special_tokens=["[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"],
+            max_coord_x=None,
+            min_coord_x=None,
+            max_coord_y=None,
+            min_coord_y=None,
+            max_coord_z=None,
+            min_coord_z=None
+    ):
         self.config = config
 
         self.tokenization = tokenization
@@ -61,22 +62,26 @@ class Encoder(object):
         seq = seq.upper()
         if self.tokenization:
             # 重定义位置
-            tokens, label = re_positional(seq,
-                                          None,
-                                          self.tokenizer,
-                                          self.special_tokens,
-                                          label,
-                                          ignore_index=self.ignore_index)
+            tokens, label = re_positional(
+                seq,
+                None,
+                self.tokenizer,
+                self.special_tokens,
+                label,
+                ignore_index=self.ignore_index
+            )
             # seq to seq ids
-            encoding = self.tokenizer.encode_plus(text=seq,
-                                                  text_pair=None,
-                                                  add_special_tokens=self.add_special_tokens,
-                                                  padding="max_length",
-                                                  max_length=self.max_length,
-                                                  return_attention_mask=True,
-                                                  return_token_type_ids=not self.no_token_type_embeddings,
-                                                  return_length=False,
-                                                  truncation=True)
+            encoding = self.tokenizer.encode_plus(
+                text=seq,
+                text_pair=None,
+                add_special_tokens=self.add_special_tokens,
+                padding="max_length",
+                max_length=self.max_length,
+                return_attention_mask=True,
+                return_token_type_ids=not self.no_token_type_embeddings,
+                return_length=False,
+                truncation=True
+            )
             L = sum(encoding["attention_mask"])
         else:
             cur_max_length = self.max_length
@@ -93,19 +98,27 @@ class Encoder(object):
             else:
                 L = len(seq) + 2 if self.add_special_tokens else len(seq)
             seq = " ".join(list(seq))
-            encoding = self.tokenizer.encode_plus(text=seq,
-                                                  text_pair=None,
-                                                  add_special_tokens=self.add_special_tokens,
-                                                  padding="max_length",
-                                                  max_length=self.max_length,
-                                                  return_attention_mask=True,
-                                                  return_token_type_ids=not self.no_token_type_embeddings,
-                                                  return_length=False,
-                                                  truncation=True)
+            encoding = self.tokenizer.encode_plus(
+                text=seq,
+                text_pair=None,
+                add_special_tokens=self.add_special_tokens,
+                padding="max_length",
+                max_length=self.max_length,
+                return_attention_mask=True,
+                return_token_type_ids=not self.no_token_type_embeddings,
+                return_length=False,
+                truncation=True
+            )
 
         if label:
             encoding["labels"] = {}
-            encoding["labels"].update(self.__parse_label__(pretrain_task_level_type, label, L, label_size_dict, output_mode_dict))
+            encoding["labels"].update(self.__parse_label__(
+                pretrain_task_level_type,
+                label,
+                L,
+                label_size_dict,
+                output_mode_dict
+            ))
         return encoding, L
 
     def __encode_char__(self, pretrain_task_level_type, seq, label, label_size_dict, output_mode_dict):
@@ -131,7 +144,13 @@ class Encoder(object):
             encoding["seq"] = seq
         if label:
             encoding["labels"] = {}
-            encoding["labels"].update(self.__parse_label__(pretrain_task_level_type, label, L, label_size_dict, output_mode_dict))
+            encoding["labels"].update(self.__parse_label__(
+                pretrain_task_level_type,
+                label,
+                L,
+                label_size_dict,
+                output_mode_dict
+            ))
         return encoding, L
 
     def __parse_label__(self, pretrain_task_level_type, label, seq_length, label_size_dict, output_mode_dict):
@@ -378,18 +397,34 @@ class Encoder(object):
 
         return res
 
-    def encode_pair(self,
-                    pretrain_task_level_type,
-                    gene_id,
-                    gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict,
-                    prot_id,
-                    prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict,
-                    pair_label, pair_label_size_dict, pair_output_mode_dict):
+    def encode_pair(
+            self,
+            pretrain_task_level_type,
+            gene_id,
+            gene_seq,
+            gene_label,
+            gene_label_size_dict,
+            gene_output_mode_dict,
+            prot_id,
+            prot_seq,
+            prot_label,
+            prot_label_size_dict,
+            prot_output_mode_dict,
+            pair_label,
+            pair_label_size_dict,
+            pair_output_mode_dict
+    ):
         res = {}
         sample_id = ""
         if gene_seq:
             gene_seq = gene_seq_replace(gene_seq)
-            gene_encode, gene_length = self.__encode__(pretrain_task_level_type, gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict)
+            gene_encode, gene_length = self.__encode__(
+                pretrain_task_level_type,
+                gene_seq,
+                gene_label,
+                gene_label_size_dict,
+                gene_output_mode_dict
+            )
             if gene_encode:
                 res.update({
                     "gene_id": gene_id,
@@ -397,7 +432,13 @@ class Encoder(object):
                 })
                 sample_id = gene_id
         if prot_seq:
-            prot_encode, prot_length = self.__encode__(pretrain_task_level_type, prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict)
+            prot_encode, prot_length = self.__encode__(
+                pretrain_task_level_type,
+                prot_seq,
+                prot_label,
+                prot_label_size_dict,
+                prot_output_mode_dict
+            )
             if not self.no_token_type_embeddings:
                 prot_encode["token_type_ids"] = [1] * len(prot_encode["attention_mask"])
             if prot_encode:
@@ -440,26 +481,39 @@ class Encoder(object):
             })
         return res
 
-    def encode_single(self,
-                      pretrain_task_level_type,
-                      obj_id,
-                      obj_type,
-                      obj_seq,
-                      obj_label,
-                      label_size_dict,
-                      output_mode_dict
-                      ):
+    def encode_single(
+            self,
+            pretrain_task_level_type,
+            obj_id,
+            obj_type,
+            obj_seq,
+            obj_label,
+            label_size_dict,
+            output_mode_dict
+    ):
         res = {}
         if obj_type == "gene":
             obj_seq = gene_seq_replace(obj_seq)
-            gene_encode, gene_length = self.__encode__(pretrain_task_level_type, obj_seq, obj_label, label_size_dict, output_mode_dict)
+            gene_encode, gene_length = self.__encode__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
             if gene_encode:
                 res.update({
                     "gene_id": obj_id,
                     "gene": gene_encode
                 })
         else:
-            prot_encode, prot_length = self.__encode__(pretrain_task_level_type, obj_seq, obj_label, label_size_dict, output_mode_dict)
+            prot_encode, prot_length = self.__encode__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
             if not self.no_token_type_embeddings:
                 prot_encode["token_type_ids"] = [1] * len(prot_encode["attention_mask"])
             if prot_encode:
@@ -470,18 +524,26 @@ class Encoder(object):
         res["sample_id"] = obj_id
         return res
 
-    def encode_char_single(self,
-                           pretrain_task_level_type,
-                           obj_id,
-                           obj_type,
-                           obj_seq,
-                           obj_label,
-                           label_size_dict,
-                           output_mode_dict):
+    def encode_char_single(
+            self,
+            pretrain_task_level_type,
+            obj_id,
+            obj_type,
+            obj_seq,
+            obj_label,
+            label_size_dict,
+            output_mode_dict
+    ):
         res = {}
         if obj_type == "gene":
             obj_seq = gene_seq_replace(obj_seq)
-            gene_encode, gene_length = self.__encode_char__(pretrain_task_level_type, obj_seq, obj_label, label_size_dict, output_mode_dict)
+            gene_encode, gene_length = self.__encode_char__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
             if gene_encode:
                 res.update({
                     "gene_id": obj_id,
@@ -490,7 +552,13 @@ class Encoder(object):
                     "gene_labels": gene_encode["labels"],
                 })
         else:
-            prot_encode, prot_length = self.__encode_char__(pretrain_task_level_type, obj_seq, obj_label, label_size_dict, output_mode_dict)
+            prot_encode, prot_length = self.__encode_char__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
             if prot_encode:
                 res.update({
                     "prot_id": obj_id,
@@ -501,18 +569,34 @@ class Encoder(object):
         res["sample_id"] = obj_id
         return res
 
-    def encode_char_pair(self,
-                         pretrain_task_level_type,
-                         gene_id,
-                         gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict,
-                         prot_id,
-                         prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict,
-                         pair_label, pair_label_size_dict, pair_output_mode_dict):
+    def encode_char_pair(
+            self,
+            pretrain_task_level_type,
+            gene_id,
+            gene_seq,
+            gene_label,
+            gene_label_size_dict,
+            gene_output_mode_dict,
+            prot_id,
+            prot_seq,
+            prot_label,
+            prot_label_size_dict,
+            prot_output_mode_dict,
+            pair_label,
+            pair_label_size_dict,
+            pair_output_mode_dict
+    ):
         res = {}
         sample_id = ""
         if gene_seq:
             gene_seq = gene_seq_replace(gene_seq)
-            gene_encode, gene_length = self.__encode_char__(pretrain_task_level_type, gene_seq, gene_label, gene_label_size_dict, gene_output_mode_dict)
+            gene_encode, gene_length = self.__encode_char__(
+                pretrain_task_level_type,
+                gene_seq,
+                gene_label,
+                gene_label_size_dict,
+                gene_output_mode_dict
+            )
             if gene_encode:
                 res.update({
                     "gene_id": gene_id,
@@ -522,7 +606,13 @@ class Encoder(object):
                 })
                 sample_id = gene_id
         if prot_seq:
-            prot_encode, prot_length = self.__encode_char__(pretrain_task_level_type, prot_seq, prot_label, prot_label_size_dict, prot_output_mode_dict)
+            prot_encode, prot_length = self.__encode_char__(
+                pretrain_task_level_type,
+                prot_seq,
+                prot_label,
+                prot_label_size_dict,
+                prot_output_mode_dict
+            )
             if prot_encode:
                 res.update({
                     "prot_id": prot_id,
@@ -562,5 +652,88 @@ class Encoder(object):
             res.update({
                 "pair": pair
             })
+        return res
+
+    def __encode_char_for_eval_mask__(
+            self,
+            pretrain_task_level_type,
+            seq,
+            label,
+            label_size_dict,
+            output_mode_dict
+    ):
+        encoding = {}
+        seq = seq.upper()
+        encoding["ori_seq"] = seq
+        if self.tokenization:
+            raise Exception("not support tokenization")
+        else:
+            cur_max_length = self.max_length
+            if self.add_special_tokens:
+                cur_max_length = cur_max_length - 2
+            if len(seq) > cur_max_length:
+                if self.truncation == "right":
+                    seq = seq[:cur_max_length]
+                elif self.truncation == "left":
+                    seq = seq[-cur_max_length:]
+                else:
+                    raise Exception("truncation = %s" % self.truncation)
+                L = cur_max_length + 2 if self.add_special_tokens else cur_max_length
+            else:
+                L = len(seq) + 2 if self.add_special_tokens else len(seq)
+            encoding["seq"] = seq
+        if label:
+            encoding["labels"] = label
+        return encoding, L
+
+    def encode_char_single_for_eval_mask(
+            self,
+            pretrain_task_level_type,
+            obj_id,
+            obj_type,
+            obj_seq,
+            obj_label,
+            label_size_dict,
+            output_mode_dict
+    ):
+        res = {}
+        if obj_type == "gene":
+            # -符号不变，因为当作是Mask，变成ids需要变为Mask的id
+            obj_seq = gene_seq_replace_eval_mask(obj_seq)
+            gene_encode, gene_length = self.__encode_char_for_eval_mask__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
+            if gene_encode:
+                # 替换
+                if "token_level" in gene_encode["labels"] and "gene_mask" in gene_encode["labels"]["token_level"]:
+                    gene_encode["labels"]["token_level"]["gene_mask"] = gene_seq_replace_eval_mask(
+                        gene_encode["labels"]["token_level"]["gene_mask"]
+                    )
+                res.update({
+                    "gene_id": obj_id,
+                    "gene_ori_seq": gene_encode["ori_seq"],
+                    "gene_seq": gene_encode["seq"],
+                    "gene_labels": gene_encode["labels"],
+                })
+        else:
+            prot_encode, prot_length = self.__encode_char_for_eval_mask__(
+                pretrain_task_level_type,
+                obj_seq,
+                obj_label,
+                label_size_dict,
+                output_mode_dict
+            )
+            if prot_encode:
+                res.update({
+                    "prot_id": obj_id,
+                    "prot_ori_seq": prot_encode["ori_seq"],
+                    "prot_seq": prot_encode["seq"],
+                    "prot_labels": prot_encode["labels"],
+                })
+        res["sample_id"] = obj_id
         return res
 

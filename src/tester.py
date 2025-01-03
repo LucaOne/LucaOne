@@ -10,60 +10,70 @@
 @file: tester
 @desc: tester for LucaOne
 '''
+import os
 import sys, torch
 sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
 try:
-    from utils import to_device, concat_output, calc_avg_loss, calc_eval_test_loss, process_outputs, eval_metrics, print_shape, metrics_merge, print_batch
-    from multi_files_stream_dataloader import *
+    from utils import to_device, concat_output, calc_avg_loss, calc_eval_test_loss, \
+        process_outputs, eval_metrics, print_shape, metrics_merge, print_batch, writer_info_tb
+    from multi_files_stream_dataloader import MultiFilesStreamLoader
     from common.multi_label_metrics import metrics_multi_label
     from common.metrics import metrics_multi_class, metrics_binary
 except ImportError:
-    from src.utils import to_device, concat_output, calc_avg_loss, calc_eval_test_loss, process_outputs, eval_metrics, print_shape, metrics_merge, print_batch
-    from src.multi_files_stream_dataloader import *
+    from src.utils import to_device, concat_output, calc_avg_loss, calc_eval_test_loss,\
+        process_outputs, eval_metrics, print_shape, metrics_merge, print_batch, writer_info_tb
+    from src.multi_files_stream_dataloader import MultiFilesStreamLoader
     from src.common.multi_label_metrics import metrics_multi_label
     from src.common.metrics import metrics_multi_class, metrics_binary
 
 
-def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", log_fp=None):
-    '''
-    evaluation
+def test(args, model, label_list, parse_row_func, batch_data_func, global_step, prefix="", tb_writer=None, log_fp=None):
+    """
+    evaluation on test set
     :param args:
     :param model:
     :param label_list:
     :param parse_row_func:
     :param batch_data_func:
+    :param global_step
     :param prefix:
+    :param tb_writer
     :param log_fp:
     :return:
-    '''
+    """
     if hasattr(model, "module"):
         model = model.module
     save_output_dir = os.path.join(args.output_dir, prefix)
     print("\nTesting information dir: ", save_output_dir)
     if not os.path.exists(save_output_dir) and args.local_rank in [-1, 0]:
         os.makedirs(save_output_dir)
-    test_dataloader = MultiFilesStreamLoader(args.test_data_dir,
-                                             args.per_gpu_eval_batch_size,
-                                             args.buffer_size,
-                                             parse_row_func=parse_row_func,
-                                             batch_data_func=batch_data_func,
-                                             pretrain_task_level_type=args.pretrain_task_level_type,
-                                             gene_label_size_dict=args.gene_label_size_dict,
-                                             gene_output_mode_dict=args.gene_output_mode_dict,
-                                             prot_label_size_dict=args.prot_label_size_dict,
-                                             prot_output_mode_dict=args.prot_output_mode_dict,
-                                             pair_label_size_dict=args.pair_label_size_dict,
-                                             pair_output_mode_dict=args.pair_output_mode_dict,
-                                             header=True,
-                                             shuffle=False)
+    test_dataloader = MultiFilesStreamLoader(
+        args.test_data_dir,
+        args.per_gpu_eval_batch_size,
+        args.buffer_size,
+        parse_row_func=parse_row_func,
+        batch_data_func=batch_data_func,
+        pretrain_task_level_type=args.pretrain_task_level_type,
+        gene_label_size_dict=args.gene_label_size_dict,
+        gene_output_mode_dict=args.gene_output_mode_dict,
+        prot_label_size_dict=args.prot_label_size_dict,
+        prot_output_mode_dict=args.prot_output_mode_dict,
+        pair_label_size_dict=args.pair_label_size_dict,
+        pair_output_mode_dict=args.pair_output_mode_dict,
+        dataset_type="test",
+        header=True,
+        shuffle=False
+    )
     # Testing
     if log_fp:
         log_fp.write("***** Running testing {} *****\n".format(prefix))
         log_fp.write("Test Dataset Instantaneous batch size per GPU = %d\n" % args.per_gpu_eval_batch_size)
         log_fp.write("#" * 50 + "\n")
         log_fp.flush()
+
+    dataset_name = "test"
 
     nb_steps = 0
     # loss
@@ -98,12 +108,14 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
             batch, cur_sample_num = to_device(args.device, batch)
             done_sample_num += cur_sample_num
             try:
-                output = model(**batch,
-                               output_keys=args.gene_output_keys,
-                               output_keys_b=args.prot_output_keys,
-                               pair_output_keys=args.pair_output_keys,
-                               output_attentions=True,
-                               output_hidden_states=True)
+                output = model(
+                    **batch,
+                    output_keys=args.gene_output_keys,
+                    output_keys_b=args.prot_output_keys,
+                    pair_output_keys=args.pair_output_keys,
+                    output_attentions=True,
+                    output_hidden_states=True
+                )
             except Exception as e:
                 exception_path = "../exception/%s" % args.time_str
                 if not os.path.exists(exception_path):
@@ -153,24 +165,34 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
             if args.do_metrics:
                 outputs_idx = 0
                 if "labels" in batch:
-
-                    truths, preds = process_outputs(args.output_mode, batch["labels"],
-                                                    outputs[outputs_idx], truths, preds,
-                                                    ignore_index=args.ignore_index,
-                                                    keep_seq=False)
+                    truths, preds = process_outputs(
+                        args.output_mode, batch["labels"],
+                        outputs[outputs_idx], truths, preds,
+                        ignore_index=args.ignore_index,
+                        keep_seq=False
+                    )
                     outputs_idx += 1
                 if "labels_b" in batch:
-                    truths_b, preds_b = process_outputs(args.output_mode, batch["labels_b"],
-                                                        outputs[outputs_idx], truths_b, preds_b,
-                                                        ignore_index=args.ignore_index,
-                                                        keep_seq=False)
+                    truths_b, preds_b = process_outputs(
+                        args.output_mode, batch["labels_b"],
+                        outputs[outputs_idx], truths_b, preds_b,
+                        ignore_index=args.ignore_index,
+                        keep_seq=False
+                    )
                     outputs_idx += 1
                 if "pair_label" in batch:
-                    pair_truths, pair_preds = process_outputs(args.output_mode, batch["pair_label"],
-                                                              outputs[outputs_idx], pair_truths, pair_preds,
-                                                              ignore_index=args.ignore_index, keep_seq=False)
+                    pair_truths, pair_preds = process_outputs(
+                        args.output_mode, batch["pair_label"],
+                        outputs[outputs_idx], pair_truths, pair_preds,
+                        ignore_index=args.ignore_index,
+                        keep_seq=False
+                    )
 
-    all_result, loss, loss_detail = calc_avg_loss(total_losses, nb_steps, total_steps=total_steps)
+    all_result, merged_loss, loss_detail = calc_avg_loss(
+        total_losses,
+        nb_steps,
+        total_steps=total_steps
+    )
     if args.do_metrics:
         if truths is not None and len(truths) > 0:
             results = eval_metrics(args.output_mode, truths, preds, threshold=0.5)
@@ -182,10 +204,37 @@ def test(args, model, label_list, parse_row_func, batch_data_func, prefix="", lo
             pair_results = eval_metrics(args.output_mode, pair_truths, pair_preds, threshold=0.5)
             all_result = metrics_merge(pair_results, all_result)
 
-    with open(os.path.join(save_output_dir, "test_metrics.txt"), "w") as writer:
-        writer.write("***** Test results {} *****\n".format(prefix))
-        writer.write("Test average loss = %0.6f\n" % loss)
-        writer.write("Test detail loss = %s\n" % str(loss_detail))
+    writer_info_tb(
+        tb_writer, {
+            "done_sample_num": done_sample_num
+        },
+        global_step,
+        prefix=dataset_name
+    )
+    writer_info_tb(
+        tb_writer, {
+            "merged_loss": merged_loss
+        },
+        global_step,
+        prefix=dataset_name
+    )
+    writer_info_tb(
+        tb_writer,
+        loss_detail,
+        global_step,
+        prefix=dataset_name + "_avg_loss"
+    )
+    writer_info_tb(
+        tb_writer,
+        total_steps,
+        global_step,
+        prefix=dataset_name + "_total_steps"
+    )
+
+    with open(os.path.join(save_output_dir, "eval_%s_checkpoints-step%d_metrics.txt" % (dataset_name, global_step)), "w") as writer:
+        writer.write("***** Eval results %s on Checkpoints %d *****\n" % (dataset_name, global_step))
+        writer.write("%s average merged_loss = %0.6f\n" % (dataset_name, merged_loss))
+        writer.write("%s detail loss = %s\n" % (dataset_name, str(loss_detail)))
         for key in sorted(all_result.keys()):
             writer.write("%s = %s\n" % (key, str(all_result[key])))
 

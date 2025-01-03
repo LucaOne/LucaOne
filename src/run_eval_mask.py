@@ -8,7 +8,7 @@
 @datetime: 2023/4/26 14:48
 @project: LucaOne
 @file: run.py
-@desc: main for LucaOne
+@desc: classifier_dropout -> classifier_dropout_prob
 '''
 import os
 import sys, json
@@ -16,10 +16,8 @@ import datetime
 import argparse
 from collections import OrderedDict
 import torch.distributed as dist
-from datasets import load_dataset
+from torch.utils.tensorboard import SummaryWriter
 from transformers import AutoTokenizer, PretrainedConfig
-from torch.utils.data.dataloader import DataLoader
-from datasets.distributed import split_dataset_by_node
 sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
@@ -28,28 +26,28 @@ try:
     from encoder import Encoder
     from utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from multi_files_stream_dataloader import MultiFilesStreamLoader
-    from trainer import train, train_continue
     from models.lucaone_gplm import LucaGPLM
     from models.alphabet import Alphabet
     from models.lucaone_gplm_config import LucaGPLMConfig
-    from batch_converter import BatchConverter
+    from batch_converter_for_eval_mask import BatchConverter
+    from do_eval_mask import do_eval_mask
 except ImportError as e:
     from src.data_collator import *
     from src.encoder import Encoder
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from src.multi_files_stream_dataloader import MultiFilesStreamLoader
-    from src.trainer import train, train_continue
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.alphabet import Alphabet
     from src.models.lucaone_gplm_config import LucaGPLMConfig
-    from src.batch_converter import BatchConverter
+    from src.batch_converter_for_eval_mask import BatchConverter
+    from src.do_eval_mask import do_eval_mask
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ['TRANSFORMERS_NO_ADVISORY_WARNINGS'] = 'true'
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:1024'
 
 
 def get_args():
-    parser = argparse.ArgumentParser(description='LucaOne/LucaGPLM')
+    parser = argparse.ArgumentParser(description='LucaOne/LucaGPLM Eval Mask')
     # for logging
     parser.add_argument("--tb_log_dir", type=str, default=None, required=True,
                         help="TensorBoard log every X updates steps.")
@@ -58,37 +56,55 @@ def get_args():
     # for model
     # modeling time str
     parser.add_argument("--time_str", type=str, default=None, help="the modeling time str")
-    parser.add_argument("--hidden_size", type=int, default=None, required=True, help="the hidden size (embedding vector size)")
+    parser.add_argument("--hidden_size", type=int, default=None, required=True, help="hidden size(embedding vector size)")
     parser.add_argument("--num_attention_heads", type=int, default=None, required=True, help="num attention heads")
     parser.add_argument("--num_hidden_layers", type=int, default=None, required=True, help="num hidden layers")
 
     # for input sequence
-    parser.add_argument("--max_length", default=1280, type=int, help="the max length of input sequence")
+    parser.add_argument("--max_length", default=10240, type=int, help="the max length of input sequence")
     parser.add_argument('--do_lower_case', action='store_true', help='whether to lower')
     parser.add_argument("--tokenization", action="store_true", help="whether to use tokenization")
     parser.add_argument("--tokenizer_dir", default=None, type=str, help="the pretrained tokenizer info path(subword-level)")
     parser.add_argument("--vocab_path", default=None, type=str, help="vocab path(char-level)")
-    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end poistion([CLS], [SEP]) of the input sequence')
+    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end position([CLS], [SEP]) of the input sequence')
     parser.add_argument('--padding', default='right', type=str, choices=["right", "left"], help='padding side type')
     parser.add_argument('--truncation', default='right', type=str, choices=["right", "left"], help='truncation side type')
     parser.add_argument('--no_token_type_embeddings', action='store_true', help='whether no token type embeddings')
-    parser.add_argument('--no_position_embeddings', action='store_true', help='whether no token type embeddings')
+    parser.add_argument('--no_position_embeddings', action='store_true', help='whether not to use absolute position embeddings')
     parser.add_argument('--dropout_prob', default=0.1, type=float, help="dropout_prob")
 
     # pooling_type
-    parser.add_argument("--pooling_type", type=str, default=None,
-                        choices=["none", "sum", "max", "avg", "attention", "context_attention", "weighted_attention",
-                                 "value_attention", "transformer"],
-                        help="pooling type for encoder")
+    parser.add_argument(
+        "--pooling_type",
+        type=str,
+        default=None,
+        choices=[
+            "none",
+            "sum",
+            "max",
+            "avg",
+            "attention",
+            "context_attention",
+            "weighted_attention",
+            "value_attention",
+            "transformer"
+        ],
+        help="pooling type for encoder"
+    )
 
     # for model selection
-    parser.add_argument('--model_type', default="lucaone_gplm", type=str,
-                        choices=["lucaone_gplm"], help='the model type')
+    parser.add_argument(
+        '--model_type',
+        default="lucaone_longformer",
+        type=str,
+        choices=["lucaone_bert", "lucaone_longformer", "lucaone_bigbird", "lucaone_gplm"],
+        help='the model type'
+    )
     parser.add_argument('--model_config', type=str, default=None, help='the model config file path')
 
     # for dataset
-    parser.add_argument("--train_data_dir", default=None, type=str, required=True, help="the train dataset dir path.")
-    parser.add_argument("--dev_data_dir", default=None, type=str, required=True, help="the evaluation dataset dir path.")
+    parser.add_argument("--train_data_dir", default=None, type=str, help="the train dataset dir path.")
+    parser.add_argument("--dev_data_dir", default=None, type=str, help="the evaluation dataset dir path.")
     parser.add_argument("--test_data_dir", default=None, type=str, required=True, help="the test dataset dir path.")
 
     # for label list
@@ -160,7 +176,7 @@ def get_args():
                         choices=["binary_class", "multi_class", "multi_label", "regression"],
                         help="the output mode of gene-protein pair-level/trans task.")
 
-    # the loss info for the pretraining tasks
+    # the loss info for the pretrain tasks
     parser.add_argument("--ignore_index", type=int, default=-100, help="the ignore index.")
     parser.add_argument("--non_ignore", type=str, default=None, help="none ignore tasks.")
     parser.add_argument("--gene_mask_loss_type", type=str, default="cce",
@@ -246,50 +262,83 @@ def get_args():
                         help="whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit")
     parser.add_argument("--fp16_opt_level", type=str, default="O1",
                         help="for fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. See details at https://nvidia.github.io/apex/amp.html")
-    parser.add_argument("--per_gpu_train_batch_size", default=8, type=int, help="batch size per GPU/CPU for training.")
-    parser.add_argument("--per_gpu_eval_batch_size", default=8, type=int, help="batch size per GPU/CPU for evaluation.")
-    parser.add_argument("--learning_rate", default=1e-4, type=float, help="the initial learning rate for Adam.")
-    parser.add_argument("--weight_decay", default=0.0, type=float, help="weight decay if we apply some.")
-    parser.add_argument("--decay_rate", default=0.9, type=float, help="weight decay of learning rate.")
-    parser.add_argument("--lr_update_steps", default=30000, type=int, help="weight decay of learning rate.")
-    parser.add_argument("--adam_epsilon", default=1e-8, type=float, help="epsilon for Adam optimizer.")
-    parser.add_argument("--max_grad_norm", default=1.0, type=float, help="max gradient norm.")
-    parser.add_argument("--num_train_epochs", default=20, type=int, help="total number of training epochs to perform.")
-    parser.add_argument("--max_steps", default=-1, type=int, help="set total number of training steps to perform.")
-    parser.add_argument("--warmup_steps", default=-1, type=int, help="linear warmup over warmup_steps.")
-    parser.add_argument("--beta1", default=0.9, type=float, help="Adamw beta1.")
+    parser.add_argument("--per_gpu_train_batch_size", default=8, type=int,
+                        help="batch size per GPU/CPU for training.")
+    parser.add_argument("--per_gpu_eval_batch_size", default=8, type=int,
+                        help="batch size per GPU/CPU for evaluation.")
+    parser.add_argument("--learning_rate", default=1e-4, type=float,
+                        help="the initial learning rate for Adam.")
+    parser.add_argument("--weight_decay", default=0.0, type=float,
+                        help="weight decay if we apply some.")
+    parser.add_argument("--decay_rate", default=0.9, type=float,
+                        help="weight decay of learning rate.")
+    parser.add_argument("--lr_update_steps", default=30000, type=int,
+                        help="weight decay of learning rate.")
+    parser.add_argument("--adam_epsilon", default=1e-8, type=float,
+                        help="epsilon for Adam optimizer.")
+    parser.add_argument("--max_grad_norm", default=1.0, type=float,
+                        help="max gradient norm.")
+    parser.add_argument("--num_train_epochs", default=20, type=int,
+                        help="total number of training epochs to perform.")
+    parser.add_argument("--max_steps", default=-1, type=int,
+                        help="set total number of training steps to perform.")
+    parser.add_argument("--warmup_steps", default=-1, type=int,
+                        help="linear warmup over warmup_steps.")
+    parser.add_argument("--beta1", default=0.9, type=float,
+                        help="Adamw beta1.")
     parser.add_argument("--beta2", default=0.98, type=float, help="Adamw beta2.")
-    parser.add_argument("--do_train", action="store_true", help="whether to run training.")
-    parser.add_argument("--do_eval", action="store_true", help="whether to run eval on the dev set.")
-    parser.add_argument("--do_test", action="store_true", help="whether to run predict on the test set.")
-    parser.add_argument("--do_metrics", action="store_true", help="whether to run eval metrics on the test set.")
-    parser.add_argument("--evaluate_during_training", action="store_true", help="where to evaluate during training.")
+    parser.add_argument("--do_train", action="store_true",
+                        help="whether to run training.")
+    parser.add_argument("--do_eval", action="store_true",
+                        help="whether to run eval on the dev set.")
+    parser.add_argument("--do_test", action="store_true",
+                        help="whether to run predict on the test set.")
+    parser.add_argument("--do_metrics", action="store_true",
+                        help="whether to run eval metrics on the test set.")
+    parser.add_argument("--evaluate_during_training", action="store_true",
+                        help="where to evaluate during training.")
     parser.add_argument("--best_metric_type", type=str, default="f1",
                         choices=["loss", "acc", "jaccard", "prec", "recall", "f1", "fmax", "roc_auc", "pr_auc"],
                         help="which metric for model selected")
-    parser.add_argument("--loss_logging_steps", type=int, default=100, help="Loss log every X updates steps.")
-    parser.add_argument("--logging_steps", type=int, default=10000, help="Log every X updates steps.")
-    parser.add_argument("--save_steps", type=int, default=10000, help="Save checkpoint every X updates steps.")
-    parser.add_argument("--gradient_accumulation_steps", type=int, default=1, help="gradient accumulation steps.")
-    parser.add_argument("--start_epoch", type=int, default=-1, help="the start epoch to eval.")
-    parser.add_argument("--scheduler_type", type=str, default="step", choices=["step", "epoch"], help="lr update scheduler type.")
+    parser.add_argument("--loss_logging_steps", type=int, default=100,
+                        help="Loss log every X updates steps.")
+    parser.add_argument("--logging_steps", type=int, default=10000,
+                        help="Log every X updates steps.")
+    parser.add_argument("--save_steps", type=int, default=10000,
+                        help="Save checkpoint every X updates steps.")
+    parser.add_argument("--gradient_accumulation_steps", type=int, default=1,
+                        help="gradient accumulation steps.")
+    parser.add_argument("--start_epoch", type=int, default=-1,
+                        help="the start epoch to eval.")
+    parser.add_argument("--scheduler_type", type=str, default="step", choices=["step", "epoch"],
+                        help="lr update scheduler type.")
 
     # for model save
-    parser.add_argument("--save_all", action="store_true", help="save all check-point")
-    parser.add_argument("--delete_old", action="store_true", help="delete old check-point")
-    parser.add_argument("--output_dir", default=None, type=str, required=True, help="the output dir path")
+    parser.add_argument("--save_all", action="store_true",
+                        help="save all check-point")
+    parser.add_argument("--delete_old", action="store_true",
+                        help="delete old check-point")
+    parser.add_argument("--output_dir", default=None, type=str, required=True,
+                        help="the output dir path")
 
     # for loss
     parser.add_argument("--multi_loss_strategy", default="manual_weight", type=str,
                         choices=["none", "manual_weight", "auto_weight", "dynamic_weight_average"],
                         help="multi-task loss fusion strategy")
-    parser.add_argument("--pos_weight", default=None, type=float, help="positive weight")
-    parser.add_argument("--gene_mask_weight", type=float, default=1.0, help="token-level/gene_mask task weight")
-    parser.add_argument("--prot_mask_weight", type=float, default=1.0, help="token-level/prot_mask task weight")
-    parser.add_argument("--gene_type_weight", type=float, default=1.0, help="gene span-level/gene_type task weight.")
-    parser.add_argument("--prot_homo_weight", type=float, default=1.0, help="protein span-level/prot_homo task weight.")
-    parser.add_argument("--prot_site_weight", type=float, default=1.0, help="protein span-level/prot_site task weight.")
-    parser.add_argument("--prot_domain_weight", type=float, default=1.0, help="protein span-level/prot_domain task weight.")
+    parser.add_argument("--pos_weight", default=None, type=float,
+                        help="positive weight")
+    parser.add_argument("--gene_mask_weight", type=float, default=1.0,
+                        help="token-level/gene_mask task weight")
+    parser.add_argument("--prot_mask_weight", type=float, default=1.0,
+                        help="token-level/prot_mask task weight")
+    parser.add_argument("--gene_type_weight", type=float, default=1.0,
+                        help="gene span-level/gene_type task weight.")
+    parser.add_argument("--prot_homo_weight", type=float, default=1.0,
+                        help="protein span-level/prot_homo task weight.")
+    parser.add_argument("--prot_site_weight", type=float, default=1.0,
+                        help="protein span-level/prot_site task weight.")
+    parser.add_argument("--prot_domain_weight", type=float, default=1.0,
+                        help="protein span-level/prot_domain task weight.")
     parser.add_argument("--gene_taxonomy_weight", type=float, default=1.0,
                         help="gene seq-level/gene_taxonomy task weight.")
     parser.add_argument("--prot_taxonomy_weight", type=float, default=1.0,
@@ -302,19 +351,31 @@ def get_args():
                         help="protein structure-level/prot_secondary task weight")
     parser.add_argument("--prot_contact_weight", type=float, default=1.0,
                         help="protein structure-level/prot_contact task weight")
-    parser.add_argument("--trans_weight", type=float, default=1.0, help="gene-protein pair-level/trans task weight")
+    parser.add_argument("--trans_weight", type=float, default=1.0,
+                        help="gene-protein pair-level/trans task weight")
 
     # pretrained model path
-    parser.add_argument("--model_dirpath", default=None, type=str, help="the pretrained model path")
+    parser.add_argument("--model_dirpath", default=None, type=str,
+                        help="the pretrained model path")
 
-    parser.add_argument("--no_token_dropout", action="store_true", help="whether not to token dropout")
-    parser.add_argument("--no_use_embed_layer_norm", action="store_true", help="whether not to use emb layer norm")
-    parser.add_argument("--no_use_last_layer_norm", action="store_true", help="whether not to use last layer norm")
-    parser.add_argument("--embed_scale", type=float, default=1.0, help="embed scale")
-    parser.add_argument("--pretrained_model_name", type=str, default=None, help="whether to use the pretrained model init parameters")
+    parser.add_argument("--no_token_dropout", action="store_true",
+                        help="whether not to token dropout")
+    parser.add_argument("--no_use_embed_layer_norm", action="store_true",
+                        help="whether not to use emb layer norm")
+    parser.add_argument("--no_use_last_layer_norm", action="store_true",
+                        help="whether not to use last layer norm")
+    parser.add_argument("--embed_scale", type=float, default=1.0,
+                        help="embed scale")
 
-    parser.add_argument("--processed_sample_cnt", default=1000000, type=int, help="processed how many samples to write sample ids")
-    parser.add_argument("--trained_checkpoint", default=None, type=int, help="the checkpoint of continue to pretraining")
+    parser.add_argument("--pretrained_model_name", type=str, default=None,
+                        help="pretrained_model_name")
+
+    parser.add_argument("--processed_sample_cnt", default=1000000, type=int,
+                        help="processed how many samples to write sample ids")
+    parser.add_argument("--trained_checkpoint", default=None, type=int,
+                        help="the checkpoint of continue to pretraining")
+    parser.add_argument("--trained_checkpoint_continue", default=None, type=int,
+                        help="the checkpoint of continue to pretraining")
     parser.add_argument("--trained_epoch", default=None, type=int,
                         help="the epoch of continue to pretraining")
     parser.add_argument("--removed_continue", action="store_true",
@@ -323,6 +384,19 @@ def get_args():
                         help="the global loss to continue training")
     parser.add_argument("--epoch_loss", default=0, type=float,
                         help="the epoch loss to continue training")
+
+    # eval all checkpoints
+    parser.add_argument("--all_checkpoints_dirpath", default=None, type=str,
+                        help="the pretrained checkpoints model path")
+    parser.add_argument("--all_checkpoints_part", default=None, type=str,
+                        help="the pretrained checkpoints part")
+    parser.add_argument("--eval_interval_step", default=400000, type=int,
+                        help="the pretrained checkpoints eval_interval_step")
+    parser.add_argument("--eval_min_step", default=0, type=int,
+                        help="the pretrained checkpoints eval_min_step")
+    parser.add_argument("--eval_max_step", default=20000000, type=int,
+                        help="the pretrained checkpoints eval_max_step")
+    parser.add_argument("--gpu_id", default=None, type=int, help="the used gpu index, -1 for cpu")
     input_args = parser.parse_args()
     return input_args
 
@@ -359,12 +433,14 @@ def check_args(args):
         assert args.tokenizer_dir is not None and os.path.exists(args.tokenizer_dir)
     else:
         assert args.vocab_path is not None and os.path.exists(args.vocab_path)
-    assert args.train_data_dir is not None and os.path.exists(args.train_data_dir)
+    # assert args.train_data_dir is not None and os.path.exists(args.train_data_dir)
     assert args.output_dir is not None
     assert args.model_config is not None and os.path.exists(args.model_config)
     if not hasattr(args, "time_str") or args.time_str is None:
         now = datetime.datetime.now()
         args.time_str = now.strftime('%Y%m%d%H%M%S')
+    print("model_dirpath: %s" % args.model_dirpath)
+    assert args.model_dirpath is not None and os.path.exists(args.model_dirpath)
     args.pretrain_task_level_type = list(args.pretrain_task_level_type.split(","))
     for v in args.pretrain_task_level_type:
         assert v in ["all", "seq2seq_level", "token_level", "span_level", "seq_level", "structure_level", "pair_level"]
@@ -663,6 +739,8 @@ def get_model(args):
 
     # create tokenizer
     if args.model_dirpath:
+        print("model_dirpath:")
+        print(args.model_dirpath)
         # load exists checkpoint
         tokenizer_dir = os.path.join(args.model_dirpath, "tokenizer")
         assert os.path.exists(tokenizer_dir)
@@ -798,7 +876,7 @@ def get_model(args):
     else:
         # create model
         model = model_class(model_config, args)
-    save_model_parameters(model, os.path.join(args.output_dir, "init_parameters"))
+   # save_model_parameters(model, os.path.join(args.output_dir, "init_parameters"))
     '''
     for name, param in model.named_parameters():
         if param.requires_grad:
@@ -909,15 +987,17 @@ def create_logger(args):
         # create the logs dir
         if not os.path.exists(args.log_dir):
             os.makedirs(args.log_dir)
-        log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
+        log_fp = open(os.path.join(args.log_dir, "logs.txt"), "a+")
         # create tensorboard logs dir
         if not os.path.exists(args.tb_log_dir):
             os.makedirs(args.tb_log_dir)
         for dataset_type in ["train", "dev", "test"]:
-            processed_samples_dir_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                                      "processed_samples",
-                                                      args.time_str,
-                                                      dataset_type)
+            processed_samples_dir_path = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "processed_samples",
+                args.time_str,
+                dataset_type
+            )
             if not os.path.exists(processed_samples_dir_path):
                 os.makedirs(processed_samples_dir_path)
         exception_path = "../exception/%s/" % args.time_str
@@ -938,9 +1018,10 @@ def create_device(args):
     :param args:
     :return:
     '''
-    if args.no_cuda or not torch.cuda.is_available():
+    if args.gpu_id == -1 or args.no_cuda or not torch.cuda.is_available():
         device = torch.device("cpu")
         args.n_gpu = 0
+        print("use cpu!")
     else:
         args.n_gpu = torch.cuda.device_count()
         if args.n_gpu > 1:
@@ -969,78 +1050,86 @@ def create_collator(args, tokenizer):
     if "whole_level" in args.pretrain_task_level_type:
         dcForWholeWordMask = DataCollatorForWholeWordMask(tokenizer)
     if "span_level" in args.pretrain_task_level_type or "all" in args.pretrain_task_level_type:
-        dcForTokenClassification = DataCollatorForTokenClassification(tokenizer,
-                                                                      padding="max_length",
-                                                                      max_length=args.max_length,
-                                                                      label_pad_token_id=args.ignore_index,
-                                                                      label_keys=["gene_type", "prot_homo", "prot_site", "prot_domain"],
-                                                                      multi_label={
-                                                                          "gene_type": args.output_mode["span_level"]["gene_type"] == "multi_label",
-                                                                          "prot_homo": args.output_mode["span_level"]["prot_homo"] == "multi_label",
-                                                                          "prot_site": args.output_mode["span_level"]["prot_site"] == "multi_label",
-                                                                          "prot_domain": args.output_mode["span_level"]["prot_domain"] == "multi_label"
-                                                                      },
-                                                                      label_num={
-                                                                          "gene_type": args.label_size["span_level"]["gene_type"],
-                                                                          "prot_homo": args.label_size["span_level"]["prot_homo"],
-                                                                          "prot_site": args.label_size["span_level"]["prot_site"],
-                                                                          "prot_domain": args.label_size["span_level"]["prot_domain"],
-                                                                      })
+        dcForTokenClassification = DataCollatorForTokenClassification(
+            tokenizer,
+            padding="max_length",
+            max_length=args.max_length,
+            label_pad_token_id=args.ignore_index,
+            label_keys=["gene_type", "prot_homo", "prot_site", "prot_domain"],
+            multi_label={
+                "gene_type": args.output_mode["span_level"]["gene_type"] == "multi_label",
+                "prot_homo": args.output_mode["span_level"]["prot_homo"] == "multi_label",
+                "prot_site": args.output_mode["span_level"]["prot_site"] == "multi_label",
+                "prot_domain": args.output_mode["span_level"]["prot_domain"] == "multi_label"
+            },
+            label_num={
+                "gene_type": args.label_size["span_level"]["gene_type"],
+                "prot_homo": args.label_size["span_level"]["prot_homo"],
+                "prot_site": args.label_size["span_level"]["prot_site"],
+                "prot_domain": args.label_size["span_level"]["prot_domain"],
+            }
+        )
     if "seq_level" in args.pretrain_task_level_type or "all" in args.pretrain_task_level_type:
-        dcForSequenceClassification = DataCollatorForSequenceClassification(tokenizer,
-                                                                            padding="max_length",
-                                                                            max_length=args.max_length,
-                                                                            label_keys=["gene_taxonomy",
-                                                                                        "prot_taxonomy",
-                                                                                        "prot_keyword"],
-                                                                            multi_label={
-                                                                                "gene_taxonomy":
-                                                                                    args.output_mode["seq_level"]["gene_taxonomy"] == "multi_label",
-                                                                                "prot_taxonomy":
-                                                                                    args.output_mode["seq_level"]["prot_taxonomy"] == "multi_label",
-                                                                                "prot_keyword":
-                                                                                    args.output_mode["seq_level"]["prot_keyword"] == "multi_label"
-                                                                            },
-                                                                            label_num={
-                                                                                "gene_taxonomy":
-                                                                                    args.label_size["seq_level"]["gene_taxonomy"],
-                                                                                "prot_taxonomy":
-                                                                                    args.label_size["seq_level"]["prot_taxonomy"],
-                                                                                "prot_keyword":
-                                                                                    args.label_size["seq_level"]["prot_keyword"]
-                                                                            })
+        dcForSequenceClassification = DataCollatorForSequenceClassification(
+            tokenizer,
+            padding="max_length",
+            max_length=args.max_length,
+            label_keys=["gene_taxonomy",
+                        "prot_taxonomy",
+                        "prot_keyword"],
+            multi_label={
+                "gene_taxonomy":
+                    args.output_mode["seq_level"]["gene_taxonomy"] == "multi_label",
+                "prot_taxonomy":
+                    args.output_mode["seq_level"]["prot_taxonomy"] == "multi_label",
+                "prot_keyword":
+                    args.output_mode["seq_level"]["prot_keyword"] == "multi_label"
+            },
+            label_num={
+                "gene_taxonomy":
+                    args.label_size["seq_level"]["gene_taxonomy"],
+                "prot_taxonomy":
+                    args.label_size["seq_level"]["prot_taxonomy"],
+                "prot_keyword":
+                    args.label_size["seq_level"]["prot_keyword"]
+            }
+        )
     if "structure_level" in args.pretrain_task_level_type or "all" in args.pretrain_task_level_type:
-        dcForStructureRegression = DataCollatorForStructureRegression(tokenizer,
-                                                                      padding="max_length",
-                                                                      max_length=args.max_length,
-                                                                      label_keys=["prot_structure", "prot_secondary", "prot_contact"],
-                                                                      multi_label={
-                                                                          "prot_structure":
-                                                                              args.output_mode["structure_level"]["prot_structure"] == "multi_label",
-                                                                          "prot_secondary":
-                                                                              args.output_mode["structure_level"]["prot_secondary"] == "multi_label",
-                                                                          "prot_contact":
-                                                                              args.output_mode["structure_level"]["prot_contact"] == "multi_label"
-                                                                      },
-                                                                      label_num={
-                                                                          "prot_structure":
-                                                                              args.label_size["structure_level"]["prot_structure"],
-                                                                          "prot_secondary":
-                                                                              args.label_size["structure_level"]["prot_secondary"],
-                                                                          "prot_contact":
-                                                                              args.label_size["structure_level"]["prot_contact"]
-                                                                      })
+        dcForStructureRegression = DataCollatorForStructureRegression(
+            tokenizer,
+            padding="max_length",
+            max_length=args.max_length,
+            label_keys=["prot_structure", "prot_secondary", "prot_contact"],
+            multi_label={
+                "prot_structure":
+                    args.output_mode["structure_level"]["prot_structure"] == "multi_label",
+                "prot_secondary":
+                    args.output_mode["structure_level"]["prot_secondary"] == "multi_label",
+                "prot_contact":
+                    args.output_mode["structure_level"]["prot_contact"] == "multi_label"
+            },
+            label_num={
+                "prot_structure":
+                    args.label_size["structure_level"]["prot_structure"],
+                "prot_secondary":
+                    args.label_size["structure_level"]["prot_secondary"],
+                "prot_contact":
+                    args.label_size["structure_level"]["prot_contact"]
+            }
+        )
     if "pair_level" in args.pretrain_task_level_type or "all" in args.pretrain_task_level_type:
-        dcForPairClassification = DataCollatorForPairClassification(tokenizer,
-                                                                    padding="max_length",
-                                                                    max_length=args.max_length,
-                                                                    label_keys=["trans"],
-                                                                    multi_label={
-                                                                        "trans": args.output_mode["pair_level"]["trans"] == "multi_label"
-                                                                    },
-                                                                    label_num={
-                                                                        "trans": args.label_size["pair_level"]["trans"]
-                                                                    })
+        dcForPairClassification = DataCollatorForPairClassification(
+            tokenizer,
+            padding="max_length",
+            max_length=args.max_length,
+            label_keys=["trans"],
+            multi_label={
+                "trans": args.output_mode["pair_level"]["trans"] == "multi_label"
+            },
+            label_num={
+                "trans": args.label_size["pair_level"]["trans"]
+            }
+        )
 
     if "seq2seq_level" in args.pretrain_task_level_type:
         raise Exception("not support seq2seq_level task.")
@@ -1096,16 +1185,13 @@ def main():
     )
     # 基因-蛋白pair对数据集
     if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
-        if args.model_type in ["lucaone_gplm"]:
-            parse_row_func = encoder.encode_char_pair
-        else:
-            parse_row_func = encoder.encode_pair
+        raise Exception("Todo")
     else:
         # 基因或者蛋白单记录数据集
         if args.model_type in ["lucaone_gplm"]:
-            parse_row_func = encoder.encode_char_single
+            parse_row_func = encoder.encode_char_single_for_eval_mask
         else:
-            parse_row_func = encoder.encode_single
+            raise Exception("Todo")
 
     # encoding
     if args.model_type in ["lucaone_gplm"]:
@@ -1118,18 +1204,7 @@ def main():
             ignore_index=model_config.ignore_index
         )
     else:
-        dcForLanguageModeling, dcForWholeWordMask, \
-        dcForTokenClassification, dcForSequenceClassification, \
-        dcForStructureRegression, dcForPairClassification, dcForSeq2Seq = create_collator(args, tokenizer=tokenizer)
-        batch_data_func = DataCollatorForAll(
-            dcForLanguageModeling,
-            dcForWholeWordMask,
-            dcForTokenClassification,
-            dcForSequenceClassification,
-            dcForStructureRegression,
-            dcForPairClassification,
-            dcForSeq2Seq
-        )
+        raise Exception("Todo")
 
     # write logs
     if args.local_rank in [0, -1]:
@@ -1196,135 +1271,29 @@ def main():
 
     if args.local_rank == 0:
         dist.barrier()
-    if args.n_gpu <= 1:
-        print("n_gpu: %d, use: MultiFilesStreamLoader" % args.n_gpu)
-        if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
-            print("Has Pair: True")
-            train_dataloader = MultiFilesStreamLoader(
-                args.train_data_dir,
-                args.per_gpu_train_batch_size,
-                args.buffer_size,
-                parse_row_func=parse_row_func,
-                batch_data_func=batch_data_func,
-                pretrain_task_level_type=args.pretrain_task_level_type,
-                gene_label_size_dict=args.gene_label_size_dict,
-                gene_output_mode_dict=args.gene_output_mode_dict,
-                prot_label_size_dict=args.prot_label_size_dict,
-                prot_output_mode_dict=args.prot_output_mode_dict,
-                pair_label_size_dict=args.pair_label_size_dict,
-                pair_output_mode_dict=args.pair_output_mode_dict,
-                dataset_type="train",
-                header=True,
-                shuffle=True
-            )
-        else:
-            print("Has Pair: False")
-            train_dataloader = MultiFilesStreamLoader(
-                args.train_data_dir,
-                args.per_gpu_train_batch_size,
-                args.buffer_size,
-                parse_row_func=parse_row_func,
-                batch_data_func=batch_data_func,
-                pretrain_task_level_type=args.pretrain_task_level_type,
-                gene_label_size_dict=args.gene_label_size_dict,
-                gene_output_mode_dict=args.gene_output_mode_dict,
-                prot_label_size_dict=args.prot_label_size_dict,
-                prot_output_mode_dict=args.prot_output_mode_dict,
-                pair_label_size_dict=args.pair_label_size_dict,
-                pair_output_mode_dict=args.pair_output_mode_dict,
-                dataset_type="train",
-                header=True,
-                shuffle=True
-            )
-    else:
-        print("n_gpu: %d, use: DataLoader" % args.n_gpu)
-        train_dataset = load_dataset(
-            'csv',
-            data_dir=args.train_data_dir,
-            split='train',
-            streaming=True
-        )
-        # print("size: %d" % train_dataset.__len__())
-        if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
-            print("Has Pair: True")
-            train_dataset = train_dataset.map(
-                lambda x: parse_row_func(
-                    args.pretrain_task_level_type,
-                    x["gene_id"],
-                    x["gene_seq"],
-                    eval(x["gene_label"]),
-                    args.gene_label_size_dict,
-                    args.gene_output_mode_dict,
-                    x["prot_id"],
-                    x["prot_seq"],
-                    eval(x["prot_label"]),
-                    args.prot_label_size_dict,
-                    args.prot_output_mode_dict,
-                    eval(x["pair_label"]),
-                    args.pair_label_size_dict,
-                    args.pair_output_mode_dict
-                ),
-                batched=False,
-                remove_columns=["gene_label", "prot_label", "pair_label"]
-            )
-        else:
-            print("Has Pair: False")
-            train_dataset = train_dataset.map(
-                lambda x: parse_row_func(
-                    args.pretrain_task_level_type,
-                    x["obj_id"],
-                    x["obj_type"],
-                    x["obj_seq"],
-                    eval(x["obj_label"]),
-                    args.label_size,
-                    args.output_mode,
-                ),
-                batched=False,
-                remove_columns=["obj_id", "obj_type", "obj_seq", "obj_label", "obj_source"]
-            )
 
-        train_dataset = split_dataset_by_node(train_dataset, rank=args.local_rank, world_size=dist.get_world_size()) \
-            .shuffle(buffer_size=args.buffer_size, seed=args.seed)
-        train_dataset = train_dataset.with_format("torch")
-        train_dataloader = DataLoader(
-            dataset=train_dataset,
-            batch_size=args.per_gpu_train_batch_size,
-            # sampler=train_sampler,
-            # num_workers=args.worker_num,
-            num_workers=args.worker_num,
-            pin_memory=True,
-            collate_fn=batch_data_func
+    print("device:", args.device)
+
+    if args.local_rank in [0, -1]:
+        tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
+        strs = args.model_dirpath.split("/")
+        global_step = None
+        for s in strs:
+            if "checkpoint-step" in s:
+                global_step = int(s.replace("checkpoint-step", ""))
+                break
+        assert global_step is not None
+        print("global_step: %s" % global_step)
+        do_eval_mask(
+            args,
+            model,
+            parse_row_func,
+            batch_data_func,
+            global_step,
+            tb_writer=tb_writer,
+            log_fp=log_fp
         )
-    if args.do_train:
-        if args.trained_checkpoint is not None:
-            global_step, avg_loss, max_metric_model_info = train_continue(
-                args,
-                model,
-                model_config,
-                dataloader=train_dataloader,
-                label_size_dict=args.label_size,
-                parse_row_func=parse_row_func,
-                batch_data_func=batch_data_func,
-                tokenizer=tokenizer,
-                train_sampler=None,
-                log_fp=log_fp
-            )
-        else:
-            global_step, avg_loss, max_metric_model_info = train(
-                args,
-                model,
-                model_config,
-                dataloader=train_dataloader,
-                label_size_dict=args.label_size,
-                parse_row_func=parse_row_func,
-                batch_data_func=batch_data_func,
-                tokenizer=tokenizer,
-                train_sampler=None,
-                log_fp=log_fp
-            )
-    if args.n_gpu > 1:
-        dist.barrier()
-        
+
 
 if __name__ == "__main__":
     main()

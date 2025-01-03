@@ -105,6 +105,7 @@ def metrics_multi_class(targets, probs, average="macro"):
     result.update({
         "top2_acc": round(float(topk_accuracy_score(targets, probs, k=2)), 6),
         "top3_acc": round(float(topk_accuracy_score(targets, probs, k=3)), 6),
+        "top4_acc": round(float(topk_accuracy_score(targets, probs, k=4)), 6),
         "top5_acc": round(float(topk_accuracy_score(targets, probs, k=5)), 6),
         "top10_acc": round(float(topk_accuracy_score(targets, probs, k=10)), 6)
     })
@@ -127,7 +128,13 @@ def metrics_multi_class(targets, probs, average="macro"):
     return result
 
 
-def metrics_multi_class_for_pred(targets, preds, probs=None, average="macro", savepath=None):
+def metrics_multi_class_for_pred(
+        targets,
+        preds,
+        probs=None,
+        average="macro",
+        savepath=None
+):
     '''
     metrcis for multi-class classification
     :param targets: 1d-array class index (n_samples, )
@@ -249,7 +256,13 @@ def binary_confusion_matrix(targets, probs, threshold=0.5, savepath=None):
     return cm
 
 
-def metrics_binary(targets, probs, threshold=0.5, average="binary", savepath=None):
+def metrics_binary(
+        targets,
+        probs,
+        threshold=0.5,
+        average="binary",
+        savepath=None
+):
     '''
     metrics for binary classification
     :param targets: 1d-array class index (n_samples, )
@@ -323,7 +336,13 @@ def metrics_binary(targets, probs, threshold=0.5, average="binary", savepath=Non
     return result
 
 
-def metrics_binary_for_pred(targets, preds, probs=None, average="binary", savepath=None):
+def metrics_binary_for_pred(
+        targets,
+        preds,
+        probs=None,
+        average="binary",
+        savepath=None
+):
     '''
     metrics for binary classification
     :param targets: 1d-array class index (n_samples, )
@@ -392,8 +411,18 @@ def metrics_binary_for_pred(targets, preds, probs=None, average="binary", savepa
     return result
 
 
-def write_error_samples_multi_class(filepath, samples, input_indexs, input_id_2_names, output_id_2_name, targets, probs,
-                                    use_other_diags=False, use_other_operas=False, use_checkin_department=False):
+def write_error_samples_multi_class(
+        filepath,
+        samples,
+        input_indexs,
+        input_id_2_names,
+        output_id_2_name,
+        targets,
+        probs,
+        use_other_diags=False,
+        use_other_operas=False,
+        use_checkin_department=False
+):
     '''
     write the bad cases of multi-class classification
     :param filepath:
@@ -440,8 +469,18 @@ def write_error_samples_multi_class(filepath, samples, input_indexs, input_id_2_
             writer.writerow(row)
 
 
-def write_error_samples_binary(filepath, samples, input_indexs, input_id_2_names, targets, probs, threshold=0.5,
-                               use_other_diags=False, use_other_operas=False, use_checkin_department=False):
+def write_error_samples_binary(
+        filepath,
+        samples,
+        input_indexs,
+        input_id_2_names,
+        targets,
+        probs,
+        threshold=0.5,
+        use_other_diags=False,
+        use_other_operas=False,
+        use_checkin_department=False
+):
     '''
     write bad cases of binary classification
     :param filepath:

@@ -487,17 +487,18 @@ def complete_embedding_matrix(
         init_emb,
         model_args,
         embedding_type,
+        matrix_add_special_token,
         use_cpu=False
 ):
     if init_emb is not None and model_args.embedding_complete and ("representations" in embedding_type or "matrix" in embedding_type):
         ori_seq_len = len(seq)
         # 每次能处理这么长度
         cur_segment_len = init_emb.shape[0]
-        if model_args.matrix_add_special_token:
+        if matrix_add_special_token:
             complete_emb = init_emb[1:cur_segment_len - 1]
         else:
             complete_emb = init_emb
-        if model_args.matrix_add_special_token:
+        if matrix_add_special_token:
             cur_segment_len = cur_segment_len - 2
         segment_num = int((ori_seq_len + cur_segment_len - 1)/cur_segment_len)
         if segment_num <= 1:
@@ -642,9 +643,9 @@ def complete_embedding_matrix(
                 )
                 first_seg_emb = first_seg_emb[:really_len, :]
                 complete_emb = np.concatenate((first_seg_emb, complete_emb), axis=0)
-        print("seq_len: %d, seq_embedding matrix len: %d" % (ori_seq_len, complete_emb.shape[0] + (2 if model_args.matrix_add_special_token else 0)))
+        print("seq_len: %d, seq_embedding matrix len: %d" % (ori_seq_len, complete_emb.shape[0] + (2 if matrix_add_special_token else 0)))
         assert complete_emb.shape[0] == ori_seq_len
-        if model_args.matrix_add_special_token:
+        if matrix_add_special_token:
             complete_emb = np.concatenate((init_emb[0:1, :], complete_emb, init_emb[-1:, :]), axis=0)
         init_emb = complete_emb
     return init_emb
@@ -691,6 +692,11 @@ def get_args():
     # for embedding
     parser.add_argument("--embedding_type", type=str, default="matrix", choices=["matrix", "vector"],
                         help="the llm embedding type.")
+    parser.add_argument("--vector_type",
+                        type=str,
+                        default="mean",
+                        choices=["mean", "max", "cls"],
+                        help="the llm vector embedding type.")
     parser.add_argument("--trunc_type", type=str, default="right", choices=["left", "right"],
                         help="llm trunc type.")
     parser.add_argument("--truncation_seq_length", type=int, default=4094,
@@ -774,6 +780,11 @@ def main(model_args):
     print("input seq type: %s" % model_args.seq_type)
     print("model_args device: %s" % model_args.device)
     embedding_type = model_args.embedding_type
+    vector_type = model_args.vector_type
+    if embedding_type == "vector" and vector_type == "cls":
+        matrix_add_special_token = True
+    else:
+        matrix_add_special_token = model_args.matrix_add_special_token
     seq_type = model_args.seq_type
     emb_save_path = model_args.save_path
     print("emb save dir: %s" % emb_save_path)
@@ -817,11 +828,11 @@ def main(model_args):
                             global_model_dirpath,
                             [seq_id, seq_type, seq],
                             model_args.trunc_type,
-                            embedding_type,
+                            embedding_type="matrix",
                             repr_layers=[-1],
                             truncation_seq_length=model_args.embedding_fixed_len_a_time,
                             device=model_args.device,
-                            matrix_add_special_token=model_args.matrix_add_special_token
+                            matrix_add_special_token=matrix_add_special_token
                         )
                         # 如果指定的设备运行失败，则使用CPU
                         use_cpu = False
@@ -830,11 +841,11 @@ def main(model_args):
                                 global_model_dirpath,
                                 [seq_id, seq_type, seq],
                                 model_args.trunc_type,
-                                embedding_type,
+                                embedding_type="matrix",
                                 repr_layers=[-1],
                                 truncation_seq_length=model_args.embedding_fixed_len_a_time,
                                 device=torch.device("cpu"),
-                                matrix_add_special_token=model_args.matrix_add_special_token
+                                matrix_add_special_token=matrix_add_special_token
                             )
                             use_cpu = True
                         if emb is not None and input_seq_len > model_args.embedding_fixed_len_a_time:
@@ -845,7 +856,8 @@ def main(model_args):
                                 model_args.embedding_fixed_len_a_time,
                                 emb,
                                 model_args,
-                                embedding_type,
+                                embedding_type="matrix",
+                                matrix_add_special_token=matrix_add_special_token,
                                 use_cpu=use_cpu
                             )
                         if use_cpu:
@@ -855,11 +867,11 @@ def main(model_args):
                             global_model_dirpath,
                             [seq_id, seq_type, seq],
                             model_args.trunc_type,
-                            embedding_type,
+                            embedding_type="matrix",
                             repr_layers=[-1],
                             truncation_seq_length=truncation_seq_length,
                             device=model_args.device,
-                            matrix_add_special_token=model_args.matrix_add_special_token
+                            matrix_add_special_token=matrix_add_special_token
                         )
                         use_cpu = False
                         if emb is None:
@@ -867,11 +879,11 @@ def main(model_args):
                                 global_model_dirpath,
                                 [seq_id, seq_type, seq],
                                 model_args.trunc_type,
-                                embedding_type,
+                                embedding_type="matrix",
                                 repr_layers=[-1],
                                 truncation_seq_length=truncation_seq_length,
                                 device=torch.device("cpu"),
-                                matrix_add_special_token=model_args.matrix_add_special_token
+                                matrix_add_special_token=matrix_add_special_token
                             )
                             use_cpu = True
                         # embedding全
@@ -883,7 +895,8 @@ def main(model_args):
                                 truncation_seq_length,
                                 emb,
                                 model_args,
-                                embedding_type,
+                                embedding_type="matrix",
+                                matrix_add_special_token=matrix_add_special_token,
                                 use_cpu=use_cpu
                             )
                         if use_cpu:
@@ -891,6 +904,19 @@ def main(model_args):
                     if emb is not None:
                         # print("seq_len: %d" % len(seq))
                         # print("emb shape:", embedding_info.shape)
+                        if embedding_type == "vector":
+                            if vector_type == "cls":
+                                emb = emb[0, :]
+                            elif vector_type == "max":
+                                if matrix_add_special_token:
+                                    emb = np.max(emb[1:-1, :], axis=0)
+                                else:
+                                    emb = np.max(emb, axis=0)
+                            else:
+                                if matrix_add_special_token:
+                                    emb = np.mean(emb[1:-1, :], axis=0)
+                                else:
+                                    emb = np.mean(emb, axis=0)
                         torch.save(emb, embedding_filepath)
                         break
                     print("%s embedding error, max_len from %d truncate to %d" % (
@@ -922,11 +948,11 @@ def main(model_args):
                 global_model_dirpath,
                 [model_args.seq_id, model_args.seq_type, model_args.seq],
                 model_args.trunc_type,
-                embedding_type,
+                embedding_type="matrix",
                 repr_layers=[-1],
                 truncation_seq_length=truncation_seq_length,
                 device=model_args.device,
-                matrix_add_special_token=model_args.matrix_add_special_token
+                matrix_add_special_token=matrix_add_special_token
             )
             use_cpu = False
             if emb is None:
@@ -934,11 +960,11 @@ def main(model_args):
                     global_model_dirpath,
                     [model_args.seq_id, model_args.seq_type, model_args.seq],
                     model_args.trunc_type,
-                    embedding_type,
+                    embedding_type="matrix",
                     repr_layers=[-1],
                     truncation_seq_length=truncation_seq_length,
                     device=torch.device("cpu"),
-                    matrix_add_special_token=model_args.matrix_add_special_token
+                    matrix_add_special_token=matrix_add_special_token
                 )
                 use_cpu = True
             # embedding全
@@ -950,7 +976,8 @@ def main(model_args):
                     truncation_seq_length=truncation_seq_length,
                     init_emb=emb,
                     model_args=model_args,
-                    embedding_type=embedding_type,
+                    embedding_type="matrix",
+                    matrix_add_special_token=matrix_add_special_token,
                     use_cpu=use_cpu
                 )
             if use_cpu:
@@ -967,6 +994,19 @@ def main(model_args):
         print("seq: %s" % model_args.seq_id)
         print("seq: %s" % model_args.seq)
         print("embedding: ")
+        if embedding_type == "vector":
+            if vector_type == "cls":
+                emb = emb[0, :]
+            elif vector_type == "max":
+                if matrix_add_special_token:
+                    emb = np.max(emb[1:-1, :], axis=0)
+                else:
+                    emb = np.max(emb, axis=0)
+            else:
+                if matrix_add_special_token:
+                    emb = np.mean(emb[1:-1, :], axis=0)
+                else:
+                    emb = np.mean(emb, axis=0)
         print(emb)
     else:
         raise Exception("input error, please --help.")
