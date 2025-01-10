@@ -476,13 +476,14 @@ class LucaGPLM(nn.Module):
                         cur_output_mode = self.output_mode[cur_task_level_type][cur_task_level_name]
                         cur_loss_fct = self.loss_fct[cur_task_level_type][cur_task_level_name]
                         cur_loss = self.__calc_loss__(
-                                                      task_level_type=cur_task_level_type,
-                                                      output_mode=cur_output_mode,
-                                                      logits=cur_logits,
-                                                      label=cur_label,
-                                                      label_size=cur_label_size,
-                                                      loss_fct=cur_loss_fct,
-                                                      loss_reduction="meanmean")
+                            task_level_type=cur_task_level_type,
+                            output_mode=cur_output_mode,
+                            logits=cur_logits,
+                            label=cur_label,
+                            label_size=cur_label_size,
+                            loss_fct=cur_loss_fct,
+                            loss_reduction="meanmean"
+                        )
                         losses[cur_task_level_type][cur_task_level_name] = cur_loss
         return representations, logits, outputs, losses
 
@@ -598,9 +599,13 @@ class LucaGPLM(nn.Module):
                             cur_logits = pair_logits[cur_task_level_type][cur_task_level_name]
                             cur_loss = self.__calc_loss__(
                                 task_level_type=cur_task_level_type,
-                                output_mode=cur_output_mode, logits=cur_logits,
-                                label=cur_label, label_size=cur_label_size, loss_fct=cur_loss_fct,
-                                loss_reduction="meanmean")
+                                output_mode=cur_output_mode,
+                                logits=cur_logits,
+                                label=cur_label,
+                                label_size=cur_label_size,
+                                loss_fct=cur_loss_fct,
+                                loss_reduction="meanmean"
+                            )
                             pair_loss[cur_task_level_type][cur_task_level_name] = cur_loss
 
                     if not return_dict:
@@ -705,4 +710,5 @@ class LucaGPLM(nn.Module):
             input_ids=input_ids,
             position_ids=position_ids,
             token_type_ids=token_type_ids,
-            return_contacts=True)["contacts"]
+            return_contacts=True
+        )["contacts"]

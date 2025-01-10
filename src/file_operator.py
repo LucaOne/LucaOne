@@ -10,11 +10,8 @@
 @file: file_operator
 @desc: file operator
 '''
-
 import csv, sys
 import io, textwrap, itertools
-import os
-
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord

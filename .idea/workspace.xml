@@ -5,14 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update writer_info_tb">
+      <change afterPath="$PROJECT_DIR$/pics/LucaTeam.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,7 +36,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/downstream" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/data" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -41,9 +48,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/downstream" />
+      <recent name="$PROJECT_DIR$/data" />
+      <recent name="$PROJECT_DIR$/src/data_analysis" />
+      <recent name="$PROJECT_DIR$/src/eval" />
       <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/src/training" />
+      <recent name="$PROJECT_DIR$/src/downstream" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pics" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -140,6 +152,14 @@
       <workItem from="1734587758782" duration="38000" />
       <workItem from="1734594941900" duration="29000" />
       <workItem from="1734595014507" duration="13000" />
+      <workItem from="1734597557017" duration="68000" />
+      <workItem from="1734686267814" duration="26000" />
+      <workItem from="1734836128410" duration="4937000" />
+      <workItem from="1735892401104" duration="3965000" />
+      <workItem from="1735902629156" duration="3357000" />
+      <workItem from="1735982250823" duration="585000" />
+      <workItem from="1736227380301" duration="16000" />
+      <workItem from="1736489671137" duration="201000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -323,7 +343,21 @@
       <option name="project" value="LOCAL" />
       <updated>1734575883698</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="feature: update writer_info_tb">
+      <created>1734597616249</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1734597616249</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feature: update writer_info_tb">
+      <created>1735909925616</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1735909925616</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

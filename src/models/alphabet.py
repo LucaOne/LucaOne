@@ -10,7 +10,6 @@
 @file: alphabet
 @desc: alphabet for LucaOne
 '''
-import sys
 import itertools
 from typing import Sequence, List
 
@@ -155,9 +154,24 @@ class Alphabet(object):
     def encode(self, text):
         return [self.tok_to_idx[tok] for tok in self.tokenize(text)]
 
+    def encode_for_eval_mask(self, text):
+        return [self.tok_to_idx[tok] if tok != '-' else self.tok_to_idx["[MASK]"] for tok in self.tokenize(text)]
+
 
 if __name__ == "__main__":
-    alphabet = Alphabet.from_predefined("gene_prot")
+    import sys
+    sys.path.append("./")
+    sys.path.append("../")
+    sys.path.append("../../")
+    sys.path.append("../../src")
     from src.utils import gene_seq_replace
-    print(alphabet.encode(gene_seq_replace("gttgtttggtagctaggagcctgactacatggcttcaaggctaaatggccacaggtgcccaggctatttggcttgctggaggcttcattcat")))
+    alphabet = Alphabet.from_predefined("gene_prot")
+    seq = "gttgtttggtagctaggagcctgactacatggcttcaaggctaaatggccacaggtgcccaggctatttggcttgctggaggcttcattcat"
+    seq = gene_seq_replace(seq)
+    toks = alphabet.tokenize(seq)
+    print(toks)
+    print(len(toks))
+    input_ids = alphabet.encode(seq)
+    print(input_ids)
+    print(len(input_ids))
 

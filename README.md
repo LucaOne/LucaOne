@@ -137,7 +137,16 @@ publisher = {Cold Spring Harbor Laboratory},
 URL = {https://www.biorxiv.org/content/early/2024/05/14/2024.05.10.592927},        
 eprint = {https://www.biorxiv.org/content/early/2024/05/14/2024.05.10.592927.full.pdf},        
 journal = {bioRxiv}        
-}       
+} 
+
+
+## 13. LucaTeam
+
+<center>
+<img alt="LucaTeam" src="./pics/LucaTeam.jpg"/>
+
+Fig. 4 LucaTeam at the West Lake in Hangzhou.
+</center>   
 
 
 

@@ -10,15 +10,14 @@
 @file: run.py
 @desc: main for LucaOne
 '''
-import torch
+import os
 import sys, json
 import datetime
 import argparse
 from collections import OrderedDict
 import torch.distributed as dist
 from datasets import load_dataset
-from transformers import AutoTokenizer, PretrainedConfig, BertTokenizer
-from transformers.models.bert import BertConfig
+from transformers import AutoTokenizer, PretrainedConfig
 from torch.utils.data.dataloader import DataLoader
 from datasets.distributed import split_dataset_by_node
 sys.path.append(".")
@@ -28,7 +27,7 @@ try:
     from data_collator import *
     from encoder import Encoder
     from utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
-    from multi_files_stream_dataloader import *
+    from multi_files_stream_dataloader import MultiFilesStreamLoader
     from trainer import train, train_continue
     from models.lucaone_gplm import LucaGPLM
     from models.alphabet import Alphabet
@@ -38,7 +37,7 @@ except ImportError as e:
     from src.data_collator import *
     from src.encoder import Encoder
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
-    from src.multi_files_stream_dataloader import *
+    from src.multi_files_stream_dataloader import MultiFilesStreamLoader
     from src.trainer import train, train_continue
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.alphabet import Alphabet
@@ -324,8 +323,8 @@ def get_args():
                         help="the global loss to continue training")
     parser.add_argument("--epoch_loss", default=0, type=float,
                         help="the epoch loss to continue training")
-    args = parser.parse_args()
-    return args
+    input_args = parser.parse_args()
+    return input_args
 
 
 def put_value(obj, key1, key2, value):
@@ -1086,20 +1085,23 @@ def main():
 
     # file row parser
     # 文件记录解析函数
-    encoder = Encoder(config=encoder_config,
-                      tokenizer=tokenizer,
-                      tokenization=args.tokenization,
-                      no_token_type_embeddings=args.no_token_type_embeddings,
-                      non_ignore=args.non_ignore,
-                      ignore_index=args.ignore_index,
-                      model_type=args.model_type)
+    encoder = Encoder(
+        config=encoder_config,
+        tokenizer=tokenizer,
+        tokenization=args.tokenization,
+        no_token_type_embeddings=args.no_token_type_embeddings,
+        non_ignore=args.non_ignore,
+        ignore_index=args.ignore_index,
+        model_type=args.model_type
+    )
     # 基因-蛋白pair对数据集
     if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
         if args.model_type in ["lucaone_gplm"]:
             parse_row_func = encoder.encode_char_pair
         else:
             parse_row_func = encoder.encode_pair
-    else: # 基因或者蛋白单记录数据集
+    else:
+        # 基因或者蛋白单记录数据集
         if args.model_type in ["lucaone_gplm"]:
             parse_row_func = encoder.encode_char_single
         else:
@@ -1108,20 +1110,26 @@ def main():
     # encoding
     if args.model_type in ["lucaone_gplm"]:
         # lucagplm独特的batch转换器
-        batch_data_func = BatchConverter(tokenizer,
-                                         no_position_embeddings=model_config.no_position_embeddings,
-                                         no_token_type_embeddings=model_config.no_token_type_embeddings,
-                                         truncation_seq_length=model_config.max_position_embeddings,
-                                         ignore_index=model_config.ignore_index
-                                         )
+        batch_data_func = BatchConverter(
+            tokenizer,
+            no_position_embeddings=model_config.no_position_embeddings,
+            no_token_type_embeddings=model_config.no_token_type_embeddings,
+            truncation_seq_length=model_config.max_position_embeddings,
+            ignore_index=model_config.ignore_index
+        )
     else:
         dcForLanguageModeling, dcForWholeWordMask, \
         dcForTokenClassification, dcForSequenceClassification, \
         dcForStructureRegression, dcForPairClassification, dcForSeq2Seq = create_collator(args, tokenizer=tokenizer)
-        batch_data_func = DataCollatorForAll(dcForLanguageModeling, dcForWholeWordMask,
-                                             dcForTokenClassification, dcForSequenceClassification,
-                                             dcForStructureRegression, dcForPairClassification,
-                                             dcForSeq2Seq)
+        batch_data_func = DataCollatorForAll(
+            dcForLanguageModeling,
+            dcForWholeWordMask,
+            dcForTokenClassification,
+            dcForSequenceClassification,
+            dcForStructureRegression,
+            dcForPairClassification,
+            dcForSeq2Seq
+        )
 
     # write logs
     if args.local_rank in [0, -1]:
@@ -1192,42 +1200,50 @@ def main():
         print("n_gpu: %d, use: MultiFilesStreamLoader" % args.n_gpu)
         if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
             print("Has Pair: True")
-            train_dataloader = MultiFilesStreamLoader(args.train_data_dir,
-                                                      args.per_gpu_train_batch_size,
-                                                      args.buffer_size,
-                                                      parse_row_func=parse_row_func,
-                                                      batch_data_func=batch_data_func,
-                                                      pretrain_task_level_type=args.pretrain_task_level_type,
-                                                      gene_label_size_dict=args.gene_label_size_dict,
-                                                      gene_output_mode_dict=args.gene_output_mode_dict,
-                                                      prot_label_size_dict=args.prot_label_size_dict,
-                                                      prot_output_mode_dict=args.prot_output_mode_dict,
-                                                      pair_label_size_dict=args.pair_label_size_dict,
-                                                      pair_output_mode_dict=args.pair_output_mode_dict,
-                                                      header=True,
-                                                      shuffle=True)
+            train_dataloader = MultiFilesStreamLoader(
+                args.train_data_dir,
+                args.per_gpu_train_batch_size,
+                args.buffer_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                pretrain_task_level_type=args.pretrain_task_level_type,
+                gene_label_size_dict=args.gene_label_size_dict,
+                gene_output_mode_dict=args.gene_output_mode_dict,
+                prot_label_size_dict=args.prot_label_size_dict,
+                prot_output_mode_dict=args.prot_output_mode_dict,
+                pair_label_size_dict=args.pair_label_size_dict,
+                pair_output_mode_dict=args.pair_output_mode_dict,
+                dataset_type="train",
+                header=True,
+                shuffle=True
+            )
         else:
             print("Has Pair: False")
-            train_dataloader = MultiFilesStreamLoader(args.train_data_dir,
-                                                      args.per_gpu_train_batch_size,
-                                                      args.buffer_size,
-                                                      parse_row_func=parse_row_func,
-                                                      batch_data_func=batch_data_func,
-                                                      pretrain_task_level_type=args.pretrain_task_level_type,
-                                                      gene_label_size_dict=args.gene_label_size_dict,
-                                                      gene_output_mode_dict=args.gene_output_mode_dict,
-                                                      prot_label_size_dict=args.prot_label_size_dict,
-                                                      prot_output_mode_dict=args.prot_output_mode_dict,
-                                                      pair_label_size_dict=args.pair_label_size_dict,
-                                                      pair_output_mode_dict=args.pair_output_mode_dict,
-                                                      header=True,
-                                                      shuffle=True)
+            train_dataloader = MultiFilesStreamLoader(
+                args.train_data_dir,
+                args.per_gpu_train_batch_size,
+                args.buffer_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                pretrain_task_level_type=args.pretrain_task_level_type,
+                gene_label_size_dict=args.gene_label_size_dict,
+                gene_output_mode_dict=args.gene_output_mode_dict,
+                prot_label_size_dict=args.prot_label_size_dict,
+                prot_output_mode_dict=args.prot_output_mode_dict,
+                pair_label_size_dict=args.pair_label_size_dict,
+                pair_output_mode_dict=args.pair_output_mode_dict,
+                dataset_type="train",
+                header=True,
+                shuffle=True
+            )
     else:
         print("n_gpu: %d, use: DataLoader" % args.n_gpu)
-        train_dataset = load_dataset('csv',
-                                     data_dir=args.train_data_dir,
-                                     split='train',
-                                     streaming=True)
+        train_dataset = load_dataset(
+            'csv',
+            data_dir=args.train_data_dir,
+            split='train',
+            streaming=True
+        )
         # print("size: %d" % train_dataset.__len__())
         if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
             print("Has Pair: True")
@@ -1270,13 +1286,15 @@ def main():
         train_dataset = split_dataset_by_node(train_dataset, rank=args.local_rank, world_size=dist.get_world_size()) \
             .shuffle(buffer_size=args.buffer_size, seed=args.seed)
         train_dataset = train_dataset.with_format("torch")
-        train_dataloader = DataLoader(dataset=train_dataset,
-                                      batch_size=args.per_gpu_train_batch_size,
-                                      # sampler=train_sampler,
-                                      # num_workers=args.worker_num,
-                                      num_workers=args.worker_num,
-                                      pin_memory=True,
-                                      collate_fn=batch_data_func)
+        train_dataloader = DataLoader(
+            dataset=train_dataset,
+            batch_size=args.per_gpu_train_batch_size,
+            # sampler=train_sampler,
+            # num_workers=args.worker_num,
+            num_workers=args.worker_num,
+            pin_memory=True,
+            collate_fn=batch_data_func
+        )
     if args.do_train:
         if args.trained_checkpoint is not None:
             global_step, avg_loss, max_metric_model_info = train_continue(
@@ -1304,7 +1322,9 @@ def main():
                 train_sampler=None,
                 log_fp=log_fp
             )
-
+    if args.n_gpu > 1:
+        dist.barrier()
+        
 
 if __name__ == "__main__":
     main()
