@@ -129,8 +129,12 @@ Other supplementary materials are available at: <a href='http://47.93.21.181/luc
 <a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>, 
 <a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>, 
 <a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>, Yanhong Wei, 
-<a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>,
-<a href="https://scholar.google.com/citations?user=1KJOH7YAAAAJ&hl=zh-CN&oi=ao" title="Mang Shi">Mang Shi</a>
+<a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>, 
+<a href="https://scholar.google.com/citations?user=1KJOH7YAAAAJ&hl=zh-CN&oi=ao" title="Mang Shi">Mang Shi</a>, 
+<a href="https://scholar.google.com/citations?hl=en&view_op=list_works&gmla=AGd7smFoGC01LG3CopJC_1HRW1Wpbk7W42IfwjCeac8GN2enJ8TEJ6t3JN5PVaugdD34CvNw3LJdUoWlY1XOpQ&user=Bd_HtNAAAAAJ" title="Jiaying Yang">Jiaying Yang</a>, 
+<a href="https://scholar.google.com/citations?user=t0YyeMcAAAAJ&hl=zh-CN" title="Yihao Chen">Yihao Chen</a>,
+<a href="https://scholar.google.com/citations?hl=en&user=ZmtOCdgAAAAJ" title="Yan Sun">Yan Sun</a>, Yuqi Liu  
+
 
 
 ## 13. Citation          

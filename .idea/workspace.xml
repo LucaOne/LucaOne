@@ -7,6 +7,7 @@
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pics/LucaTeam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pics/LucaTeamT.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +159,9 @@
       <workItem from="1735902629156" duration="3357000" />
       <workItem from="1735982250823" duration="585000" />
       <workItem from="1736227380301" duration="16000" />
-      <workItem from="1736489671137" duration="2870000" />
+      <workItem from="1736489671137" duration="3050000" />
+      <workItem from="1736493989637" duration="671000" />
+      <workItem from="1736496183540" duration="2689000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -370,7 +373,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736491585630</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="feature: update readme">
+      <created>1736492773171</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1736492773171</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
