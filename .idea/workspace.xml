@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add the LucaTeam Image">
-      <change afterPath="$PROJECT_DIR$/pics/CentralDogma.png" afterDir="false" />
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pics/DownstreamNetworksAndMetrics.png" beforeDir="false" afterPath="$PROJECT_DIR$/pics/DownstreamNetworksAndMetrics.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pics/ModelArchitecture.png" beforeDir="false" afterPath="$PROJECT_DIR$/pics/ModelArchitecture.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pics/PretraingData&amp;Tasks&amp;EmbeddingTSNE.png" beforeDir="false" afterPath="$PROJECT_DIR$/pics/PretraingData&amp;Tasks&amp;EmbeddingTSNE.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +158,7 @@
       <workItem from="1735902629156" duration="3357000" />
       <workItem from="1735982250823" duration="585000" />
       <workItem from="1736227380301" duration="16000" />
-      <workItem from="1736489671137" duration="1449000" />
+      <workItem from="1736489671137" duration="2870000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -367,7 +363,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736489910124</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="feature: update readme">
+      <created>1736491585630</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1736491585630</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -390,9 +393,9 @@
     <MESSAGE value="feature: add comments to the training shell script" />
     <MESSAGE value="feature: optimized embedding inference code: 'src/get_embedding.py'" />
     <MESSAGE value="feature: add clean_seq_luca" />
-    <MESSAGE value="feature: update readme" />
     <MESSAGE value="feature: update writer_info_tb" />
     <MESSAGE value="feature: add the LucaTeam Image" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: add the LucaTeam Image" />
+    <MESSAGE value="feature: update readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
   </component>
 </project>

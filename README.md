@@ -15,7 +15,7 @@ Fig. 1 The workflow of LucaOne.
 </center>   
 
 
-## 2. LucaOne PreTraining Data & PreTraining Tasks & Embedding(Zero-Shot)   
+## 2. LucaOne PreTraining Data & PreTraining Tasks & Embedding(Zero-Shot)      
 
 <center>
 <img alt="The data and tasks for pre-training LucaOne, and T-SNE on four embedding models." src="./pics/PretraingData&Tasks&EmbeddingTSNE.png"/>
@@ -23,15 +23,15 @@ Fig. 1 The workflow of LucaOne.
 Fig. 2 The data and tasks for pre-training LucaOne, and T-SNE on four embedding models.     
 </center>
 
-## 3. Central Dogma
+## 3. Central Dogma(Few-Shot)    
 
 <center>
-<img alt="Learning Central Dogma of Molecular Biology." src="./pics/CentralDogma.png.png"/>
+<img alt="Learning Central Dogma of Molecular Biology." src="./pics/CentralDogma.png"/>
 
 Fig. 3 Learning Central Dogma of Molecular Biology.
 </center>
 
-## 4. Downstream Tasks
+## 4. Downstream Tasks(SFT)    
 
 <center>
 <img alt="Downstream task network with three input types and results comparison of 8 verification tasks." src="./pics/DownstreamNetworksAndMetrics.png"/>
@@ -126,10 +126,10 @@ Other supplementary materials are available at: <a href='http://47.93.21.181/luc
 
 ## 12. Contributor        
 <a href="https://scholar.google.com.hk/citations?user=RDbqGTcAAAAJ&hl=en" title="Yong He">Yong He</a>, 
-<a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>,
-<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>,     
-<a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>, Yanhong Wei,     
-<a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>, 
+<a href="https://scholar.google.com/citations?user=lT3nelQAAAAJ&hl=en" title="Zhaorong Li">Zhaorong Li</a>, 
+<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&user=uvrzUfEAAAAJ" title="Yongtao Shan">Yongtao Shan</a>, 
+<a href="https://scholar.google.com/citations?user=ODcOX4AAAAAJ&hl=zh-CN" title="Pan Fang">Pan Fang</a>, Yanhong Wei, 
+<a href="https://scholar.google.com.hk/citations?hl=zh-CN&pli=1&user=Zhlg9QkAAAAJ" title="Yuan-Fei Pan">Yuan-Fei Pan</a>,
 <a href="https://scholar.google.com/citations?user=1KJOH7YAAAAJ&hl=zh-CN&oi=ao" title="Mang Shi">Mang Shi</a>
 
 
