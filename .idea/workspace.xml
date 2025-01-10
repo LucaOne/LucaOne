@@ -5,31 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update writer_info_tb">
-      <change afterPath="$PROJECT_DIR$/data/pseudogene/aligned_pairs.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/batch_converter_for_eval_mask.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data_analysis/pseudogene_only_mismatch.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/do_eval_all_checkpoints.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/do_eval_mask.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/eval/run_multi_v2.0_all_checkpoints_eval_val_test.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/eval/run_multi_v2.0_eval_mask.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/eval/run_multi_v2.0_mask_all_checkpoints_eval_val_test.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_eval.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run_eval_mask.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pics/LucaTeam.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/batch_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/metrics.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/encoder.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/encoder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_operator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_operator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/alphabet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/alphabet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/lucaone_gplm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lucaone_gplm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/multi_files_stream_dataloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/multi_files_stream_dataloader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +53,9 @@
       <recent name="$PROJECT_DIR$/src/eval" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/downstream" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pics" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -175,7 +156,10 @@
       <workItem from="1734686267814" duration="26000" />
       <workItem from="1734836128410" duration="4937000" />
       <workItem from="1735892401104" duration="3965000" />
-      <workItem from="1735902629156" duration="2485000" />
+      <workItem from="1735902629156" duration="3357000" />
+      <workItem from="1735982250823" duration="585000" />
+      <workItem from="1736227380301" duration="16000" />
+      <workItem from="1736489671137" duration="201000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -366,7 +350,14 @@
       <option name="project" value="LOCAL" />
       <updated>1734597616249</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="feature: update writer_info_tb">
+      <created>1735909925616</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1735909925616</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
