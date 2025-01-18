@@ -163,7 +163,8 @@
       <workItem from="1736496183540" duration="3121000" />
       <workItem from="1737097003080" duration="19000" />
       <workItem from="1737173279376" duration="199000" />
-      <workItem from="1737173961503" duration="805000" />
+      <workItem from="1737173961503" duration="1045000" />
+      <workItem from="1737175243228" duration="288000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -396,7 +397,14 @@
       <option name="project" value="LOCAL" />
       <updated>1736500425212</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="feature: update readme">
+      <created>1737174797148</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1737174797148</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
