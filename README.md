@@ -141,7 +141,7 @@ We have uploaded the model code, training scripts, and embedding inference scrip
 The mode code, training and evaluation scripts, datasets, and trained models for downstream tasks,    
 and additional supplementary materials to Zenodo (10.5281/zenodo.14604463).    
 However, due to the substantial size of the pretraining dataset of LucaOne, it has not been included on Zenodo.     
-Instead, it remains accessible via our publicly available FTP server (**<a href='http://47.93.21.181/lucaone/PreTrainingDataset/'>LucaOne Pretraining dataset</a>**).     
+Instead, it remains accessible via our publicly available FTP server (**<a href='http://47.93.21.181/lucaone/PreTrainingDataset/'>LucaOne Pretraining Dataset</a>**).     
 We are actively seeking an open FTP platform with sufficient storage capacity to host our pretraining dataset.
 
 **<a href='https://doi.org/10.5281/zenodo.14604463'>LucaOne Zenodo</a>**   
