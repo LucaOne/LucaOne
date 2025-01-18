@@ -7,7 +7,6 @@
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pics/LucaTeam.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pics/LucaTeamT.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +160,10 @@
       <workItem from="1736227380301" duration="16000" />
       <workItem from="1736489671137" duration="3050000" />
       <workItem from="1736493989637" duration="671000" />
-      <workItem from="1736496183540" duration="2689000" />
+      <workItem from="1736496183540" duration="3121000" />
+      <workItem from="1737097003080" duration="19000" />
+      <workItem from="1737173279376" duration="199000" />
+      <workItem from="1737173961503" duration="805000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -380,7 +382,21 @@
       <option name="project" value="LOCAL" />
       <updated>1736492773171</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="feature: update readme">
+      <created>1736500238358</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1736500238359</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feature: update readme">
+      <created>1736500425212</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1736500425212</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
