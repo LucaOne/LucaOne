@@ -136,7 +136,7 @@ Other supplementary materials are available at: <a href='http://47.93.21.181/luc
 <a href="https://scholar.google.com/citations?hl=en&user=ZmtOCdgAAAAJ" title="Yan Sun">Yan Sun</a>, Yuqi Liu  
 
 
-## 13. Zenodo      
+## 13. Zenodo         
 We have uploaded the model code, training scripts, and embedding inference scripts of LucaOne;    
 The mode code, training and evaluation scripts, datasets, and trained models for downstream tasks,    
 and additional supplementary materials to Zenodo (10.5281/zenodo.14604463).    
