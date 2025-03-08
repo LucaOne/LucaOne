@@ -1776,7 +1776,7 @@ def load_trained_model(model_config, args, model_class, model_dirpath):
         model = model_class.from_pretrained(model_dirpath, args=args)
     except Exception as e:
         model = model_class(model_config, args=args)
-        pretrained_net_dict = torch.load(os.path.join(args.model_dirpath, "pytorch.pth"),
+        pretrained_net_dict = torch.load(os.path.join(model_dirpath, "pytorch.pth"),
                                          map_location=torch.device("cpu"))
         model_state_dict_keys = set()
         for key in model.state_dict():
