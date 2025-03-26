@@ -2021,6 +2021,7 @@ def download_trained_checkpoint_lucaone(
             filepath = os.path.join(logs_local_dir, logs_file_name)
             if not os.path.exists(filepath):
                 exists = False
+                print(os.path.abspath(os.path.join(logs_local_dir, logs_file_name)) + ' not exists.')
                 break
             else:
                 print("file: %s exists: %s." % (logs_file_name, filepath))
@@ -2032,6 +2033,7 @@ def download_trained_checkpoint_lucaone(
                 filepath = os.path.join(models_local_dir, models_file_name)
                 if not os.path.exists(filepath):
                     exists = False
+                    print(os.path.abspath(os.path.join(models_local_dir, models_file_name)) + ' not exists.')
                     break
                 else:
                     print("file: %s exists: %s." % (models_file_name, filepath))
