@@ -729,6 +729,10 @@ def main(model_args):
         model_args.llm_dir = ".."
     download_trained_checkpoint_lucaone(
         llm_dir=model_args.llm_dir,
+        llm_time_str=model_args.llm_time_str,
+        llm_type=model_args.llm_type,
+        llm_task_level=model_args.llm_task_level,
+        llm_version=model_args.llm_version,
         llm_step=model_args.llm_step
     )
 
