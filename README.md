@@ -2,9 +2,28 @@
 LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.   
 
 # TimeLine     
+* 2025/04/01:  
+  * LucaOne         
+  add `checkpoint=36000000` for LucaOne
+  
+  * LucaOne-Prot    
+  add `checkpoint=30000000` for LucaOne-Prot(only trained using Protein)  
+  
+  * LucaOne-Gene     
+  add `checkpoint=36800000` for LucaOne-Gene(only trained using DNA and RNA)    
+  
 * 2024/10/01: optimized embedding inference code: `src/get_embedding.py`      
 * 2024/08/01: add `checkpoint=17600000`, location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045/checkpoint-step17600000/'>checkpoint-step17600000</a>   
 * 2024/07/24: feature: add `continue training when failure`   
+
+# Embedding Recommendation    
+|    Task Type (Input Type)     |       LucaOne-Version       |                    LucaOne-CheckPoint                     |
+|:-----------------------------:|:---------------------------:|:---------------------------------------------------------:|
+| Only for Gene (i.e. DNA, RNA) | `LucaOne` or `LucaOne-Gene` | `36000000` for `LucaOne`<br/>`36800000` for LucaOne-Gene` |
+|         Only for Prot         | `LucaOne` or `LucaOne-Prot` | `36000000` for `LucaOne`<br/>`30000000` for LucaOne-Prot` |
+|  Gene (i.e. DNA, RNA) + Prot  |           `LucaOne`           |                 `36000000` for `LucaOne`                  |
+
+
 
 ## 1. LucaOne Workflow      
 

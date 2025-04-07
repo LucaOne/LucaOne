@@ -20,14 +20,14 @@ sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
 try:
-    from args import Args
-    from file_operator import fasta_reader, csv_reader, tsv_reader
-    from utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
+    from .args import Args
+    from .file_operator import fasta_reader, csv_reader, tsv_reader
+    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
         download_trained_checkpoint_lucaone, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
-    from models.lucaone_gplm import LucaGPLM
-    from models.lucaone_gplm_config import LucaGPLMConfig
-    from models.alphabet import Alphabet
-    from batch_converter import BatchConverter
+    from .models.lucaone_gplm import LucaGPLM
+    from .models.lucaone_gplm_config import LucaGPLMConfig
+    from .models.alphabet import Alphabet
+    from .batch_converter import BatchConverter
 except ImportError as e:
     from src.args import Args
     from src.file_operator import fasta_reader, csv_reader, tsv_reader
@@ -111,10 +111,8 @@ def load_model(
             model = torch.load(os.path.join(model_dirpath, "pytorch.pt"), map_location=torch.device("cpu"))
         except Exception as e:
             model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(
-                os.path.join(model_dirpath, "pytorch.pth"),
-                map_location=torch.device("cpu")
-            )
+            pretrained_net_dict = torch.load(os.path.join(model_dirpath, "pytorch.pth"),
+                                             map_location=torch.device("cpu"))
             model_state_dict_keys = set()
             for key in model.state_dict():
                 model_state_dict_keys.add(key)
@@ -656,142 +654,65 @@ def complete_embedding_matrix(
 def get_args():
     parser = argparse.ArgumentParser(description='LucaOne/LucaOne-gene/LucaOne-Prot Embedding')
     # for one seq
-    parser.add_argument(
-        "--seq_id",
-        type=str,
-        default=None,
-        help="the seq id"
-    )
-    parser.add_argument(
-        "--seq",
-        type=str,
-        default=None,
-        help="when to input a seq"
-    )
-    parser.add_argument(
-        "--seq_type",
-        type=str,
-        default=None,
-        required=True,
-        choices=["gene", "prot"],
-        help="the input seq type: gene(i.e. DNA or RNA) or prot"
-    )
+    parser.add_argument("--seq_id", type=str, default=None,
+                        help="the seq id")
+    parser.add_argument("--seq", type=str, default=None,
+                        help="when to input a seq")
+    parser.add_argument("--seq_type", type=str, default=None, required=True, choices=["gene", "prot"],
+                        help="the input seq type")
 
-    # for many seqs
-    parser.add_argument(
-        "--input_file",
-        type=str,
-        default=None,
-        help="the input filepath(.fasta or .csv or .tsv)"
-    )
-    parser.add_argument(
-        "--id_idx",
-        type=int,
-        default=None,
-        help="id col idx(0 start)"
-    )
-    parser.add_argument(
-        "--seq_idx",
-        type=int,
-        default=None,
-        help="seq col idx(0 start)"
-    )
+    # for many
+    parser.add_argument("--input_file", type=str, default=None,
+                        help="the input file（format: fasta or csv or tsv)")
+    # for input csv
+    parser.add_argument("--id_idx", type=int, default=None,
+                        help="id col idx(0 start)")
+    parser.add_argument("--seq_idx", type=int, default=None,
+                        help="seq col idx(0 start)")
 
-    # saved path
-    parser.add_argument(
-        "--save_path",
-        type=str,
-        default=None,
-        help="embedding file save dir path"
-    )
+    # for saved path
+    parser.add_argument("--save_path", type=str, default=None,
+                        help="embedding file save dir path")
 
     # for trained llm checkpoint
-    # for trained LucaOne checkpoint
-    parser.add_argument(
-        "--llm_dir",
-        type=str,
-        default=None,
-        help="the llm model save dir"
-    )
-    parser.add_argument(
-        "--llm_type",
-        type=str,
-        default="lucaone",
-        choices=["lucaone"],
-        help="the llm type"
-    )
-    parser.add_argument(
-        "--llm_version",
-        type=str,
-        default="lucaone",
-        choices=["lucaone", "lucaone-gene", "lucaone-prot"],
-        help="the llm version"
-    )
-    parser.add_argument(
-        "--llm_step",
-        type=int,
-        default=None,
-        choices=["5600000", "17600000", "30000000", "36000000", "36800000"],
-        help="the llm checkpoint step."
-    )
+    parser.add_argument("--llm_dir", type=str, default="../models/",
+                        help="the llm model dir")
+    parser.add_argument("--llm_type", type=str, default="lucaone_gplm", choices=["esm", "lucaone_gplm"],
+                        help="the llm type")
+    parser.add_argument("--llm_version", type=str, default="v2.0", choices=["v2.0"],
+                        help="the llm version")
+    parser.add_argument("--llm_task_level", type=str, default="token_level,span_level,seq_level,structure_level",
+                        choices=["token_level", "token_level,span_level,seq_level,structure_level"],
+                        help="the llm task level")
+    parser.add_argument("--llm_time_str", type=str, default=None,
+                        help="the llm running time str")
+    parser.add_argument("--llm_step", type=int, default=None,
+                        help="the llm checkpoint step.")
 
     # for embedding
-    parser.add_argument(
-        "--embedding_type",
-        type=str,
-        default="matrix",
-        choices=["matrix", "vector"],
-        help="the llm embedding type."
-    )
-    parser.add_argument(
-        "--vector_type",
-        type=str,
-        default="mean",
-        choices=["mean", "max", "cls"],
-        help="the llm vector embedding type."
-    )
-    parser.add_argument(
-        "--trunc_type",
-        type=str,
-        default="right",
-        choices=["left", "right"],
-        help="llm trunc type when the seq is too longer."
-    )
-    parser.add_argument(
-        "--truncation_seq_length",
-        type=int,
-        default=4094,
-        help="the llm truncation seq length(not contain [CLS] and [SEP]."
-    )
-    parser.add_argument(
-        "--matrix_add_special_token",
-        action="store_true",
-        help="whether to add special tokens([CLS] and [SEP]) vector in seq representation matrix."
-    )
+    parser.add_argument("--embedding_type", type=str, default="matrix", choices=["matrix", "vector"],
+                        help="the llm embedding type.")
+    parser.add_argument("--vector_type",
+                        type=str,
+                        default="mean",
+                        choices=["mean", "max", "cls"],
+                        help="the llm vector embedding type.")
+    parser.add_argument("--trunc_type", type=str, default="right", choices=["left", "right"],
+                        help="llm trunc type.")
+    parser.add_argument("--truncation_seq_length", type=int, default=4094,
+                        help="the llm truncation seq length(not contain [CLS] and [SEP].")
+    parser.add_argument("--matrix_add_special_token", action="store_true",
+                        help="whether to add special token embedding vector in seq representation matrix")
+    parser.add_argument("--embedding_complete",  action="store_true",
+                        help="when the seq len > inference_max_len, then the embedding matrix is completed by segment")
+    parser.add_argument("--embedding_complete_seg_overlap",  action="store_true",
+                        help="segment overlap")
+    parser.add_argument("--embedding_fixed_len_a_time", type=int, default=None,
+                        help="the embedding fixed length of once inference for longer sequence")
 
-    parser.add_argument(
-        "--embedding_complete",
-        action="store_true",
-        help="when the seq len > inference_max_len, then the embedding matrix is completed by segment."
-    )
-    parser.add_argument(
-        "--embedding_complete_seg_overlap",
-        action="store_true",
-        help="segment overlap when the seq is too longer."
-    )
-    parser.add_argument(
-        "--embedding_fixed_len_a_time",
-        type=int,
-        default=None,
-        help="the embedding fixed length of once inference for longer sequence."
-    )
-
-    parser.add_argument(
-        '--gpu_id',
-        type=int,
-        default=-1,
-        help="the gpu id to use."
-    )
+    # for running
+    parser.add_argument('--gpu_id', type=int, default=-1,
+                        help="the gpu id to use.")
     input_args = parser.parse_args()
     return input_args
 
@@ -805,40 +726,42 @@ def main(model_args):
     print("*" * 50)
 
     if model_args.llm_dir is None:
-        model_args.llm_dir = "../"
-    if not hasattr(model_args, "llm_type") or model_args.llm_type is None:
-            model_args.llm_type = "lucaone"
-    if not hasattr(model_args, "llm_version") or model_args.llm_version is None:
-        model_args.llm_version = "lucaone"
-    if model_args.llm_step is None or model_args.llm_step not in ["5600000", "17600000", "30000000", "36000000" "36800000"]:
-        if model_args.llm_version == "lucaone":
-            model_args.llm_step = "30000000"
-        elif model_args.llm_version == "lucaone-gene":
-            model_args.llm_step = "36800000"
-        elif model_args.llm_version == "lucaone-prot":
-            model_args.llm_step = "30000000"
+        model_args.llm_dir = ".."
     download_trained_checkpoint_lucaone(
         llm_dir=model_args.llm_dir,
+        llm_time_str=model_args.llm_time_str,
         llm_type=model_args.llm_type,
+        llm_task_level=model_args.llm_task_level,
         llm_version=model_args.llm_version,
-        llm_step=str(model_args.llm_step)
+        llm_step=model_args.llm_step
     )
 
-    cur_log_filepath = "%s/logs/%s/%s/logs.txt" % (
-        model_args.llm_dir,
-        model_args.llm_type,
-        model_args.llm_version,
+    cur_log_filepath = "%s/logs/lucagplm/%s/%s/%s/%s/logs.txt" % (
+        model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
+        model_args.llm_type, model_args.llm_time_str
     )
     print("log_filepath: %s" % cur_log_filepath)
 
-    cur_model_dirpath = "%s/models/%s/%s/checkpoint-step%s" % (
-        model_args.llm_dir,
-        model_args.llm_type,
-        model_args.llm_version,
-        str(model_args.llm_step)
+    cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-%d" % (
+        model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
+        model_args.llm_type, model_args.llm_time_str, model_args.llm_step
     )
+    if not os.path.exists(cur_model_dirpath):
+        cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-step%d" % (
+            model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
+            model_args.llm_type, model_args.llm_time_str, model_args.llm_step
+        )
     print("model_dirpath: %s" % cur_model_dirpath)
 
+    if not os.path.exists(cur_model_dirpath):
+        cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-step%d" % (
+            model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
+            model_args.llm_type, model_args.llm_time_str, model_args.llm_step
+        )
+        cur_log_filepath = "%s/logs/lucagplm/%s/%s/%s/%s/logs.txt" % (
+            model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
+            model_args.llm_type, model_args.llm_time_str
+        )
     if global_log_filepath != cur_log_filepath or global_model_dirpath != cur_model_dirpath:
         global_log_filepath = cur_log_filepath
         global_model_dirpath = cur_model_dirpath
@@ -850,6 +773,7 @@ def main(model_args):
     if model_args.gpu_id >= 0:
         gpu_id = model_args.gpu_id
     else:
+        # gpu_id = available_gpu_id()
         gpu_id = -1
         print("gpu_id: ", gpu_id)
 
