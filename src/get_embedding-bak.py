@@ -20,19 +20,20 @@ sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
 try:
-    from .args import Args
-    from .file_operator import fasta_reader, csv_reader, tsv_reader
-    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
-        download_trained_checkpoint_lucaone, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
-    from .models.lucaone_gplm import LucaGPLM
-    from .models.lucaone_gplm_config import LucaGPLMConfig
-    from .models.alphabet import Alphabet
-    from .batch_converter import BatchConverter
+    from args import Args
+    from file_operator import fasta_reader, csv_reader, tsv_reader
+    from utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
+        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, \
+        calc_emb_filename_by_seq_id, seq_type_is_match_seq
+    from models.lucaone_gplm import LucaGPLM
+    from models.lucaone_gplm_config import LucaGPLMConfig
+    from models.alphabet import Alphabet
+    from batch_converter import BatchConverter
 except ImportError as e:
     from src.args import Args
     from src.file_operator import fasta_reader, csv_reader, tsv_reader
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
-        download_trained_checkpoint_lucaone, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
+        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.lucaone_gplm_config import LucaGPLMConfig
     from src.models.alphabet import Alphabet
@@ -727,7 +728,7 @@ def main(model_args):
 
     if model_args.llm_dir is None:
         model_args.llm_dir = ".."
-    download_trained_checkpoint_lucaone(
+    download_trained_checkpoint_lucaone_v1(
         llm_dir=model_args.llm_dir,
         llm_time_str=model_args.llm_time_str,
         llm_type=model_args.llm_type,
@@ -740,7 +741,7 @@ def main(model_args):
         model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
         model_args.llm_type, model_args.llm_time_str
     )
-    print("log_filepath: %s" % cur_log_filepath)
+    print("log_filepath: %s" % os.path.abspath(cur_log_filepath))
 
     cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-%d" % (
         model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
@@ -751,7 +752,7 @@ def main(model_args):
             model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
             model_args.llm_type, model_args.llm_time_str, model_args.llm_step
         )
-    print("model_dirpath: %s" % cur_model_dirpath)
+    print("model_dirpath: %s" % os.path.abspath(cur_model_dirpath))
 
     if not os.path.exists(cur_model_dirpath):
         cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-step%d" % (
@@ -791,7 +792,7 @@ def main(model_args):
         matrix_add_special_token = model_args.matrix_add_special_token
     seq_type = model_args.seq_type
     emb_save_path = model_args.save_path
-    print("emb save dir: %s" % emb_save_path)
+    print("emb save dir: %s" % os.path.abspath(emb_save_path))
     if seq_type not in ["gene", "prot"]:
         print("Error! arg: --seq_type=%s is not gene or prot" % seq_type)
         sys.exit(-1)
