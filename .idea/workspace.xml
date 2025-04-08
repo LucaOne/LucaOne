@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add released">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/downstream/get_embedding.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,6 +202,7 @@
       <workItem from="1744038123040" duration="125000" />
       <workItem from="1744077191718" duration="1000" />
       <workItem from="1744077552650" duration="257000" />
+      <workItem from="1744115465228" duration="66000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -496,7 +498,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744032445620</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="feature: update readme">
+      <created>1744112755240</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1744112755240</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -521,9 +530,9 @@
     <MESSAGE value="feature: add clean_seq_luca" />
     <MESSAGE value="feature: update writer_info_tb" />
     <MESSAGE value="feature: add the LucaTeam Image" />
-    <MESSAGE value="feature: update readme" />
     <MESSAGE value="feature: add released" />
     <MESSAGE value="feature: update checkpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: update checkpoint" />
+    <MESSAGE value="feature: update readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
   </component>
 </project>
