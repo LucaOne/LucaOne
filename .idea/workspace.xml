@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add released">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/downstream/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -37,7 +40,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/pics" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/downstream" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -49,11 +52,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/downstream" />
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/pics" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/src/data_analysis" />
-      <recent name="$PROJECT_DIR$/src/eval" />
-      <recent name="$PROJECT_DIR$/src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pics" />
@@ -182,7 +185,21 @@
       <workItem from="1741414636847" duration="11000" />
       <workItem from="1741939834034" duration="25000" />
       <workItem from="1742344927157" duration="75000" />
-      <workItem from="1742984104069" duration="242000" />
+      <workItem from="1742984104069" duration="307000" />
+      <workItem from="1742984900432" duration="5000" />
+      <workItem from="1743054521094" duration="2464000" />
+      <workItem from="1743131788531" duration="33000" />
+      <workItem from="1743473431853" duration="1646000" />
+      <workItem from="1743653508306" duration="17000" />
+      <workItem from="1744012734887" duration="6982000" />
+      <workItem from="1744023839989" duration="1296000" />
+      <workItem from="1744029222205" duration="1320000" />
+      <workItem from="1744030970357" duration="138000" />
+      <workItem from="1744031587689" duration="285000" />
+      <workItem from="1744032385945" duration="67000" />
+      <workItem from="1744038123040" duration="125000" />
+      <workItem from="1744077191718" duration="1000" />
+      <workItem from="1744077552650" duration="257000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -464,7 +481,21 @@
       <option name="project" value="LOCAL" />
       <updated>1741414452932</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="feature: update readme">
+      <created>1742984389766</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1742984389766</updated>
+    </task>
+    <task id="LOCAL-00042" summary="feature: add released">
+      <created>1744032445620</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1744032445620</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,6 +521,7 @@
     <MESSAGE value="feature: update writer_info_tb" />
     <MESSAGE value="feature: add the LucaTeam Image" />
     <MESSAGE value="feature: update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
+    <MESSAGE value="feature: add released" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: add released" />
   </component>
 </project>
