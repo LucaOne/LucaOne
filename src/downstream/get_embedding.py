@@ -734,7 +734,7 @@ def main(model_args):
         model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
         model_args.llm_type, model_args.llm_time_str
     )
-    print("log_filepath: %s" % cur_log_filepath)
+    print("log_filepath: %s" % os.path.abspath(cur_log_filepath))
 
     cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-%d" % (
         model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
@@ -745,7 +745,7 @@ def main(model_args):
             model_args.llm_dir if model_args.llm_dir else "..", model_args.llm_version, model_args.llm_task_level,
             model_args.llm_type, model_args.llm_time_str, model_args.llm_step
         )
-    print("model_dirpath: %s" % cur_model_dirpath)
+    print("model_dirpath: %s" % os.path.abspath(cur_model_dirpath))
 
     if not os.path.exists(cur_model_dirpath):
         cur_model_dirpath = "%s/models/lucagplm/%s/%s/%s/%s/checkpoint-step%d" % (
@@ -780,7 +780,7 @@ def main(model_args):
     embedding_type = model_args.embedding_type
     seq_type = model_args.seq_type
     emb_save_path = model_args.save_path
-    print("emb save dir: %s" % emb_save_path)
+    print("emb save dir: %s" % os.path.abspath(emb_save_path))
     if seq_type not in ["gene", "prot"]:
         print("Error! arg: --seq_type=%s is not gene or prot" % seq_type)
         sys.exit(-1)
