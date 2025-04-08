@@ -4,7 +4,7 @@ LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and P
 # TimeLine     
 * 2025/04/08:
   * LucaOne         
-    add `checkpoint=36000000` for `LucaOne`         
+    add `checkpoint=36000000` for `LucaOne`            
     location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone/lucaone/checkpoint-step36000000/'>checkpoint-step36000000</a>
   * LucaOne-Prot       
     add `checkpoint=30000000` for `LucaOne-Prot` (only trained using `Protein`)    
