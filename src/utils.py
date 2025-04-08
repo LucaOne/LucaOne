@@ -2051,7 +2051,7 @@ def download_trained_checkpoint_lucaone(
                 os.makedirs(models_local_dir)
             models_base_url = os.path.join(base_url, models_path)
             download_folder(models_base_url, models_file_names, models_local_dir)
-            print("LucaOne Downloaded.")
+            print("LucaOne Download Completed.")
             print("*" * 50)
     except Exception as e:
         print(e)
