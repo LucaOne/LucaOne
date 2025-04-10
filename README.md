@@ -3,6 +3,17 @@ LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and P
 
 # TimeLine     
 * 2025/04/08:
+<<<<<<< HEAD
+  * **LucaOne**          
+    add `checkpoint=36000000` for `LucaOne`     
+    location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone/lucaone/checkpoint-step36000000/'>checkpoint-step36000000</a>
+  * **LucaOne-Gene**          
+    add `checkpoint=36800000` for `LucaOne-Gene` (only trained using `DNA` and `RNA`)     
+    location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone-gene/lucaone/checkpoint-step36800000/'>checkpoint-step36800000</a>
+  * **LucaOne-Prot**       
+    add `checkpoint=30000000` for `LucaOne-Prot` (only trained using `Protein`)       
+    location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone-prot/lucaone/checkpoint-step30000000/'>checkpoint-step30000000</a>
+=======
   * LucaOne         
     add `checkpoint=36000000` for `LucaOne`            
     location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone/lucaone/checkpoint-step36000000/'>checkpoint-step36000000</a>
@@ -12,11 +23,21 @@ LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and P
   * LucaOne-Gene     
     add `checkpoint=36800000` for `LucaOne-Gene` (only trained using `DNA` and `RNA`)     
     location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/models/lucaone-gene/lucaone/checkpoint-step36800000/'>checkpoint-step36800000</a>
+>>>>>>> 13079e2fdc4cba8c5f3e356cc8a8dea615946f3c
 
 * 2024/10/01: optimized embedding inference code: `src/get_embedding.py`      
 * 2024/08/01: add `checkpoint=17600000`, location: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20231125113045/checkpoint-step17600000/'>checkpoint-step17600000</a>   
 * 2024/07/24: feature: add `continue training when failure`   
 
+<<<<<<< HEAD
+
+## Embedding Recommendation
+| --llm_type | --llm_version  |              --llm_step              |                 Usage (seq_type)                 |
+|:----------:|:--------------:|:------------------------------------:|:------------------------------------------------:|
+| `lucaone`  |   `lucaone`    | `36000000`, `17600000`, or `5600000` | both `gene` (i.e. `DNA`, `RNA`) and `prot` sequences |
+| `lucaone`  | `lucaone-gene` |              `36800000`              |    only for `gene` (i.e. `DNA`, `RNA`) sequences     |
+| `lucaone`  | `lucaone-prot` |              `30000000`              |             only for `prot` sequence             | 
+=======
 This project will download the checkpoint automatically from our `FTP` according to the value of parameter:
 * **--llm_type**
 * **--llm_version**
@@ -28,6 +49,7 @@ This project will download the checkpoint automatically from our `FTP` according
 | `lucaone`  |   `lucaone`    | `36000000` | both `gene` (i.e. `DNA`, `RNA`) and `prot` sequences |
 | `lucaone`  | `lucaone-gene` | `36800000` |    only for `gene` (i.e. `DNA`, `RNA`) sequences     |
 | `lucaone`  | `lucaone-prot` | `30000000` |             only for `prot` sequence             | 
+>>>>>>> 13079e2fdc4cba8c5f3e356cc8a8dea615946f3c
 
 
 
@@ -135,7 +157,11 @@ Pre-training data, code, and trained checkpoint of LucaOne, embedding inference 
 
 The LucaOne's model code is available at: <a href='https://github.com/LucaOne/LucaOne'>LucaOne Github </a> or <a href='http://47.93.21.181/lucaone/LucaOne/'>LucaOne</a>.   
 
+<<<<<<< HEAD
+The trained-checkpoint files are available at: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest/'>TrainedCheckPoint</a>.  
+=======
 The trained-checkpoint files are available at: <a href='http://47.93.21.181/lucaone/TrainedCheckPoint/latest'>TrainedCheckPoint</a>.  
+>>>>>>> 13079e2fdc4cba8c5f3e356cc8a8dea615946f3c
 
 LucaOne's representational inference code is available at: <a href='https://github.com/LucaOne/LucaOneApp'>LucaOneApp Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneApp'>LucaOneApp</a>. 
 
@@ -164,12 +190,12 @@ Other supplementary materials are available at: <a href='http://47.93.21.181/luc
 ## 13. Zenodo         
 We have uploaded the model code, training scripts, and embedding inference scripts of LucaOne;    
 The mode code, training and evaluation scripts, datasets, and trained models for downstream tasks,    
-and additional supplementary materials to Zenodo (10.5281/zenodo.14977739).    
+and additional supplementary materials to Zenodo (10.5281/zenodo.15171943).    
 However, due to the substantial size of the pretraining dataset of LucaOne, it has not been included on Zenodo.     
 Instead, it remains accessible via our publicly available FTP server (**<a href='http://47.93.21.181/lucaone/PreTrainingDataset/'>LucaOne Pretraining Dataset</a>**).     
 We are actively seeking an open FTP platform with sufficient storage capacity to host our pretraining dataset.
 
-**<a href='https://doi.org/10.5281/zenodo.14977739'>LucaOne Zenodo</a>**   
+**<a href='https://doi.org/10.5281/zenodo.15171943'>LucaOne Zenodo</a>**   
 
 
 

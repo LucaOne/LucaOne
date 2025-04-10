@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/downstream/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="developv2" />
+        <entry key="$PROJECT_DIR$" value="develop" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -199,7 +201,15 @@
       <workItem from="1744038123040" duration="125000" />
       <workItem from="1744077191718" duration="1000" />
       <workItem from="1744077552650" duration="257000" />
-      <workItem from="1744115465228" duration="66000" />
+      <workItem from="1744078477872" duration="477000" />
+      <workItem from="1744079238898" duration="55000" />
+      <workItem from="1744095362669" duration="846000" />
+      <workItem from="1744106419346" duration="3323000" />
+      <workItem from="1744116207131" duration="30000" />
+      <workItem from="1744171950484" duration="68000" />
+      <workItem from="1744176881452" duration="33000" />
+      <workItem from="1744203778582" duration="110000" />
+      <workItem from="1744203947225" duration="96000" />
     </task>
     <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
       <created>1722218669521</created>
@@ -496,27 +506,41 @@
       <updated>1744032445620</updated>
     </task>
     <task id="LOCAL-00043" summary="feature: update readme">
-      <created>1744112755240</created>
+      <created>1744115617618</created>
       <option name="number" value="00043" />
       <option name="presentableId" value="LOCAL-00043" />
       <option name="project" value="LOCAL" />
-      <updated>1744112755240</updated>
+      <updated>1744115617618</updated>
     </task>
     <task id="LOCAL-00044" summary="feature: update readme">
-      <created>1744116343276</created>
+      <created>1744116601365</created>
       <option name="number" value="00044" />
       <option name="presentableId" value="LOCAL-00044" />
       <option name="project" value="LOCAL" />
-      <updated>1744116343276</updated>
+      <updated>1744116601365</updated>
     </task>
     <task id="LOCAL-00045" summary="feature: update readme">
-      <created>1744116558610</created>
+      <created>1744172003833</created>
       <option name="number" value="00045" />
       <option name="presentableId" value="LOCAL-00045" />
       <option name="project" value="LOCAL" />
-      <updated>1744116558610</updated>
+      <updated>1744172003833</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="feature: update readme">
+      <created>1744203876599</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1744203876599</updated>
+    </task>
+    <task id="LOCAL-00047" summary="feature: update readme">
+      <created>1744204093904</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1744204093904</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +566,6 @@
     <MESSAGE value="feature: update writer_info_tb" />
     <MESSAGE value="feature: add the LucaTeam Image" />
     <MESSAGE value="feature: add released" />
-    <MESSAGE value="feature: update checkpoint" />
     <MESSAGE value="feature: update readme" />
     <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
   </component>
