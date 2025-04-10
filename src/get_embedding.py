@@ -808,7 +808,7 @@ def main(model_args):
     if model_args.llm_dir is None:
         model_args.llm_dir = "../"
     if not hasattr(model_args, "llm_type") or model_args.llm_type is None:
-            model_args.llm_type = "lucaone"
+        model_args.llm_type = "lucaone"
     if not hasattr(model_args, "llm_version") or model_args.llm_version is None:
         model_args.llm_version = "lucaone"
     if model_args.llm_step is None or model_args.llm_step not in ["5600000", "17600000", "30000000", "36000000" "36800000"]:
