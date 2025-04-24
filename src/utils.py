@@ -2010,8 +2010,19 @@ def download_trained_checkpoint_lucaone_v1(
     try:
         logs_file_names = ["logs.txt"]
         models_file_names = ["config.json", "pytorch.pth", "training_args.bin", "tokenizer/alphabet.pkl"]
-        logs_path = "logs/lucagplm/%s/%s/%s/%s" % (llm_version, llm_task_level, llm_type, llm_time_str)
-        models_path = "models/lucagplm/%s/%s/%s/%s/checkpoint-step%s" % (llm_version, llm_task_level, llm_type, llm_time_str, llm_step)
+        logs_path = "logs/lucagplm/%s/%s/%s/%s" % (
+            llm_version,
+            llm_task_level,
+            llm_type,
+            llm_time_str
+        )
+        models_path = "models/lucagplm/%s/%s/%s/%s/checkpoint-step%s" % (
+            llm_version,
+            llm_task_level,
+            llm_type,
+            llm_time_str,
+            llm_step
+        )
         logs_local_dir = os.path.join(llm_dir, logs_path)
         print("llm_dir: %s" % llm_dir)
         print("logs_local_dir: %s" % logs_local_dir)
@@ -2056,7 +2067,10 @@ def download_trained_checkpoint_lucaone_v1(
     except Exception as e:
         print(e)
         print("Download automatically LucaOne Trained CheckPoint failed!")
-        print("You can manually download 'logs/' and 'models/' into local directory: %s/ from %s" % (os.path.abspath(llm_dir), os.path.join(base_url, "TrainedCheckPoint/")))
+        print("You can manually download 'logs/' and 'models/' into local directory: %s/ from %s" % (
+            os.path.abspath(llm_dir),
+            base_url
+        ))
         raise Exception(e)
 
 
@@ -2132,6 +2146,6 @@ def download_trained_checkpoint_lucaone(
         print("Download automatically LucaOne Trained CheckPoint failed!")
         print("You can manually download 'logs/' and 'models/' into local directory: %s/ from %s" % (
             os.path.abspath(llm_dir),
-            os.path.join(base_url, "TrainedCheckPoint/")
+            base_url
         ))
         raise Exception(e)
