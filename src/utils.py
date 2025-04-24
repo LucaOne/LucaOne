@@ -2004,7 +2004,7 @@ def download_trained_checkpoint_lucaone(
         llm_version="v2.0",
         llm_task_level="token_level,span_level,seq_level,structure_level",
         llm_time_str="20231125113045",
-        llm_step="17600000",
+        llm_step="36000000",
         base_url="http://47.93.21.181/lucaone/TrainedCheckPoint"
 ):
     try:

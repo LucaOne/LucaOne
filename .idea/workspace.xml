@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
+      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/downstream/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/downstream/args.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/args.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +47,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/downstream" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/training" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -52,11 +59,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/training" />
       <recent name="$PROJECT_DIR$/src/downstream" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/pics" />
       <recent name="$PROJECT_DIR$/data" />
-      <recent name="$PROJECT_DIR$/src/data_analysis" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pics" />
@@ -210,14 +217,11 @@
       <workItem from="1744203778582" duration="110000" />
       <workItem from="1744203947225" duration="96000" />
       <workItem from="1744279220164" duration="394000" />
-      <workItem from="1744280108221" duration="74000" />
-    </task>
-    <task id="LOCAL-00001" summary="feature: add `continue training when failure`">
-      <created>1722218669521</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1722218669521</updated>
+      <workItem from="1744280108221" duration="113000" />
+      <workItem from="1744351386625" duration="627000" />
+      <workItem from="1744617313476" duration="5020000" />
+      <workItem from="1744882997147" duration="4012000" />
+      <workItem from="1745469462816" duration="2593000" />
     </task>
     <task id="LOCAL-00002" summary="feature: add `continue training when failure`">
       <created>1722218680788</created>
@@ -555,7 +559,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744279605657</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="feature: update readme">
+      <created>1744280207651</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1744280207651</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

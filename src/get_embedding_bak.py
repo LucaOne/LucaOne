@@ -19,12 +19,12 @@ sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
 try:
-    from .args import Args
-    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace
-    from .models.lucaone_gplm import LucaGPLM
-    from .models.lucaone_gplm_config import LucaGPLMConfig
-    from .models.alphabet import Alphabet
-    from .batch_converter import BatchConverter
+    from args import Args
+    from utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace
+    from models.lucaone_gplm import LucaGPLM
+    from models.lucaone_gplm_config import LucaGPLMConfig
+    from models.alphabet import Alphabet
+    from batch_converter import BatchConverter
 except ImportError as e:
     from src.args import Args
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace

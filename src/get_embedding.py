@@ -20,14 +20,14 @@ sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
 try:
-    from .args import Args
-    from .file_operator import fasta_reader, csv_reader, tsv_reader
-    from .utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
+    from args import Args
+    from file_operator import fasta_reader, csv_reader, tsv_reader
+    from utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
         download_trained_checkpoint_lucaone, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
-    from .models.lucaone_gplm import LucaGPLM
-    from .models.lucaone_gplm_config import LucaGPLMConfig
-    from .models.alphabet import Alphabet
-    from .batch_converter import BatchConverter
+    from models.lucaone_gplm import LucaGPLM
+    from models.lucaone_gplm_config import LucaGPLMConfig
+    from models.alphabet import Alphabet
+    from batch_converter import BatchConverter
 except ImportError as e:
     from src.args import Args
     from src.file_operator import fasta_reader, csv_reader, tsv_reader
