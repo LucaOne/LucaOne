@@ -125,7 +125,7 @@ Training scripts are under the directory `src/training`, including 4 shell scrip
 `run_multi_v2.0_prot.sh`:  individual protein training with 7 pre-training tasks.    
 
 ## 10. Continue Training when Failure     
-`run_multi_v2.0_continue.sh`:  continue training when failure.  
+`run_multi_v2.0_continue.sh`:  continue training when failure (i.e. an interruption occurs).   
 
 ## 11. Data and Code Availability     
 **FTP:**   

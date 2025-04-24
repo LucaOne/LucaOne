@@ -34,23 +34,6 @@
 
 for `gene` or `prot`
 ```
-cd ./src/llm/lucaone_gplm
-export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7,8"
-python get_embedding.py \
-    --llm_dir ../../../  \
-    --llm_type lucaone \
-    --llm_version lucaone \
-    --llm_step 36000000 \
-    --truncation_seq_length 10240 \
-    --trunc_type right \
-    --seq_type prot \
-    --input_file ../../../data/test_data/prot/test_prot.fasta \
-    --save_path ../../../embedding/lucaone/test_data/prot/test_prot \
-    --embedding_type matrix \
-    --matrix_add_special_token \
-    --embedding_complete \
-    --embedding_complete_seg_overlap \
-    --gpu_id 0
 
 # for DNA or RNA
 cd ./src/llm/lucaone_gplm
@@ -70,4 +53,25 @@ python get_embedding.py \
     --embedding_complete \
     --embedding_complete_seg_overlap \
     --gpu_id 0
+    
+# for Protein
+cd ./src/llm/lucaone_gplm
+export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7,8"
+python get_embedding.py \
+    --llm_dir ../../../  \
+    --llm_type lucaone \
+    --llm_version lucaone \
+    --llm_step 36000000 \
+    --truncation_seq_length 10240 \
+    --trunc_type right \
+    --seq_type prot \
+    --input_file ../../../data/test_data/prot/test_prot.fasta \
+    --save_path ../../../embedding/lucaone/test_data/prot/test_prot \
+    --embedding_type matrix \
+    --matrix_add_special_token \
+    --embedding_complete \
+    --embedding_complete_seg_overlap \
+    --gpu_id 0
+
+
 ```
