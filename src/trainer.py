@@ -129,10 +129,12 @@ def train(
     # Distributed training (should be after apex fp16 initialization)
     if args.n_gpu > 1:
         # find_unused_parameters=True
-        if "all" in args.pretrain_task_level_type:
+        if "all" in args.pretrain_task_level_type or args.pretrain_task_level_type == "token_level":
             find_unused_parameters = False
-        else:
+        elif "gene" in args.pretrain_task_level_type and "prot" in args.pretrain_task_level_type:
             find_unused_parameters = True
+        else:
+            find_unused_parameters = False
         model = torch.nn.parallel.DistributedDataParallel(
             model,
             device_ids=[args.local_rank],
@@ -650,10 +652,12 @@ def train_continue(
     # Distributed training (should be after apex fp16 initialization)
     if args.n_gpu > 1:
         # find_unused_parameters=True
-        if "all" in args.pretrain_task_level_type:
+        if "all" in args.pretrain_task_level_type or args.pretrain_task_level_type == "token_level":
             find_unused_parameters = False
-        else:
+        elif "gene" in args.pretrain_task_level_type and "prot" in args.pretrain_task_level_type:
             find_unused_parameters = True
+        else:
+            find_unused_parameters = False
         model = torch.nn.parallel.DistributedDataParallel(
             model,
             device_ids=[args.local_rank],

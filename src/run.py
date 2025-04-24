@@ -239,7 +239,19 @@ def get_args():
                         type=str, required=True, help="pretrain task level name")
 
     # for training
-    parser.add_argument("--local_rank", default=-1, type=int, help="main node local rank.")
+    # for GPU, 单卡默认为-1，不需要显示的设置
+    parser.add_argument(
+        "--local_rank",
+        default=-1,
+        type=int,
+        help="main node local rank, for pytorch<1.9."
+    )
+    parser.add_argument(
+        "--local-rank",
+        default=-1,
+        type=int,
+        help="main node local rank, for pytorch>=1.9."
+    )
     parser.add_argument("--seed", default=1111, type=int, help="random seed value.")
     parser.add_argument('--no_cuda', action='store_true', help='whether not to use GPU')
     parser.add_argument("--fp16", action="store_true",
@@ -353,6 +365,11 @@ def check_args(args):
     :param args:
     :return:
     '''
+    # for pytorch 1.9+
+    if "LOCAL_RANK" in os.environ:
+        local_rank = int(os.environ["LOCAL_RANK"])
+        args.local_rank = local_rank
+        print("args.local_rank: %d" % args.local_rank)
     assert args.log_dir is not None
     assert args.tb_log_dir is not None
     if args.tokenization:
