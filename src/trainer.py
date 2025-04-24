@@ -572,6 +572,131 @@ def train(
     return None, None, None
 
 
+def train_for_record(
+        args,
+        model,
+        model_config,
+        dataloader,
+        label_size_dict,
+        parse_row_func,
+        batch_data_func,
+        tokenizer,
+        train_sampler=None,
+        log_fp=None
+):
+    # logger
+    if args.local_rank in [0, -1]:
+        tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
+        if log_fp is None:
+            log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
+        output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(0))
+        save_check_point(args, model, model_config, tokenizer, output_dir)
+    no_decay = ["bias", "layer_norm.weight"]
+    no_decay_keys = [n for n, _ in model.named_parameters() if any(nd in n.lower() for nd in no_decay)]
+    print("no_decay_keys: ")
+    print(no_decay_keys)
+    optimizer_grouped_parameters = [
+        {
+            "params": [p for n, p in model.named_parameters() if not any(nd in n.lower() for nd in no_decay)],
+            "weight_decay": args.weight_decay
+        },
+        {
+            "params": [p for n, p in model.named_parameters() if any(nd in n.lower() for nd in no_decay)],
+            "weight_decay": 0.0
+        }
+    ]
+    if args.multi_loss_strategy == "auto_weight":
+        args.awl = AutomaticWeightedLoss(loss_mum=args.task_num)
+        optimizer_grouped_parameters.append({
+            "params": args.awl.parameters(),
+            "weight_decay": 0.0
+        })
+
+    optimizer = AdamW(
+        optimizer_grouped_parameters,
+        lr=args.learning_rate,
+        betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
+        eps=args.adam_epsilon
+    )
+    print("Init lr: ", get_lr(optimizer))
+    print("Peak lr: ", args.learning_rate)
+    print("Scheduler_type: %s" % args.scheduler_type)
+    args.warmup_steps = int(args.warmup_steps / args.gradient_accumulation_steps)
+    if args.warmup_steps < 1000:
+        args.warmup_steps = 2000
+    if args.scheduler_type == "step" and args.max_steps >= 100000:
+        # https://blog.csdn.net/orangerfun/article/details/120400247
+        '''
+        optimizer： 优化器
+        num_warmup_steps：初始预热步数
+        num_training_steps：整个训练过程的总步数
+        '''
+        print("Use Warmup, warmup_steps=%d, max_steps=%d" % (args.warmup_steps, args.max_steps))
+        scheduler = get_linear_schedule_with_warmup(
+            optimizer,
+            num_warmup_steps=args.warmup_steps,
+            num_training_steps=args.max_steps
+        )
+    else:
+        print("Use ExponentialLR")
+        args.scheduler_type = "epoch"
+        scheduler = torch.optim.lr_scheduler.ExponentialLR(
+            optimizer,
+            gamma=args.decay_rate if args.decay_rate > 0 else 0.9
+        )
+    if args.fp16:
+        try:
+            from apex import amp
+        except ImportError:
+            raise ImportError("Please install apex from https://www.github.com/nvidia/apex to use fp16 training.")
+        model, optimizer = amp.initialize(model, optimizer, opt_level=args.fp16_opt_level)
+
+    # Distributed training (should be after apex fp16 initialization)
+    if args.n_gpu > 1:
+        # find_unused_parameters=True
+        if "all" in args.pretrain_task_level_type:
+            find_unused_parameters = False
+        else:
+            find_unused_parameters = True
+        model = torch.nn.parallel.DistributedDataParallel(
+            model,
+            device_ids=[args.local_rank],
+            output_device=args.local_rank,
+            find_unused_parameters=find_unused_parameters
+        )
+    optimizer.zero_grad()
+
+    cur_global_steps = 0
+    for epoch in range(args.num_train_epochs):
+        if train_sampler:
+            train_sampler.set_epoch(epoch)
+        if args.local_rank in [0, -1]:
+            print("\n=====Epoch: %06d=====" % (epoch + 1))
+
+        trained_sample_ids = []
+        # 训练模式
+        model.train()
+        for step, batch in enumerate(dataloader):
+            # 用于训练中途失败来恢复现场
+            sample_ids = batch["sample_ids"]
+            trained_sample_ids.extend(sample_ids)
+            if len(trained_sample_ids) >= args.processed_sample_cnt and (cur_global_steps + 1) % args.save_steps == 0:
+                write_processed_sample_ids(
+                    dataset_type="train",
+                    sample_ids=trained_sample_ids,
+                    time_str=args.time_str,
+                    epoch=epoch + 1,
+                    local_rank=args.local_rank
+                )
+                trained_sample_ids = []
+            cur_global_steps += 1
+            if cur_global_steps >= args.end_step:
+                print("cur_global_steps: %d" % cur_global_steps)
+                return None, None, None
+
+    return None, None, None
+
+
 def train_continue(
         args,
         model,

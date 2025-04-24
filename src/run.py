@@ -28,7 +28,7 @@ try:
     from encoder import Encoder
     from utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from multi_files_stream_dataloader import MultiFilesStreamLoader
-    from trainer import train, train_continue
+    from trainer import train, train_continue, train_for_record
     from models.lucaone_gplm import LucaGPLM
     from models.alphabet import Alphabet
     from models.lucaone_gplm_config import LucaGPLMConfig
@@ -38,7 +38,7 @@ except ImportError as e:
     from src.encoder import Encoder
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from src.multi_files_stream_dataloader import MultiFilesStreamLoader
-    from src.trainer import train, train_continue
+    from src.trainer import train, train_continue, train_for_record
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.alphabet import Alphabet
     from src.models.lucaone_gplm_config import LucaGPLMConfig
@@ -323,6 +323,8 @@ def get_args():
                         help="the global loss to continue training")
     parser.add_argument("--epoch_loss", default=0, type=float,
                         help="the epoch loss to continue training")
+    parser.add_argument("--record", action="store_true", help="only for record trained sample ids")
+    parser.add_argument("--end_step", default=None, type=int, help="end record steps")
     input_args = parser.parse_args()
     return input_args
 
@@ -1296,7 +1298,20 @@ def main():
             collate_fn=batch_data_func
         )
     if args.do_train:
-        if args.trained_checkpoint is not None:
+        if args.record:
+            global_step, avg_loss, max_metric_model_info = train_for_record(
+                args,
+                model,
+                model_config,
+                dataloader=train_dataloader,
+                label_size_dict=args.label_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                tokenizer=tokenizer,
+                train_sampler=None,
+                log_fp=log_fp
+            )
+        elif args.trained_checkpoint is not None:
             global_step, avg_loss, max_metric_model_info = train_continue(
                 args,
                 model,

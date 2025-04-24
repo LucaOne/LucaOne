@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
+      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/args.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/args.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/downstream/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -221,14 +217,7 @@
       <workItem from="1744351386625" duration="627000" />
       <workItem from="1744617313476" duration="5020000" />
       <workItem from="1744882997147" duration="4012000" />
-      <workItem from="1745469462816" duration="2593000" />
-    </task>
-    <task id="LOCAL-00002" summary="feature: add `continue training when failure`">
-      <created>1722218680788</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1722218680788</updated>
+      <workItem from="1745469462816" duration="3298000" />
     </task>
     <task id="LOCAL-00003" summary="feature: add `continue training when failure`">
       <created>1722413740568</created>
@@ -566,7 +555,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744280207651</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="feature: update readme">
+      <created>1745475844420</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1745475844421</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
