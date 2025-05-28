@@ -91,18 +91,25 @@ def load_model(log_filepath, model_dirpath):
     args.loss_type = args_info["loss_type"]
     args.output_mode = args_info["output_mode"]
     args.max_length = args_info["max_length"]
+    args.pretrained_model_name = None
     args.classifier_size = args_info["classifier_size"]
     try:
         model = model_class.from_pretrained(model_dirpath, args=args)
     except Exception as e:
         model = None
     if model is None:
+        """
         try:
-            model = torch.load(os.path.join(model_dirpath, "pytorch.pt"), map_location=torch.device("cpu"))
+            model = torch.load(os.path.join(
+                model_dirpath, "pytorch.pt"), 
+                map_location=torch.device("cpu")
+            )
         except Exception as e:
             model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(os.path.join(model_dirpath, "pytorch.pth"),
-                                             map_location=torch.device("cpu"))
+            pretrained_net_dict = torch.load(
+                os.path.join(model_dirpath, "pytorch.pth"),
+                map_location=torch.device("cpu")
+            )
             model_state_dict_keys = set()
             for key in model.state_dict():
                 model_state_dict_keys.add(key)
@@ -117,6 +124,26 @@ def load_model(log_filepath, model_dirpath):
                 if name in model_state_dict_keys:
                     new_state_dict[name] = v
             model.load_state_dict(new_state_dict)
+        """
+        model = model_class(model_config, args=args)
+        pretrained_net_dict = torch.load(
+            os.path.join(model_dirpath, "pytorch.pth"),
+            map_location=torch.device("cpu")
+        )
+        model_state_dict_keys = set()
+        for key in model.state_dict():
+            model_state_dict_keys.add(key)
+
+        new_state_dict = OrderedDict()
+        for k, v in pretrained_net_dict.items():
+            if k.startswith("module."):
+                # remove `module.`
+                name = k[7:]
+            else:
+                name = k
+            if name in model_state_dict_keys:
+                new_state_dict[name] = v
+        model.load_state_dict(new_state_dict)
     # print(model)
     return args_info, model_config, model, tokenizer
 
@@ -213,8 +240,8 @@ def get_embedding(args_info, model_config, tokenizer, model, seq, seq_type, devi
         new_batch["return_dict"] = True
         new_batch["repr_layers"] = list(range(args_info["num_hidden_layers"] + 1))
         batch = new_batch
-        print("batch:")
-        print(batch)
+        # print("batch:")
+        # print(batch)
     else:
         raise Exception("Not support model_type=%s" % args_info["model_type"])
     print("llm embedding device: ", device)

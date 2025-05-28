@@ -325,16 +325,40 @@ def get_args():
     parser.add_argument("--embed_scale", type=float, default=1.0, help="embed scale")
     parser.add_argument("--pretrained_model_name", type=str, default=None, help="whether to use the pretrained model init parameters")
 
-    parser.add_argument("--processed_sample_cnt", default=1000000, type=int, help="processed how many samples to write sample ids")
-    parser.add_argument("--trained_checkpoint", default=None, type=int, help="the checkpoint of continue to pretraining")
-    parser.add_argument("--trained_epoch", default=None, type=int,
-                        help="the epoch of continue to pretraining")
-    parser.add_argument("--removed_continue", action="store_true",
-                        help="whether to remove done samples to continue training")
-    parser.add_argument("--global_loss", default=0, type=float,
-                        help="the global loss to continue training")
-    parser.add_argument("--epoch_loss", default=0, type=float,
-                        help="the epoch loss to continue training")
+    parser.add_argument(
+        "--processed_sample_cnt", 
+        default=1000000, 
+        type=int,
+        help="processed how many samples to write sample ids")
+    parser.add_argument(
+        "--trained_checkpoint",
+        default=None,
+        type=int,
+        help="the checkpoint of continue to pretraining"
+    )
+    parser.add_argument(
+        "--trained_epoch",
+        default=None,
+        type=int,
+        help="the epoch of continue to pretraining"
+    )
+    parser.add_argument(
+        "--removed_continue",
+        action="store_true",
+        help="whether to remove done samples to continue training"
+    )
+    parser.add_argument(
+        "--global_loss",
+        default=0,
+        type=float,
+        help="the global loss to continue training"
+    )
+    parser.add_argument(
+        "--epoch_loss",
+        default=0,
+        type=float,
+        help="the epoch loss to continue training"
+    )
     input_args = parser.parse_args()
     return input_args
 
