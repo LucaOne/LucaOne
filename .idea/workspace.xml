@@ -17,11 +17,7 @@
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,14 +287,9 @@
       <workItem from="1747362090678" duration="77000" />
       <workItem from="1748313369148" duration="1336000" />
       <workItem from="1748315395304" duration="943000" />
-      <workItem from="1748427545032" duration="820000" />
-    </task>
-    <task id="LOCAL-00004" summary="feature: optimized code">
-      <created>1722485450834</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1722485450834</updated>
+      <workItem from="1748427545032" duration="910000" />
+      <workItem from="1748432182098" duration="77000" />
+      <workItem from="1748920592249" duration="1156000" />
     </task>
     <task id="LOCAL-00005" summary="feature: optimized code">
       <created>1722505196753</created>
@@ -636,7 +627,14 @@
       <option name="project" value="LOCAL" />
       <updated>1745499093347</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="feature: update readme">
+      <created>1748428446994</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1748428446995</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

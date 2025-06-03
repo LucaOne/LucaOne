@@ -122,7 +122,10 @@ Training scripts are under the directory `src/training`, including 4 shell scrip
 `run_multi_v2.0.sh`:  nucleic acid(DNA+RNA) and protein mixed training with 10 pre-training tasks.   
 `run_multi_mask_v2.0.sh`:  nucleic acid(DNA+RNA) and protein mixed training with only 2 mask pre-training tasks.       
 `run_multi_v2.0_gene.sh`:  individual nucleic acid training with 3 pre-training tasks.   
-`run_multi_v2.0_prot.sh`:  individual protein training with 7 pre-training tasks.    
+`run_multi_v2.0_prot.sh`:  individual protein training with 7 pre-training tasks.      
+
+### TensorBoard for Loss Curve     
+tensorboard --logdir tb-logs --bind_all --port 8008
 
 ## 10. Continue Training when Failure     
 `run_multi_v2.0_continue.sh`:  continue training when failure (i.e. an interruption occurs).   
