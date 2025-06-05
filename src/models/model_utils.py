@@ -95,22 +95,29 @@ def create_output_loss_lucagplm(task_level_type, task_level_name, config, args):
         return_types = ["output", "loss"]
     else:
         return_types = ["dropout", "hidden_layer", "hidden_act", "classifier", "output", "loss"]
-    return create_loss_function(config,
-                                args,
-                                task_level_type=task_level_type,
-                                task_level_name=task_level_name,
-                                sigmoid=args.sigmoid[task_level_type][task_level_name],
-                                output_mode=args.output_mode[task_level_type][task_level_name],
-                                num_labels=config.num_labels,
-                                loss_type=args.loss_type[task_level_type][task_level_name],
-                                ignore_index=args.ignore_index,
-                                pair_level=True if task_level_type == "pair_level" else False,
-                                return_types=return_types)
+    return create_loss_function(
+        config,
+        args,
+        task_level_type=task_level_type,
+        task_level_name=task_level_name,
+        sigmoid=args.sigmoid[task_level_type][task_level_name],
+        output_mode=args.output_mode[task_level_type][task_level_name],
+        num_labels=config.num_labels,
+        loss_type=args.loss_type[task_level_type][task_level_name],
+        ignore_index=args.ignore_index,
+        pair_level=True if task_level_type == "pair_level" else False,
+        return_types=return_types
+    )
 
 
 def create_output_loss(task_level_type, task_level_name, cls_module, config, args):
     cls = None
     if task_level_type in ["token_level", "whole_level"]:
         cls = cls_module(config)
-    dropout, hidden_layer, hidden_act, classifier, output, loss_fct = create_output_loss_lucagplm(task_level_type, task_level_name, config, args)
+    dropout, hidden_layer, hidden_act, classifier, output, loss_fct = create_output_loss_lucagplm(
+        task_level_type,
+        task_level_name,
+        config,
+        args
+    )
     return cls, dropout, hidden_layer, hidden_act, classifier, output, loss_fct
