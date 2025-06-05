@@ -179,14 +179,14 @@ class AxialTransformerLayer(nn.Module):
         row_self_attention = RowSelfAttention(
             embedding_dim,
             num_attention_heads,
-            dropout=dropout,
+            dropout=attention_dropout,
             max_tokens_per_msa=max_tokens_per_msa,
         )
 
         column_self_attention = ColumnSelfAttention(
             embedding_dim,
             num_attention_heads,
-            dropout=dropout,
+            dropout=attention_dropout,
             max_tokens_per_msa=max_tokens_per_msa,
         )
 
