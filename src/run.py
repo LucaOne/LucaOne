@@ -68,7 +68,7 @@ def get_args():
     parser.add_argument("--tokenization", action="store_true", help="whether to use tokenization")
     parser.add_argument("--tokenizer_dir", default=None, type=str, help="the pretrained tokenizer info path(subword-level)")
     parser.add_argument("--vocab_path", default=None, type=str, help="vocab path(char-level)")
-    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end poistion([CLS], [SEP]) of the input sequence')
+    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end position([CLS], [SEP]) of the input sequence')
     parser.add_argument('--padding', default='right', type=str, choices=["right", "left"], help='padding side type')
     parser.add_argument('--truncation', default='right', type=str, choices=["right", "left"], help='truncation side type')
     parser.add_argument('--no_token_type_embeddings', action='store_true', help='whether no token type embeddings')
@@ -82,18 +82,45 @@ def get_args():
                         help="pooling type for encoder")
 
     # for model selection
-    parser.add_argument('--model_type', default="lucaone_gplm", type=str,
-                        choices=["lucaone_gplm"], help='the model type')
+    parser.add_argument(
+        '--model_type',
+        default="lucaone_gplm",
+        type=str,
+        choices=["lucaone_gplm"],
+        help='the model type'
+    )
     parser.add_argument('--model_config', type=str, default=None, help='the model config file path')
 
     # for dataset
-    parser.add_argument("--train_data_dir", default=None, type=str, required=True, help="the train dataset dir path.")
-    parser.add_argument("--dev_data_dir", default=None, type=str, required=True, help="the evaluation dataset dir path.")
-    parser.add_argument("--test_data_dir", default=None, type=str, required=True, help="the test dataset dir path.")
+    parser.add_argument(
+        "--train_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the train dataset dir path."
+    )
+    parser.add_argument(
+        "--dev_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the validation dataset dir path."
+    )
+    parser.add_argument(
+        "--test_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the testing dataset dir path."
+    )
 
     # for label list
-    parser.add_argument("--gene_mask_label_filepath", default=None, type=str,
-                        help="the label filepath of token-level/gene_mask task(vocab).")
+    parser.add_argument(
+        "--gene_mask_label_filepath", 
+        default=None, 
+        type=str,
+        help="the label filepath of token-level/gene_mask task(vocab)."
+    )
     parser.add_argument("--prot_mask_label_filepath", default=None, type=str,
                         help="the label filepath of token-level/prot_mask task(vocab).")
     parser.add_argument("--gene_type_label_filepath", default=None, type=str,
@@ -119,7 +146,7 @@ def get_args():
     parser.add_argument("--trans_label_filepath", default=None, type=str,
                         help="the label filepath of gene-protein pair-level/trans task.")
 
-    # for pretrain task output mode
+    # for pretraining task output mode
     parser.add_argument("--gene_mask_output_mode", default=None, type=str,
                         choices=["binary_class", "multi_class", "multi_label", "regression"],
                         help="the output mode of token-level/gene_mask task.")
@@ -234,9 +261,20 @@ def get_args():
     # for stream dataloader
     parser.add_argument('--buffer_size', default=10240, type=int, help='buffer size for the dataset loading')
     parser.add_argument('--worker_num', default=1, type=int, help='worker number for the data loader.')
-    parser.add_argument("--pretrain_task_level_type", default="all", type=str, required=True, help="pre train task level type")
-    parser.add_argument("--pretrain_task_level_name", default="gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_domain,prot_homo,prot_taxonomy,prot_keyword,prot_structure,trans",
-                        type=str, required=True, help="pretrain task level name")
+    parser.add_argument(
+        "--pretrain_task_level_type",
+        default="all",
+        type=str,
+        required=True,
+        help="pre train task level type"
+    )
+    parser.add_argument(
+        "--pretrain_task_level_name",
+        default="gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_domain,prot_homo,prot_taxonomy,prot_keyword,prot_structure,trans",
+        type=str,
+        required=True,
+        help="pretrain task level name"
+    )
 
     # for training
     # for GPU, 单卡默认为-1，不需要显示的设置

@@ -80,14 +80,41 @@ def get_args():
                         help="pooling type for encoder")
 
     # for model selection
-    parser.add_argument('--model_type', default="lucaone_longformer", type=str,
-                        choices=["lucaone_bert", "lucaone_longformer", "lucaone_bigbird", "lucaone_gplm"], help='the model type')
-    parser.add_argument('--model_config', type=str, default=None, help='the model config file path')
+    parser.add_argument(
+        '--model_type', 
+        default="lucaone_gplm",
+        type=str,
+        choices=["lucaone_bert", "lucaone_longformer", "lucaone_bigbird", "lucaone_gplm"],
+        help='the model type'
+    )
+    parser.add_argument(
+        '--model_config', 
+        type=str, 
+        default=None, 
+        help='the model config file path'
+    )
 
     # for dataset
-    parser.add_argument("--train_data_dir", default=None, type=str, help="the train dataset dir path.")
-    parser.add_argument("--dev_data_dir", default=None, type=str, required=True, help="the evaluation dataset dir path.")
-    parser.add_argument("--test_data_dir", default=None, type=str, required=True, help="the test dataset dir path.")
+    parser.add_argument(
+        "--train_data_dir",
+        default=None,
+        type=str,
+        help="the train dataset dir path."
+    )
+    parser.add_argument(
+        "--dev_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the validation dataset dir path."
+    )
+    parser.add_argument(
+        "--test_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the testing dataset dir path."
+    )
 
     # for label list
     parser.add_argument("--gene_mask_label_filepath", default=None, type=str,
@@ -117,7 +144,7 @@ def get_args():
     parser.add_argument("--trans_label_filepath", default=None, type=str,
                         help="the label filepath of gene-protein pair-level/trans task.")
 
-    # for pretrain task output mode
+    # for pretraining task output mode
     parser.add_argument("--gene_mask_output_mode", default=None, type=str,
                         choices=["binary_class", "multi_class", "multi_label", "regression"],
                         help="the output mode of token-level/gene_mask task.")
@@ -158,7 +185,7 @@ def get_args():
                         choices=["binary_class", "multi_class", "multi_label", "regression"],
                         help="the output mode of gene-protein pair-level/trans task.")
 
-    # the loss info for the pretrain tasks
+    # the loss info for the pretraining tasks
     parser.add_argument("--ignore_index", type=int, default=-100, help="the ignore index.")
     parser.add_argument("--non_ignore", type=str, default=None, help="none ignore tasks.")
     parser.add_argument("--gene_mask_loss_type", type=str, default="cce",
