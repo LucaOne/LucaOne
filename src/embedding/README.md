@@ -36,10 +36,10 @@ for `gene` or `prot`
 ```
 
 # for DNA or RNA
-cd ./src/llm/lucaone_gplm
+cd ./src/embedding/
 export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7,8"
 python get_embedding.py \
-    --llm_dir ../../../  \
+    --llm_dir ../../ \
     --llm_type lucaone \
     --llm_version lucaone \
     --llm_step 36000000 \
@@ -58,7 +58,7 @@ python get_embedding.py \
 cd ./src/llm/lucaone_gplm
 export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7,8"
 python get_embedding.py \
-    --llm_dir ../../../  \
+    --llm_dir ../../ \
     --llm_type lucaone \
     --llm_version lucaone \
     --llm_step 36000000 \

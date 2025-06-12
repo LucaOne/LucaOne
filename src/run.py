@@ -292,16 +292,23 @@ def get_args():
     )
     parser.add_argument("--seed", default=1111, type=int, help="random seed value.")
     parser.add_argument('--no_cuda', action='store_true', help='whether not to use GPU')
-    parser.add_argument("--fp16", action="store_true",
-                        help="whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit")
-    parser.add_argument("--fp16_opt_level", type=str, default="O1",
-                        help="for fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. See details at https://nvidia.github.io/apex/amp.html")
+    parser.add_argument(
+        "--fp16",
+        action="store_true",
+        help="whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit"
+    )
+    parser.add_argument(
+        "--fp16_opt_level", 
+        type=str, 
+        default="O1",
+        help="for fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. See details at https://nvidia.github.io/apex/amp.html"
+    )
     parser.add_argument("--per_gpu_train_batch_size", default=8, type=int, help="batch size per GPU/CPU for training.")
     parser.add_argument("--per_gpu_eval_batch_size", default=8, type=int, help="batch size per GPU/CPU for evaluation.")
     parser.add_argument("--learning_rate", default=1e-4, type=float, help="the initial learning rate for Adam.")
     parser.add_argument("--weight_decay", default=0.0, type=float, help="weight decay if we apply some.")
     parser.add_argument("--decay_rate", default=0.9, type=float, help="weight decay of learning rate.")
-    parser.add_argument("--lr_update_steps", default=30000, type=int, help="weight decay of learning rate.")
+    parser.add_argument("--lr_update_steps", default=30000, type=int, help="lr updated steps when using epoch strategy for lr updating.")
     parser.add_argument("--adam_epsilon", default=1e-8, type=float, help="epsilon for Adam optimizer.")
     parser.add_argument("--max_grad_norm", default=1.0, type=float, help="max gradient norm.")
     parser.add_argument("--num_train_epochs", default=20, type=int, help="total number of training epochs to perform.")
@@ -314,9 +321,13 @@ def get_args():
     parser.add_argument("--do_test", action="store_true", help="whether to run predict on the test set.")
     parser.add_argument("--do_metrics", action="store_true", help="whether to run eval metrics on the test set.")
     parser.add_argument("--evaluate_during_training", action="store_true", help="where to evaluate during training.")
-    parser.add_argument("--best_metric_type", type=str, default="f1",
-                        choices=["loss", "acc", "jaccard", "prec", "recall", "f1", "fmax", "roc_auc", "pr_auc"],
-                        help="which metric for model selected")
+    parser.add_argument(
+        "--best_metric_type",
+        type=str,
+        default="f1",
+        choices=["loss", "acc", "jaccard", "prec", "recall", "f1", "fmax", "roc_auc", "pr_auc"],
+        help="which metric for model selected"
+    )
     parser.add_argument("--loss_logging_steps", type=int, default=100, help="Loss log every X updates steps.")
     parser.add_argument("--logging_steps", type=int, default=10000, help="Log every X updates steps.")
     parser.add_argument("--save_steps", type=int, default=10000, help="Save checkpoint every X updates steps.")
@@ -330,9 +341,13 @@ def get_args():
     parser.add_argument("--output_dir", default=None, type=str, required=True, help="the output dir path")
 
     # for loss
-    parser.add_argument("--multi_loss_strategy", default="manual_weight", type=str,
-                        choices=["none", "manual_weight", "auto_weight", "dynamic_weight_average"],
-                        help="multi-task loss fusion strategy")
+    parser.add_argument(
+        "--multi_loss_strategy",
+        default="manual_weight",
+        type=str,
+        choices=["none", "manual_weight", "auto_weight", "dynamic_weight_average"],
+        help="multi-task loss fusion strategy"
+    )
     parser.add_argument("--pos_weight", default=None, type=float, help="positive weight")
     parser.add_argument("--gene_mask_weight", type=float, default=1.0, help="token-level/gene_mask task weight")
     parser.add_argument("--prot_mask_weight", type=float, default=1.0, help="token-level/prot_mask task weight")
