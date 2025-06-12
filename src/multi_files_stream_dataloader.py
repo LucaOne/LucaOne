@@ -185,7 +185,8 @@ class MultiFilesStreamLoader(object):
                     # line = self.read_one_line()
                     # self.buffer.append(self.encode_line(line))
                     # ct += 1
-                else: # reset
+                else:
+                    # reset
                     # print("file index %d" % (self.cur_file_idx % self.total_filename_num), end="", flush=True)
                     # one epoch over(all files readed)
                     self.epoch_over = True

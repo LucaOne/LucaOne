@@ -14,26 +14,28 @@ from transformers.configuration_utils import PretrainedConfig
 
 
 class LucaGPLMConfig(PretrainedConfig):
-    def __init__(self,
-                 vocab_size=-1,
-                 pad_token_id=0,
-                 max_position_embeddings: int = 4096,
-                 type_vocab_size: int = 2,
-                 num_hidden_layers: int = 24,
-                 hidden_size: int = 1280,
-                 num_attention_heads: int = 20,
-                 no_position_embeddings: bool = False,
-                 no_token_type_embeddings: bool = False,
-                 alphabet: str = "gene_prot",
-                 token_dropout: bool = True,
-                 attention_probs_dropout_prob=0.1,
-                 hidden_dropout_prob=0.1,
-                 classifier_dropout_prob=0.1,
-                 use_embed_layer_norm=True,
-                 use_last_layer_norm=True,
-                 embed_scale=1.0,
-                 ignore_index=-100,
-                 **kwargs):
+    def __init__(
+            self,
+            vocab_size=-1,
+            pad_token_id=0,
+            max_position_embeddings: int = 4096,
+            type_vocab_size: int = 2,
+            num_hidden_layers: int = 24,
+            hidden_size: int = 1280,
+            num_attention_heads: int = 20,
+            no_position_embeddings: bool = False,
+            no_token_type_embeddings: bool = False,
+            alphabet: str = "gene_prot",
+            token_dropout: bool = True,
+            attention_probs_dropout_prob=0.1,
+            hidden_dropout_prob=0.1,
+            classifier_dropout_prob=0.1,
+            use_embed_layer_norm=True,
+            use_last_layer_norm=True,
+            embed_scale=1.0,
+            ignore_index=-100,
+            **kwargs
+    ):
         super().__init__(pad_token_id=pad_token_id, **kwargs)
         self.alphabet = alphabet
         self.vocab_size = vocab_size

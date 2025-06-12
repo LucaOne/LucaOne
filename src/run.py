@@ -68,7 +68,7 @@ def get_args():
     parser.add_argument("--tokenization", action="store_true", help="whether to use tokenization")
     parser.add_argument("--tokenizer_dir", default=None, type=str, help="the pretrained tokenizer info path(subword-level)")
     parser.add_argument("--vocab_path", default=None, type=str, help="vocab path(char-level)")
-    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end poistion([CLS], [SEP]) of the input sequence')
+    parser.add_argument('--add_special_tokens', action='store_true', help='add special tokens in the start and end position([CLS], [SEP]) of the input sequence')
     parser.add_argument('--padding', default='right', type=str, choices=["right", "left"], help='padding side type')
     parser.add_argument('--truncation', default='right', type=str, choices=["right", "left"], help='truncation side type')
     parser.add_argument('--no_token_type_embeddings', action='store_true', help='whether no token type embeddings')
@@ -82,18 +82,45 @@ def get_args():
                         help="pooling type for encoder")
 
     # for model selection
-    parser.add_argument('--model_type', default="lucaone_gplm", type=str,
-                        choices=["lucaone_gplm"], help='the model type')
+    parser.add_argument(
+        '--model_type',
+        default="lucaone_gplm",
+        type=str,
+        choices=["lucaone_gplm"],
+        help='the model type'
+    )
     parser.add_argument('--model_config', type=str, default=None, help='the model config file path')
 
     # for dataset
-    parser.add_argument("--train_data_dir", default=None, type=str, required=True, help="the train dataset dir path.")
-    parser.add_argument("--dev_data_dir", default=None, type=str, required=True, help="the evaluation dataset dir path.")
-    parser.add_argument("--test_data_dir", default=None, type=str, required=True, help="the test dataset dir path.")
+    parser.add_argument(
+        "--train_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the train dataset dir path."
+    )
+    parser.add_argument(
+        "--dev_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the validation dataset dir path."
+    )
+    parser.add_argument(
+        "--test_data_dir",
+        default=None,
+        type=str,
+        required=True,
+        help="the testing dataset dir path."
+    )
 
     # for label list
-    parser.add_argument("--gene_mask_label_filepath", default=None, type=str,
-                        help="the label filepath of token-level/gene_mask task(vocab).")
+    parser.add_argument(
+        "--gene_mask_label_filepath", 
+        default=None, 
+        type=str,
+        help="the label filepath of token-level/gene_mask task(vocab)."
+    )
     parser.add_argument("--prot_mask_label_filepath", default=None, type=str,
                         help="the label filepath of token-level/prot_mask task(vocab).")
     parser.add_argument("--gene_type_label_filepath", default=None, type=str,
@@ -119,7 +146,7 @@ def get_args():
     parser.add_argument("--trans_label_filepath", default=None, type=str,
                         help="the label filepath of gene-protein pair-level/trans task.")
 
-    # for pretrain task output mode
+    # for pretraining task output mode
     parser.add_argument("--gene_mask_output_mode", default=None, type=str,
                         choices=["binary_class", "multi_class", "multi_label", "regression"],
                         help="the output mode of token-level/gene_mask task.")
@@ -234,9 +261,20 @@ def get_args():
     # for stream dataloader
     parser.add_argument('--buffer_size', default=10240, type=int, help='buffer size for the dataset loading')
     parser.add_argument('--worker_num', default=1, type=int, help='worker number for the data loader.')
-    parser.add_argument("--pretrain_task_level_type", default="all", type=str, required=True, help="pre train task level type")
-    parser.add_argument("--pretrain_task_level_name", default="gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_domain,prot_homo,prot_taxonomy,prot_keyword,prot_structure,trans",
-                        type=str, required=True, help="pretrain task level name")
+    parser.add_argument(
+        "--pretrain_task_level_type",
+        default="all",
+        type=str,
+        required=True,
+        help="pre train task level type"
+    )
+    parser.add_argument(
+        "--pretrain_task_level_name",
+        default="gene_mask,gene_type,gene_taxonomy,prot_mask,prot_site,prot_domain,prot_homo,prot_taxonomy,prot_keyword,prot_structure,trans",
+        type=str,
+        required=True,
+        help="pretrain task level name"
+    )
 
     # for training
     # for GPU, 单卡默认为-1，不需要显示的设置
@@ -254,16 +292,23 @@ def get_args():
     )
     parser.add_argument("--seed", default=1111, type=int, help="random seed value.")
     parser.add_argument('--no_cuda', action='store_true', help='whether not to use GPU')
-    parser.add_argument("--fp16", action="store_true",
-                        help="whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit")
-    parser.add_argument("--fp16_opt_level", type=str, default="O1",
-                        help="for fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. See details at https://nvidia.github.io/apex/amp.html")
+    parser.add_argument(
+        "--fp16",
+        action="store_true",
+        help="whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit"
+    )
+    parser.add_argument(
+        "--fp16_opt_level", 
+        type=str, 
+        default="O1",
+        help="for fp16: Apex AMP optimization level selected in ['O0', 'O1', 'O2', and 'O3']. See details at https://nvidia.github.io/apex/amp.html"
+    )
     parser.add_argument("--per_gpu_train_batch_size", default=8, type=int, help="batch size per GPU/CPU for training.")
     parser.add_argument("--per_gpu_eval_batch_size", default=8, type=int, help="batch size per GPU/CPU for evaluation.")
     parser.add_argument("--learning_rate", default=1e-4, type=float, help="the initial learning rate for Adam.")
     parser.add_argument("--weight_decay", default=0.0, type=float, help="weight decay if we apply some.")
     parser.add_argument("--decay_rate", default=0.9, type=float, help="weight decay of learning rate.")
-    parser.add_argument("--lr_update_steps", default=30000, type=int, help="weight decay of learning rate.")
+    parser.add_argument("--lr_update_steps", default=30000, type=int, help="lr updated steps when using epoch strategy for lr updating.")
     parser.add_argument("--adam_epsilon", default=1e-8, type=float, help="epsilon for Adam optimizer.")
     parser.add_argument("--max_grad_norm", default=1.0, type=float, help="max gradient norm.")
     parser.add_argument("--num_train_epochs", default=20, type=int, help="total number of training epochs to perform.")
@@ -276,9 +321,13 @@ def get_args():
     parser.add_argument("--do_test", action="store_true", help="whether to run predict on the test set.")
     parser.add_argument("--do_metrics", action="store_true", help="whether to run eval metrics on the test set.")
     parser.add_argument("--evaluate_during_training", action="store_true", help="where to evaluate during training.")
-    parser.add_argument("--best_metric_type", type=str, default="f1",
-                        choices=["loss", "acc", "jaccard", "prec", "recall", "f1", "fmax", "roc_auc", "pr_auc"],
-                        help="which metric for model selected")
+    parser.add_argument(
+        "--best_metric_type",
+        type=str,
+        default="f1",
+        choices=["loss", "acc", "jaccard", "prec", "recall", "f1", "fmax", "roc_auc", "pr_auc"],
+        help="which metric for model selected"
+    )
     parser.add_argument("--loss_logging_steps", type=int, default=100, help="Loss log every X updates steps.")
     parser.add_argument("--logging_steps", type=int, default=10000, help="Log every X updates steps.")
     parser.add_argument("--save_steps", type=int, default=10000, help="Save checkpoint every X updates steps.")
@@ -292,9 +341,13 @@ def get_args():
     parser.add_argument("--output_dir", default=None, type=str, required=True, help="the output dir path")
 
     # for loss
-    parser.add_argument("--multi_loss_strategy", default="manual_weight", type=str,
-                        choices=["none", "manual_weight", "auto_weight", "dynamic_weight_average"],
-                        help="multi-task loss fusion strategy")
+    parser.add_argument(
+        "--multi_loss_strategy",
+        default="manual_weight",
+        type=str,
+        choices=["none", "manual_weight", "auto_weight", "dynamic_weight_average"],
+        help="multi-task loss fusion strategy"
+    )
     parser.add_argument("--pos_weight", default=None, type=float, help="positive weight")
     parser.add_argument("--gene_mask_weight", type=float, default=1.0, help="token-level/gene_mask task weight")
     parser.add_argument("--prot_mask_weight", type=float, default=1.0, help="token-level/prot_mask task weight")
