@@ -1,7 +1,12 @@
 # LucaOne(LucaGPLM)     
 LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.   
 
-# TimeLine     
+# TimeLine      
+* 2025/06/16:  
+**The Pretraining Dataset uploaded CNSA**      
+The pre-training dataset of LucaOne has been deposited into CNGB Sequence Archive (CNSA) with accession number CNP0007266 (https://db.cngb.org/search/project/CNP0007266/).   
+
+
 * 2025/04/08:
   * **LucaOne**          
     add `checkpoint=36000000` for `LucaOne`     
@@ -131,6 +136,10 @@ tensorboard --logdir tb-logs --bind_all --port 8008
 `run_multi_v2.0_continue.sh`:  continue training when failure (i.e. an interruption occurs).   
 
 ## 11. Data and Code Availability     
+
+**The Pretraining Dataset uploaded CNSA**      
+The pre-training dataset of LucaOne has been deposited into CNGB Sequence Archive (CNSA) with accession number CNP0007266 (https://db.cngb.org/search/project/CNP0007266/).
+
 **FTP:**   
 Pre-training data, code, and trained checkpoint of LucaOne, embedding inference code, downstream validation tasks data & code, and other materials are available: <a href='http://47.93.21.181/lucaone/'>FTP</a>. 
 

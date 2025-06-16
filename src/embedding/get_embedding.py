@@ -42,6 +42,10 @@ from transformers import AutoTokenizer, PretrainedConfig, BertTokenizer
 from collections import OrderedDict
 
 
+global_log_filepath, global_model_dirpath, global_args_info, \
+global_model_config, global_model, global_tokenizer = None, None, None, None, None, None
+
+
 def load_model(
         log_filepath,
         model_dirpath,

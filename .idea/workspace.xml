@@ -20,10 +20,7 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/lucaone_gplm_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lucaone_gplm_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/multi_files_stream_dataloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/multi_files_stream_dataloader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -313,14 +310,9 @@
       <workItem from="1749608972340" duration="342000" />
       <workItem from="1749610066213" duration="1280000" />
       <workItem from="1749611981632" duration="1548000" />
-      <workItem from="1749698690509" duration="2073000" />
-    </task>
-    <task id="LOCAL-00008" summary="feature: optimized code">
-      <created>1723712963478</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1723712963478</updated>
+      <workItem from="1749698690509" duration="2404000" />
+      <workItem from="1749730381009" duration="180000" />
+      <workItem from="1750054104342" duration="617000" />
     </task>
     <task id="LOCAL-00009" summary="feature: optimized code">
       <created>1724232142048</created>
@@ -658,7 +650,14 @@
       <option name="project" value="LOCAL" />
       <updated>1749560493895</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="feature: update readme">
+      <created>1749730092010</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1749730092011</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
