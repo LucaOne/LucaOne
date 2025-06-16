@@ -39,7 +39,7 @@ This project will download the checkpoint automatically from our `FTP` according
 ## 1. LucaOne Workflow      
 
 <center>
-<img alt="The workflow of LucaOne." src="./pics/ModelArchitecture.png"/>
+<img alt="The workflow of LucaOne." src="./pics/ModelArchitecture.jpg"/>
 
 Fig. 1 The workflow of LucaOne.   
 </center>   
