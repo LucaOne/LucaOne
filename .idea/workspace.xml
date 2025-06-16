@@ -20,9 +20,6 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pics/ModelArchitecture.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -316,14 +313,7 @@
       <workItem from="1749730381009" duration="180000" />
       <workItem from="1750054104342" duration="617000" />
       <workItem from="1750055177368" duration="269000" />
-      <workItem from="1750056082827" duration="68000" />
-    </task>
-    <task id="LOCAL-00010" summary="feature: optimized code">
-      <created>1724741608076</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1724741608076</updated>
+      <workItem from="1750056082827" duration="149000" />
     </task>
     <task id="LOCAL-00011" summary="feature: add comments to the training shell script">
       <created>1725596363860</created>
@@ -661,7 +651,14 @@
       <option name="project" value="LOCAL" />
       <updated>1750055436752</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="feature: update readme">
+      <created>1750056221397</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1750056221397</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
