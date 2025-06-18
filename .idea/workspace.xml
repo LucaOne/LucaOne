@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update readme">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: add embedding save type: numpy or tensor">
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v1.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v2.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v3.txt" afterDir="false" />
@@ -16,10 +16,15 @@
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_bytes_check.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pics/ModelArchitecture.jpg" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embedding/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,13 +319,10 @@
       <workItem from="1750054104342" duration="617000" />
       <workItem from="1750055177368" duration="269000" />
       <workItem from="1750056082827" duration="149000" />
-    </task>
-    <task id="LOCAL-00011" summary="feature: add comments to the training shell script">
-      <created>1725596363860</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1725596363860</updated>
+      <workItem from="1750056317027" duration="29000" />
+      <workItem from="1750228481238" duration="7556000" />
+      <workItem from="1750236095591" duration="32000" />
+      <workItem from="1750237837428" duration="385000" />
     </task>
     <task id="LOCAL-00012" summary="feature: add comments to the training shell script">
       <created>1725612604916</created>
@@ -658,7 +660,14 @@
       <option name="project" value="LOCAL" />
       <updated>1750056221397</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="feature: update readme">
+      <created>1750056325903</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1750056325903</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,7 +694,8 @@
     <MESSAGE value="feature: add the LucaTeam Image" />
     <MESSAGE value="feature: add released" />
     <MESSAGE value="feature: update readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: update readme" />
+    <MESSAGE value="feature: add embedding save type: numpy or tensor" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: add embedding save type: numpy or tensor" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LucaOne$aspera_stats.coverage" NAME="aspera_stats Coverage Results" MODIFIED="1745891400392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />

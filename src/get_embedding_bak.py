@@ -98,33 +98,6 @@ def load_model(log_filepath, model_dirpath):
     except Exception as e:
         model = None
     if model is None:
-        """
-        try:
-            model = torch.load(os.path.join(
-                model_dirpath, "pytorch.pt"), 
-                map_location=torch.device("cpu")
-            )
-        except Exception as e:
-            model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(
-                os.path.join(model_dirpath, "pytorch.pth"),
-                map_location=torch.device("cpu")
-            )
-            model_state_dict_keys = set()
-            for key in model.state_dict():
-                model_state_dict_keys.add(key)
-
-            new_state_dict = OrderedDict()
-            for k, v in pretrained_net_dict.items():
-                if k.startswith("module."):
-                    # remove `module.`
-                    name = k[7:]
-                else:
-                    name = k
-                if name in model_state_dict_keys:
-                    new_state_dict[name] = v
-            model.load_state_dict(new_state_dict)
-        """
         model = model_class(model_config, args=args)
         pretrained_net_dict = torch.load(
             os.path.join(model_dirpath, "pytorch.pth"),
@@ -255,14 +228,55 @@ def get_embedding(args_info, model_config, tokenizer, model, seq, seq_type, devi
 def get_args():
     parser = argparse.ArgumentParser(description='LucaOne/LucaGPLM')
     # for logging
-    parser.add_argument("--dataset_type", type=str, default="v2.0", help="dataset type")
-    parser.add_argument("--model_type", type=str, default="lucaone_gplm", help="model type")
-    parser.add_argument("--task_level", type=str, default="token_level,span_level,seq_level,structure_level", help="task type")
-    parser.add_argument("--time_str", type=str, default="20231125113045", help="time str")
-    parser.add_argument("--step", type=int, default=5600000, help="step.")
-    parser.add_argument('--no_cuda', action='store_true', help='whether not to use GPU')
-    parser.add_argument("--seq", type=str, default=None, required=True, help="seq")
-    parser.add_argument("--seq_type", type=str, default=None, required=True, choices=["gene", "prot"], help="seq_type")
+    parser.add_argument(
+        "--dataset_type",
+        type=str,
+        default="v2.0",
+        help="dataset type"
+    )
+    parser.add_argument(
+        "--model_type",
+        type=str,
+        default="lucaone_gplm",
+        help="model type"
+    )
+    parser.add_argument(
+        "--task_level",
+        type=str,
+        default="token_level,span_level,seq_level,structure_level",
+        help="task type"
+    )
+    parser.add_argument(
+        "--time_str",
+        type=str,
+        default="20231125113045",
+        help="time str"
+    )
+    parser.add_argument(
+        "--step",
+        type=int,
+        default=5600000,
+        help="step."
+    )
+    parser.add_argument(
+        '--no_cuda',
+        action='store_true',
+        help='whether not to use GPU'
+    )
+    parser.add_argument(
+        "--seq",
+        type=str,
+        default=None,
+        required=True,
+        help="seq"
+    )
+    parser.add_argument(
+        "--seq_type",
+        type=str,
+        default=None,
+        required=True,
+        choices=["gene", "prot"], help="seq_type"
+    )
     args = parser.parse_args()
     return args
 
