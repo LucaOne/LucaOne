@@ -102,6 +102,9 @@ class GlobalMaskWeightedAttentionPooling1D(nn.Module):
         x = torch.sum(torch.unsqueeze(attention_probs, dim=-1) * x, dim=1)
         return x
 
+    def __repr__(self):
+        return self.__class__.__name__ + ' (' + str(self.embed_size) + (', bias=%r)' % self.use_bias)
+
 
 class GlobalMaskContextAttentionPooling1D(nn.Module):
     def __init__(self, embed_size, units=None, use_additive_bias=False, use_attention_bias=False):
@@ -145,6 +148,9 @@ class GlobalMaskContextAttentionPooling1D(nn.Module):
             attention_probs = nn.Softmax(dim=-1)(e)
         x = torch.sum(torch.unsqueeze(attention_probs, dim=-1) * x, dim=1)
         return x
+
+    def __repr__(self):
+        return self.__class__.__name__ + ' (' + str(self.embed_size) + ' -> ' + str(self.units) + ', bias=(%r, %r))' % (self.use_additive_bias, self.use_attention_bias)
 
 
 class GlobalMaskValueAttentionPooling1D(nn.Module):
@@ -192,7 +198,7 @@ class GlobalMaskValueAttentionPooling1D(nn.Module):
         return x
 
     def __repr__(self):
-        return self.__class__.__name__ + ' (' + str(self.embed_size) + ' -> ' + str(self.embed_size) + ')'
+        return self.__class__.__name__ + ' (' + str(self.embed_size) + ' -> ' + str(self.units) + ', bias=(%r, %r))' % (self.use_additive_bias, self.use_attention_bias)
 
 
 class GlobalMaskTransformerPooling1D(nn.Module):
