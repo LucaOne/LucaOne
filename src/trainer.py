@@ -428,7 +428,7 @@ def train(
                 with open(os.path.join(exception_path, "train_exception_input_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(batch) + "\n")
                     afp.flush()
-                debug_path = "../debug/train/local_rank%s/%s/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", str(epoch) + "_" + str(step))
+                debug_path = "../debug/%s/train/local_rank%s/%s/" % (args.time_str, "_" + str(args.local_rank) if args.local_rank >= 0 else "", str(epoch) + "_" + str(step))
                 if not os.path.exists(debug_path):
                     os.makedirs(debug_path)
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
@@ -978,7 +978,7 @@ def train_continue(
                 with open(os.path.join(exception_path, "train_exception_input_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(batch) + "\n")
                     afp.flush()
-                debug_path = "../debug/train/local_rank%s/%s/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", str(epoch) + "_" + str(step))
+                debug_path = "../debug/%s/train/local_rank%s/%s/" % (args.time_str, "_" + str(args.local_rank) if args.local_rank >= 0 else "", str(epoch) + "_" + str(step))
                 if not os.path.exists(debug_path):
                     os.makedirs(debug_path)
                 with open(os.path.join(debug_path, "train_exception_input_details.txt"), "a+") as afp:
