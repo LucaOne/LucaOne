@@ -126,7 +126,7 @@ def test(args, model, label_list, parse_row_func, batch_data_func, global_step, 
                 with open(os.path.join(exception_path, "test_exception_input_%d" % args.local_rank), "a+") as afp:
                     afp.write(str(batch) + "\n")
                     afp.flush()
-                debug_path = "../debug/test/local_rank%s/%d/" % ("_" + str(args.local_rank) if args.local_rank >= 0 else "", step)
+                debug_path = "../debug/%s/test/local_rank%s/%d/" % (args.time_str, "_" + str(args.local_rank) if args.local_rank >= 0 else "", step)
                 if not os.path.exists(debug_path):
                     os.makedirs(debug_path)
                 with open(os.path.join(debug_path, "test_exception_input_details.txt"), "a+") as afp:

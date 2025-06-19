@@ -20,11 +20,8 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -322,14 +319,8 @@
       <workItem from="1750056317027" duration="29000" />
       <workItem from="1750228481238" duration="7556000" />
       <workItem from="1750236095591" duration="32000" />
-      <workItem from="1750237837428" duration="385000" />
-    </task>
-    <task id="LOCAL-00012" summary="feature: add comments to the training shell script">
-      <created>1725612604916</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1725612604916</updated>
+      <workItem from="1750237837428" duration="524000" />
+      <workItem from="1750301872304" duration="85000" />
     </task>
     <task id="LOCAL-00013" summary="feature: add comments to the training shell script">
       <created>1726722271335</created>
@@ -667,7 +658,14 @@
       <option name="project" value="LOCAL" />
       <updated>1750056325903</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="feature: add embedding save type: numpy or tensor">
+      <created>1750238371757</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1750238371757</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
