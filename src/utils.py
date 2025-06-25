@@ -1245,7 +1245,6 @@ def calc_avg_loss(total_losses, nb_steps, total_steps=None):
             if key2 not in loss_detail[key1]:
                 loss_detail[key1][key2] = float(v)
             else:
-
                 loss_detail[key1][key2] += float(v)
             loss += float(v)
     all_result = {

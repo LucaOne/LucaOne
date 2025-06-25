@@ -20,8 +20,9 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,21 +321,14 @@
       <workItem from="1750228481238" duration="7556000" />
       <workItem from="1750236095591" duration="32000" />
       <workItem from="1750237837428" duration="524000" />
-      <workItem from="1750301872304" duration="85000" />
-    </task>
-    <task id="LOCAL-00013" summary="feature: add comments to the training shell script">
-      <created>1726722271335</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1726722271335</updated>
-    </task>
-    <task id="LOCAL-00014" summary="feature: optimized embedding inference code: 'src/get_embedding.py'">
-      <created>1728110836399</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1728110836399</updated>
+      <workItem from="1750301872304" duration="287000" />
+      <workItem from="1750302513824" duration="5000" />
+      <workItem from="1750303779284" duration="207000" />
+      <workItem from="1750318309165" duration="337000" />
+      <workItem from="1750477824496" duration="41000" />
+      <workItem from="1750478586033" duration="81000" />
+      <workItem from="1750818942718" duration="1556000" />
+      <workItem from="1750851094302" duration="40000" />
     </task>
     <task id="LOCAL-00015" summary="feature: optimized embedding inference code: 'src/get_embedding.py'">
       <created>1728283697348</created>
@@ -665,7 +659,21 @@
       <option name="project" value="LOCAL" />
       <updated>1750238371757</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="feature: add embedding save type: numpy or tensor">
+      <created>1750302132996</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1750302132997</updated>
+    </task>
+    <task id="LOCAL-00063" summary="feature: add embedding save type: numpy or tensor">
+      <created>1750318632780</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1750318632780</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

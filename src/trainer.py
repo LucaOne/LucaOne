@@ -566,6 +566,9 @@ def train(
         log_fp.flush()
 
     if args.n_gpu > 1:
+        dist.barrier()
+
+    if args.n_gpu > 1:
         cleanup()
 
     if args.local_rank in [0, -1]:
@@ -1114,6 +1117,9 @@ def train_continue(
             avg_time_per_epoch
         ))
         log_fp.flush()
+
+    if args.n_gpu > 1:
+        dist.barrier()
 
     if args.n_gpu > 1:
         cleanup()
