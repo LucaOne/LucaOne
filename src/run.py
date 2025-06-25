@@ -1416,8 +1416,6 @@ def main():
                 train_sampler=None,
                 log_fp=log_fp
             )
-    if args.n_gpu > 1:
-        dist.barrier()
         
 
 if __name__ == "__main__":
