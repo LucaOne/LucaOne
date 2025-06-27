@@ -1681,7 +1681,10 @@ def print_batch(
     :param local_rank:
     :return:
     '''
+    if key is None:
+        key = ""
     if isinstance(value, list):
+        wfp.write("list size: %d\n" % len(value))
         for idx, v in enumerate(value):
             if wfp is not None:
                 if v is not None:
@@ -1699,19 +1702,44 @@ def print_batch(
                 print("-" * 50)
             if v is not None:
                 try:
-                    value = v.detach().cpu().numpy().astype(int)
+                    dtype = v.dtype
+                    if dtype in [torch.float32, torch.float16, torch.float64, torch.float]:
+                        fmt = '%0.4f'
+                    else:
+                        fmt = '%i'
+                    value = v.detach().cpu().numpy()
                     if debug_path is not None:
                         if value.ndim == 3:
                             for dim_1_idx in range(value.shape[0]):
-                                np.savetxt(os.path.join(debug_path, "%s_batch_%d.txt" % (key, dim_1_idx)), value[dim_1_idx, :, :], fmt='%i', delimiter=",")
+                                np.savetxt(
+                                    os.path.join(debug_path, "%s_batch_idx_%d.txt" % (key, dim_1_idx)),
+                                    value[dim_1_idx, :, :],
+                                    fmt=fmt,
+                                    delimiter=","
+                                )
                         else:
-                            np.savetxt(os.path.join(debug_path, "%d.txt" % idx), value, fmt='%i', delimiter=",")
+                            np.savetxt(
+                                os.path.join(debug_path, "%s_idx_%d.txt" % (key, idx)),
+                                value,
+                                fmt=fmt,
+                                delimiter=","
+                            )
                     else:
                         if value.ndim == 3:
                             for dim_1_idx in range(value.shape[0]):
-                                np.savetxt(os.path.join(debug_path, "%s_batch_%d.txt" % (key, dim_1_idx)), value[dim_1_idx, :, :], fmt='%i', delimiter=",")
+                                np.savetxt(
+                                    os.path.join(debug_path, "%s_batch_idx_%d.txt" % (key, dim_1_idx)),
+                                    value[dim_1_idx, :, :],
+                                    fmt=fmt,
+                                    delimiter=","
+                                )
                         else:
-                            np.savetxt("%d.txt" % idx, value, fmt='%i', delimiter=",")
+                            np.savetxt(
+                                "%s_idx_%d.txt" % (key, idx),
+                                value,
+                                fmt=fmt,
+                                delimiter=","
+                            )
                 except Exception as e:
                     print(e)
     elif isinstance(value, dict):
@@ -1738,26 +1766,45 @@ def print_batch(
                 print("None")
             print("-" * 10)
         if value is not None:
-            if key != "prot_structure":
-                fmt = '%i'
-                d_type = int
-            else:
+            dtype = value.dtype
+            if dtype in [torch.float32, torch.float16, torch.float64, torch.float]:
                 fmt = '%0.4f'
-                d_type = float
+            else:
+                fmt = '%i'
             try:
-                value = value.detach().cpu().numpy().astype(d_type)
+                value = value.detach().cpu().numpy()
                 if debug_path is not None:
                     if value.ndim == 3:
                         for dim_1_idx in range(value.shape[0]):
-                            np.savetxt(os.path.join(debug_path, "%s_batch_%d.txt" % (key, dim_1_idx)), value[dim_1_idx, :, :], fmt=fmt, delimiter=",")
+                            np.savetxt(
+                                os.path.join(debug_path, "%s_batch_idx_%d.txt" % (key, dim_1_idx)),
+                                value[dim_1_idx, :, :],
+                                fmt=fmt,
+                                delimiter=","
+                            )
                     else:
-                        np.savetxt(os.path.join(debug_path, "%s.txt" % key), value, fmt=fmt, delimiter=",")
+                        np.savetxt(
+                            os.path.join(debug_path, "%s.txt" % key),
+                            value,
+                            fmt=fmt,
+                            delimiter=","
+                        )
                 else:
                     if value.ndim == 3:
                         for dim_1_idx in range(value.shape[0]):
-                            np.savetxt("%s_batch_%d.txt" % (key, dim_1_idx), value[dim_1_idx, :, :], fmt=fmt, delimiter=",")
+                            np.savetxt(
+                                "%s_batch_idx_%d.txt" % (key, dim_1_idx),
+                                value[dim_1_idx, :, :],
+                                fmt=fmt,
+                                delimiter=","
+                            )
                     else:
-                        np.savetxt("%s.txt" % key, value, fmt=fmt, delimiter=",")
+                        np.savetxt(
+                            "%s.txt" % key,
+                            value,
+                            fmt=fmt,
+                            delimiter=","
+                        )
             except Exception as e:
                 print(e)
 
