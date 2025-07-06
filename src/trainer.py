@@ -394,7 +394,7 @@ def train(
                     if scheduler is not None:
                         scheduler_update_flag = False
                         if args.scheduler_type == "epoch":
-                            if epoch == 0 and args.lr_update_steps > 0 and cur_global_steps % args.lr_update_steps == 0:
+                            if epoch == 0 and args.lr_update_steps > 0 and (step + 1) % args.lr_update_steps == 0:
                                 # 第一次epoch内部根据steps调整
                                 # Update learning rate schedule
                                 scheduler.step()
@@ -402,7 +402,7 @@ def train(
                         else:
                             scheduler.step()
                             scheduler_update_flag = True
-                        if args.local_rank in [0, -1] and scheduler_update_flag and global_step % args.logging_steps == 0:
+                        if args.local_rank in [0, -1] and scheduler_update_flag and (step + 1) % args.logging_steps == 0:
                             if args.scheduler_type == "epoch":
                                 updated_lr = scheduler.get_last_lr()[0]
                             else:
@@ -745,7 +745,7 @@ def train_continue(
                         if scheduler is not None:
                             scheduler_update_flag = False
                             if args.scheduler_type == "epoch":
-                                if epoch == 0 and args.lr_update_steps > 0 and cur_global_steps % args.lr_update_steps == 0:
+                                if epoch == 0 and args.lr_update_steps > 0 and (step + 1) % args.lr_update_steps == 0:
                                     # 第一次epoch内部根据steps调整
                                     # Update learning rate schedule
                                     scheduler.step()
@@ -753,7 +753,7 @@ def train_continue(
                             else:
                                 scheduler.step()
                                 scheduler_update_flag = True
-                            if args.local_rank in [0, -1] and scheduler_update_flag and global_step % args.logging_steps == 0:
+                            if args.local_rank in [0, -1] and scheduler_update_flag and (step + 1) % args.logging_steps == 0:
                                 if args.scheduler_type == "epoch":
                                     updated_lr = scheduler.get_last_lr()[0]
                                 else:
@@ -947,7 +947,7 @@ def train_continue(
                         if scheduler is not None:
                             scheduler_update_flag = False
                             if args.scheduler_type == "epoch":
-                                if epoch == 0 and args.lr_update_steps > 0 and cur_global_steps % args.lr_update_steps == 0:
+                                if epoch == 0 and args.lr_update_steps > 0 and (step + 1) % args.lr_update_steps == 0:
                                     # 第一次epoch内部根据steps调整
                                     # Update learning rate schedule
                                     scheduler.step()
@@ -955,7 +955,7 @@ def train_continue(
                             else:
                                 scheduler.step()
                                 scheduler_update_flag = True
-                            if args.local_rank in [0, -1] and scheduler_update_flag and global_step % args.logging_steps == 0:
+                            if args.local_rank in [0, -1] and scheduler_update_flag and (step + 1) % args.logging_steps == 0:
                                 if args.scheduler_type == "epoch":
                                     updated_lr = scheduler.get_last_lr()[0]
                                 else:

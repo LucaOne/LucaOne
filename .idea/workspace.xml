@@ -20,7 +20,6 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,14 +328,8 @@
       <workItem from="1750851094302" duration="107000" />
       <workItem from="1750943907128" duration="199000" />
       <workItem from="1750945202126" duration="237000" />
-      <workItem from="1750989744200" duration="622000" />
-    </task>
-    <task id="LOCAL-00016" summary="feature: update readme">
-      <created>1728561844635</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1728561844635</updated>
+      <workItem from="1750989744200" duration="657000" />
+      <workItem from="1751785805697" duration="27000" />
     </task>
     <task id="LOCAL-00017" summary="feature: update readme">
       <created>1728562437493</created>
@@ -674,7 +667,14 @@
       <option name="project" value="LOCAL" />
       <updated>1750851198877</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="feature: add embedding save type: numpy or tensor">
+      <created>1750994274585</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1750994274585</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
