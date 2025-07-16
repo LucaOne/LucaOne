@@ -95,14 +95,26 @@ def print_batch_input1(batch):
                 if isinstance(item2[1], dict):
                     for item3 in item2[1].items():
                         print(item3[0] + ":")
-                        print(item3[1].shape)
-                        print(item3[1])
+                        if item3[1] is None:
+                            print("None")
+                        else:
+                            print(item3[1].shape)
+                            print(item3[1])
+                        print("*" * 10)
                 else:
-                    print(item2[1].shape)
-                    print(item2[1])
+                    if item2[1] is None:
+                        print("None")
+                    else:
+                        print(item2[1].shape)
+                        print(item2[1])
+                    print("*" * 10)
         else:
-            print(item[1].shape)
-            print(item[1])
+            if item[1] is None:
+                print("None")
+            else:
+                print(item[1].shape)
+                print(item[1])
+            print("*" * 10)
 
 
 def print_batch_input(batch):
@@ -119,9 +131,13 @@ def print_batch_input(batch):
             print(item[0] + ":")
             print_batch_output(item[1])
     else:
-        print(batch.shape)
-        print(batch)
-        print(torch.nonzero(torch.ne(batch, -100)))
+        if batch is None:
+            print("None")
+        else:
+            print(batch.shape)
+            print(batch)
+            print(torch.nonzero(torch.ne(batch, -100)))
+        print("*" * 10)
 
 
 def print_batch_output(batch):
@@ -138,8 +154,12 @@ def print_batch_output(batch):
             print(item[0] + ":")
             print_batch_output(item[1])
     else:
-        print(batch.shape)
-        print(batch)
+        if batch is None:
+            print("None")
+        else:
+            print(batch.shape)
+            print(batch)
+        print("*" * 10)
 
 
 def print_batch_device(batch_input, level):
@@ -153,6 +173,7 @@ def print_batch_device(batch_input, level):
                 print(item[1].device)
             else:
                 print("None")
+            print("*" * 10)
 
 
 def process_outputs(
@@ -1115,7 +1136,7 @@ def calc_loss(args, cur_losses, last_last_loss_list=None, last_loss_list=None):
             last_losses.append(last_loss_list[idx])
             last_last_losses.append(last_last_loss_list[idx])
         weights = dynamic_weight_average(last_last_losses, last_losses, args.task_num)
-        return sum([weights[idx] * cur_losses[idx] for idx in len(weights)])
+        return sum([weights[idx] * cur_losses[idx] for idx in range(len(weights))])
     elif args.multi_loss_strategy in ["none", "default"]:
         cur_loss_list = []
         if len(cur_losses) == 1:
@@ -1662,7 +1683,11 @@ def print_shape(item):
             print("idx: %d" % idx)
             print_shape(item1)
     else:
-        print("shape:", item.shape)
+        if item is None:
+            print("None")
+        else:
+            print("shape:", item.shape)
+        print("*" * 10)
 
 
 def print_batch(
@@ -1827,10 +1852,12 @@ def load_trained_model(model_config, args, model_class, model_dirpath):
         model = model_class.from_pretrained(model_dirpath, args=args)
     except Exception as e:
         model = model_class(model_config, args=args)
-        pretrained_net_dict = torch.load(os.path.join(model_dirpath, "pytorch.pth"),
-                                         map_location=torch.device("cpu"))
+        pretrained_net_dict = torch.load(
+            os.path.join(model_dirpath, "pytorch.pth"),
+            map_location=torch.device("cpu")
+        )
         model_state_dict_keys = set()
-        for key in model.state_dict():
+        for key in model.state_dict().keys():
             model_state_dict_keys.add(key)
         new_state_dict = OrderedDict()
         for k, v in pretrained_net_dict.items():

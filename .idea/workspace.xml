@@ -329,21 +329,11 @@
       <workItem from="1750851094302" duration="107000" />
       <workItem from="1750943907128" duration="199000" />
       <workItem from="1750945202126" duration="237000" />
-      <workItem from="1750989744200" duration="622000" />
-    </task>
-    <task id="LOCAL-00016" summary="feature: update readme">
-      <created>1728561844635</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1728561844635</updated>
-    </task>
-    <task id="LOCAL-00017" summary="feature: update readme">
-      <created>1728562437493</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1728562437493</updated>
+      <workItem from="1750989744200" duration="657000" />
+      <workItem from="1751785805697" duration="27000" />
+      <workItem from="1751786052341" duration="227000" />
+      <workItem from="1752590955871" duration="41000" />
+      <workItem from="1752668529067" duration="806000" />
     </task>
     <task id="LOCAL-00018" summary="feature: update readme">
       <created>1729778328682</created>
@@ -674,7 +664,21 @@
       <option name="project" value="LOCAL" />
       <updated>1750851198877</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="feature: add embedding save type: numpy or tensor">
+      <created>1750994274585</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1750994274585</updated>
+    </task>
+    <task id="LOCAL-00066" summary="feature: add embedding save type: numpy or tensor">
+      <created>1751786202745</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1751786202746</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
