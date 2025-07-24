@@ -1079,6 +1079,7 @@ def main(model_args):
                         int(truncation_seq_length * 0.95)
                     ))
                     truncation_seq_length = int(truncation_seq_length * 0.95)
+                torch.cuda.empty_cache()
             else:
                 print("%s exists." % embedding_filepath)
             done += 1
