@@ -867,7 +867,11 @@ def get_model(args):
         # load exists checkpoint
         print("load pretrained model: %s" % args.model_dirpath)
         try:
-            model = model_class.from_pretrained(args.model_dirpath, args=args)
+            model = model_class.from_pretrained(
+                args.model_dirpath,
+                config=model_config,
+                args=args
+            )
         except Exception as e:
             model = model_class(model_config, args=args)
             pretrained_net_dict = torch.load(os.path.join(args.model_dirpath, "pytorch.pth"), map_location=torch.device("cpu"))
