@@ -169,8 +169,8 @@ class LucaGPLM(nn.Module):
                     self.attention_heads,
                     add_bias_kv=False,
                     use_lucagplm1b_layer_norm=True,
-                    use_rotary_embeddings=True,
-                    )
+                    use_rotary_embeddings=self.no_position_embeddings,
+                )
                 for _ in range(self.num_layers)
             ]
         )
