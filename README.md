@@ -24,12 +24,12 @@ Our work focuses on building foundational models to decode the language of life.
 * **1st Place**, Clinical Automated Coding Task, CHIP 2022.     
 
 💡 Patents & Innovation      
-**Patent Portfolio:**     
+* **Patent Portfolio:**     
   * **15** patent applications filed
   * **10** patents granted
   * **1** PCT international patent pending
   
-**Industry Awards:**   
+* **Industry Awards:**   
   * **"Top 10 Patent"** Award, Alibaba Cloud & Tongyi Lab (FY2025)
   * **3rd Prize Patent** Award, Alibaba Cloud (FY2018)   
 
