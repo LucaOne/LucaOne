@@ -1,5 +1,40 @@
+# LucaGroup  
+Pioneering research of AI for Life Science at **Alibaba Cloud**.    
+Our work focuses on building foundational models to decode the language of life.    
+
+📚 Publications
+* **LucaProt**    
+<a href="https://www.cell.com/cell/fulltext/s0092-8674(24)01085-7">Using artificial intelligence to document the hidden RNA virosphere."</a> **Cell (Cover Article), 2024**.   
+
+* **LucaOne**     
+<a href="https://dl.acm.org/doi/abs/10.1145/3394486.3403055">"Generalized biological foundation model with unified nucleic acid and protein language."</a> **Nature Machine Intelligence, 2025**.   
+
+* **LucaVirus**    
+<a href="https://www.biorxiv.org/content/10.1101/2025.06.14.659722v1">"Predicting the evolutionary and functional landscapes of viruses with a unified nucleotide-protein language model: LucaVirus."</a> **Biorxiv, 2025**.
+
+* **LucaPCycle**       
+<a href="https://www.nature.com/articles/s41467-025-60142-4">"Illuminating microbial phosphorus cycling in deep-sea cold seep sediments using protein language models."</a> **Nature Communications, 2025**.
+
+* **LucaAMANet**    
+<a href="https://dl.acm.org/doi/abs/10.1145/3394486.3403055">"Attention and memory-augmented networks for dual-view sequential learning."</a> **SIGKDD, 2020**.    
+
+  
+🏆 Awards & Competitions       
+* **"Top 10 Progress in Bioinformatics in China (2024)"** - LucaProt.   
+* **1st Place**, Clinical Automated Coding Task, CHIP 2022.     
+
+💡 Patents & Innovation      
+**Patent Portfolio:**     
+  * **15** patent applications filed
+  * **10** patents granted
+  * **1** PCT international patent pending
+  
+**Industry Awards:**   
+  * **"Top 10 Patent"** Award, Alibaba Cloud & Tongyi Lab (FY2025)
+  * **3rd Prize Patent** Award, Alibaba Cloud (FY2018)   
+
 # LucaOne(LucaGPLM)     
-LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.   
+LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.
 
 # TimeLine      
 * 2025/06/16:  
@@ -184,22 +219,12 @@ We are actively seeking an open FTP platform with sufficient storage capacity to
 **<a href='https://doi.org/10.5281/zenodo.15171943'>LucaOne Zenodo</a>**   
 
 
-
 ## 14. Citation         
-**<a href='https://www.biorxiv.org/content/10.1101/2024.05.10.592927v1'>LucaOne Biorxiv</a>**   
+**<a href='https://www.biorxiv.org/content/10.1101/2024.05.10.592927v2'>LucaOne Biorxiv</a>**   
+**<a href='https://www.nature.com/articles/s42256-025-01044-4'>LucaOne NMI 2025</a>**
 
 
-@article {LucaOne,                
-author = {Yong He and Pan Fang and Yongtao Shan and Yuanfei Pan and Yanhong Wei and Yichang Chen and Yihao Chen and Yi Liu and Zhenyu Zeng and Zhan Zhou and Feng Zhu and Edward C. Holmes and Jieping Ye and Jun Li and Yuelong Shu and Mang Shi and Zhaorong Li},     
-title = {LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language},      
-elocation-id = {2024.05.10.592927},        
-year = {2024},         
-doi = {10.1101/2024.05.10.592927},        
-publisher = {Cold Spring Harbor Laboratory},        
-URL = {https://www.biorxiv.org/content/early/2024/05/14/2024.05.10.592927 },        
-eprint = {https://www.biorxiv.org/content/early/2024/05/14/2024.05.10.592927.full.pdf },        
-journal = {bioRxiv}        
-} 
+He, Y., Fang, P., Shan, Y. et al. Generalized biological foundation model with unified nucleic acid and protein language. Nat Mach Intell 7, 942–953 (2025). https://doi.org/10.1038/s42256-025-01044-4
 
 
 ## 15. LucaTeam
