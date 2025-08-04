@@ -464,7 +464,7 @@ def train(
             update_flag = False
             # Only evaluate at local_rank=0 or single GPU
             if args.local_rank in [-1, 0] and args.evaluate_during_training and args.dev_data_dir \
-                    and (args.start_epoch < 0 or epoch + 1 >= args.start_epoch):
+                    and (args.start_eval_epoch < 0 or epoch + 1 >= args.start_eval_epoch):
                 eval_result = evaluate(
                     args,
                     model,
@@ -1017,7 +1017,7 @@ def train_continue(
             update_flag = False
             # Only evaluate at local_rank=0 or single GPU
             if args.local_rank in [-1, 0] and args.evaluate_during_training and args.dev_data_dir \
-                    and (args.start_epoch < 0 or epoch + 1 >= args.start_epoch):
+                    and (args.start_eval_epoch < 0 or epoch + 1 >= args.start_eval_epoch):
                 eval_result = evaluate(
                     args,
                     model,

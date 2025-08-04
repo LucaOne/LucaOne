@@ -317,7 +317,7 @@ def get_args():
                         help="Save checkpoint every X updates steps.")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1,
                         help="gradient accumulation steps.")
-    parser.add_argument("--start_epoch", type=int, default=-1,
+    parser.add_argument("--start_eval_epoch", type=int, default=-1,
                         help="the start epoch to eval.")
     parser.add_argument("--scheduler_type", type=str, default="step", choices=["step", "epoch"],
                         help="lr update scheduler type.")
