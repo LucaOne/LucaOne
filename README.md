@@ -4,7 +4,7 @@ Our work focuses on building foundational models to decode the language of life.
 
 📚 Publications
 * **LucaProt**    
-<a href="https://www.cell.com/cell/fulltext/s0092-8674(24)01085-7">Using artificial intelligence to document the hidden RNA virosphere."</a> **Cell (Cover Article), 2024**.   
+<a href="https://www.cell.com/cell/fulltext/s0092-8674(24)01085-7">"Using artificial intelligence to document the hidden RNA virosphere."</a> **Cell (Cover Article), 2024**.   
 
 * **LucaOne**     
 <a href="https://dl.acm.org/doi/abs/10.1145/3394486.3403055">"Generalized biological foundation model with unified nucleic acid and protein language."</a> **Nature Machine Intelligence, 2025**.   
