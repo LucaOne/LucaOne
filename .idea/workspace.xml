@@ -343,20 +343,8 @@
       <workItem from="1754297583841" duration="9000" />
       <workItem from="1754297733083" duration="99000" />
       <workItem from="1754299297044" duration="45000" />
-    </task>
-    <task id="LOCAL-00025" summary="feature: update writer_info_tb">
-      <created>1734574733415</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1734574733415</updated>
-    </task>
-    <task id="LOCAL-00026" summary="feature: update writer_info_tb">
-      <created>1734575883698</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1734575883698</updated>
+      <workItem from="1754300298724" duration="435000" />
+      <workItem from="1754300763837" duration="47000" />
     </task>
     <task id="LOCAL-00027" summary="feature: update writer_info_tb">
       <created>1734597616249</created>
@@ -687,7 +675,21 @@
       <option name="project" value="LOCAL" />
       <updated>1754297210196</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="feature: update readme(citation)">
+      <created>1754300691507</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1754300691507</updated>
+    </task>
+    <task id="LOCAL-00075" summary="feature: update readme(citation)">
+      <created>1754300797667</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1754300797667</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
