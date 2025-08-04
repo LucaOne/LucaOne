@@ -167,7 +167,7 @@ python run_eval.py \
        --save_steps $save_steps \
        --gradient_accumulation_steps $gradient_accumulation_steps \
        --save_all \
-       --start_epoch 2 \
+       --start_eval_epoch 2 \
        --lr_update_steps 760000 \
        --dropout_prob 0.0 \
        --no_position_embeddings \
