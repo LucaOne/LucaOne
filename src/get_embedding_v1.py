@@ -326,9 +326,9 @@ def predict_embedding(
         save_type="numpy"
 ):
     """
-    use sequence to predict protein embedding matrix or vector(bos)
+    use sequence to predict bio seq embedding matrix or vector(bos)
     :param llm_dirpath: llm dir path
-    :param sample: [protein_id, protein_sequence]
+    :param sample: [seq_id, seq_type, seq]
     :param trunc_type:
     :param embedding_type: bos or representations
     :param repr_layers: [-1]
