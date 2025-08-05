@@ -197,9 +197,9 @@ def write_fasta(filepath, sequences):
         with open(filepath, "w") as output_handle:
             if len(sequences[0]) > 1 and isinstance(sequences[0][0], str):
                 for row in sequences:
-                    protein_id = row[0]
+                    seq_id = row[0]
                     seq = row[1]
-                    sequence = SeqRecord(Seq(seq, None), id=protein_id[1:] if protein_id and protein_id[0] == ">" else protein_id, description="")
+                    sequence = SeqRecord(Seq(seq, None), id=seq_id[1:] if seq_id and seq_id[0] == ">" else seq_id, description="")
                     SeqIO.write(sequence, output_handle, "fasta")
             else:
                 for sequence in sequences:
