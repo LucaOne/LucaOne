@@ -506,6 +506,7 @@ def complete_embedding_matrix(
         use_cpu=False
 ):
     if init_emb is not None and model_args.embedding_complete and ("representations" in embedding_type or "matrix" in embedding_type):
+        torch.cuda.empty_cache()
         ori_seq_len = len(seq)
         # 每次能处理这么长度
         cur_segment_len = init_emb.shape[0]
