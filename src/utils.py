@@ -125,11 +125,11 @@ def print_batch_input(batch):
     '''
     if isinstance(batch, list):
         for item in batch:
-            print_batch_output(item)
+            print_batch_input(item)
     elif isinstance(batch, dict):
         for item in batch.items():
             print(item[0] + ":")
-            print_batch_output(item[1])
+            print_batch_input(item[1])
     else:
         if batch is None:
             print("None")
