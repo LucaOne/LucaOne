@@ -19,11 +19,6 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -355,13 +350,7 @@
       <workItem from="1754364909355" duration="300000" />
       <workItem from="1754385066962" duration="709000" />
       <workItem from="1754461257817" duration="659000" />
-    </task>
-    <task id="LOCAL-00030" summary="feature: update readme">
-      <created>1736491585630</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1736491585630</updated>
+      <workItem from="1754468307648" duration="146000" />
     </task>
     <task id="LOCAL-00031" summary="feature: update readme">
       <created>1736492773171</created>
@@ -699,7 +688,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754364062545</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)">
+      <created>1754468439406</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1754468439406</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
