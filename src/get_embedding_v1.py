@@ -23,7 +23,7 @@ try:
     from args import Args
     from file_operator import fasta_reader, csv_reader, tsv_reader
     from utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
-        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, \
+        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, matrix_2_vector,\
         calc_emb_filename_by_seq_id, seq_type_is_match_seq
     from models.lucaone_gplm import LucaGPLM
     from models.lucaone_gplm_config import LucaGPLMConfig
@@ -33,7 +33,8 @@ except ImportError as e:
     from src.args import Args
     from src.file_operator import fasta_reader, csv_reader, tsv_reader
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, gene_seq_replace, \
-        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, calc_emb_filename_by_seq_id, seq_type_is_match_seq
+        download_trained_checkpoint_lucaone_v1, clean_seq_luca, available_gpu_id, matrix_2_vector, \
+        calc_emb_filename_by_seq_id, seq_type_is_match_seq
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.lucaone_gplm_config import LucaGPLMConfig
     from src.models.alphabet import Alphabet
@@ -485,9 +486,9 @@ def predict_embedding(
         if save_type == "numpy":
             embeddings["contacts"] = embeddings["contacts"].numpy()
     if len(embeddings) > 1:
-        return embeddings, processed_seq
+        return embeddings, processed_seq_len
     elif len(embeddings) == 1:
-        return list(embeddings.items())[0][1], processed_seq
+        return list(embeddings.items())[0][1], processed_seq_len
     else:
         return None, None
 
@@ -978,30 +979,7 @@ def main(model_args):
                         # print("seq_len: %d" % len(seq))
                         # print("emb shape:", embedding_info.shape)
                         if embedding_type == "vector":
-                            if vector_type == "cls":
-                                emb = emb[0, :]
-                            elif vector_type == "max":
-                                if matrix_add_special_token:
-                                    if model_args.save_type == "numpy":
-                                        emb = np.max(emb[1:-1, :], axis=0)
-                                    else:
-                                        emb = torch.amax(emb[1:-1, :], dim=0)
-                                else:
-                                    if model_args.save_type == "numpy":
-                                        emb = np.max(emb, axis=0)
-                                    else:
-                                        emb = torch.amax(emb, dim=0)
-                            else:
-                                if matrix_add_special_token:
-                                    if model_args.save_type == "numpy":
-                                        emb = np.mean(emb[1:-1, :], axis=0)
-                                    else:
-                                        emb = torch.mean(emb[1:-1, :], dim=0)
-                                else:
-                                    if model_args.save_type == "numpy":
-                                        emb = np.mean(emb, axis=0)
-                                    else:
-                                        emb = torch.mean(emb, dim=0)
+                            emb = matrix_2_vector(emb, matrix_add_special_token, vector_type, model_args.save_type)
                         torch.save(emb, embedding_filepath)
                         break
                     print("%s embedding error, max_len from %d truncate to %d" % (
@@ -1072,7 +1050,7 @@ def main(model_args):
             if use_cpu:
                 print("use_cpu: %r" % use_cpu)
             if emb is not None:
-                print("processed seq length: %d, truncation seq length: %d" % (processed_seq_len, truncation_seq_length))
+                print("processed seq length: %d, truncation seq length: %d" % (emb.shape[0], truncation_seq_length))
                 break
             print("%s embedding error, max_len from %d truncate to %d" % (
                 model_args.seq_id,
@@ -1084,30 +1062,7 @@ def main(model_args):
         print("seq: %s" % model_args.seq)
         print("embedding: ")
         if embedding_type == "vector":
-            if vector_type == "cls":
-                emb = emb[0, :]
-            elif vector_type == "max":
-                if matrix_add_special_token:
-                    if model_args.save_type == "numpy":
-                        emb = np.max(emb[1:-1, :], axis=0)
-                    else:
-                        emb = torch.amax(emb[1:-1, :], dim=0)
-                else:
-                    if model_args.save_type == "numpy":
-                        emb = np.max(emb, axis=0)
-                    else:
-                        emb = torch.amax(emb, dim=0)
-            else:
-                if matrix_add_special_token:
-                    if model_args.save_type == "numpy":
-                        emb = np.mean(emb[1:-1, :], axis=0)
-                    else:
-                        emb = torch.mean(emb[1:-1, :], dim=0)
-                else:
-                    if model_args.save_type == "numpy":
-                        emb = np.mean(emb, axis=0)
-                    else:
-                        emb = torch.mean(emb, dim=0)
+            emb = matrix_2_vector(emb, matrix_add_special_token, vector_type, model_args.save_type)
         print(emb)
     else:
         raise Exception("input error, please --help.")

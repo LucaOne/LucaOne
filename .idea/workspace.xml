@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: args: start_epoch-&gt;start_eval_epoch">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)">
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v1.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v2.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v3.txt" afterDir="false" />
@@ -20,10 +20,7 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_process/script/uniparc_parse.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_process/script/uniparc_parse.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_process/script/uniparc_parse_selected.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_process/script/uniparc_parse_selected.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/file_operator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/file_operator.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
@@ -353,21 +350,11 @@
       <workItem from="1754300298724" duration="435000" />
       <workItem from="1754300763837" duration="47000" />
       <workItem from="1754311149156" duration="283000" />
-      <workItem from="1754358026890" duration="867000" />
-    </task>
-    <task id="LOCAL-00028" summary="feature: update writer_info_tb">
-      <created>1735909925616</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1735909925616</updated>
-    </task>
-    <task id="LOCAL-00029" summary="feature: add the LucaTeam Image">
-      <created>1736489910124</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1736489910124</updated>
+      <workItem from="1754358026890" duration="1130000" />
+      <workItem from="1754363973715" duration="691000" />
+      <workItem from="1754364909355" duration="300000" />
+      <workItem from="1754385066962" duration="709000" />
+      <workItem from="1754461257817" duration="659000" />
     </task>
     <task id="LOCAL-00030" summary="feature: update readme">
       <created>1736491585630</created>
@@ -698,7 +685,21 @@
       <option name="project" value="LOCAL" />
       <updated>1754311425019</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)">
+      <created>1754359200592</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1754359200592</updated>
+    </task>
+    <task id="LOCAL-00078" summary="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)">
+      <created>1754364062545</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1754364062545</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -728,7 +729,8 @@
     <MESSAGE value="feature: add embedding save type: numpy or tensor" />
     <MESSAGE value="feature: update readme(citation)" />
     <MESSAGE value="feature: args: start_epoch-&gt;start_eval_epoch" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: args: start_epoch-&gt;start_eval_epoch" />
+    <MESSAGE value="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LucaOne$aspera_stats.coverage" NAME="aspera_stats Coverage Results" MODIFIED="1745891400392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />

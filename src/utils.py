@@ -1905,6 +1905,33 @@ def clean_seq_luca(seq_id, seq):
     return new_seq
 
 
+def matrix_2_vector(matrix, matrix_has_special_token, vector_type, save_type):
+    if vector_type == "cls":
+        return matrix[0, :]
+    elif vector_type == "max":
+        if matrix_has_special_token:
+            if save_type == "numpy":
+                return np.max(matrix[1:-1, :], axis=0)
+            else:
+                return torch.amax(matrix[1:-1, :], dim=0)
+        else:
+            if save_type == "numpy":
+                return np.max(matrix, axis=0)
+            else:
+                return torch.amax(matrix, dim=0)
+    else:
+        if matrix_has_special_token:
+            if save_type == "numpy":
+                return np.mean(matrix[1:-1, :], axis=0)
+            else:
+                return torch.mean(matrix[1:-1, :], dim=0)
+        else:
+            if save_type == "numpy":
+                return np.mean(matrix, axis=0)
+            else:
+                return torch.mean(matrix, dim=0)
+
+
 def gcd(x, y):
     '''
     最大公约数
