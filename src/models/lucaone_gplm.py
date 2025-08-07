@@ -308,17 +308,19 @@ class LucaGPLM(nn.Module):
             raise Exception("Not support output_mode=%s" % output_mode)
         return loss
 
-    def __forword__(self,
-                    input_ids: Optional[torch.Tensor] = None,
-                    attention_mask: Optional[torch.Tensor] = None,
-                    token_type_ids: Optional[torch.Tensor] = None,
-                    position_ids: Optional[torch.Tensor] = None,
-                    output_keys: Optional[dict[str, set[str]]] = None,
-                    labels: Optional[dict[str, dict[str, torch.Tensor]]] = None,
-                    repr_layers=[-1],
-                    need_head_weights=False,
-                    return_contacts=False,
-                    use_last_layer_norm=True):
+    def __forword__(
+            self,
+            input_ids: Optional[torch.Tensor] = None,
+            attention_mask: Optional[torch.Tensor] = None,
+            token_type_ids: Optional[torch.Tensor] = None,
+            position_ids: Optional[torch.Tensor] = None,
+            output_keys: Optional[dict[str, set[str]]] = None,
+            labels: Optional[dict[str, dict[str, torch.Tensor]]] = None,
+            repr_layers=[-1],
+            need_head_weights=False,
+            return_contacts=False,
+            use_last_layer_norm=True
+    ):
         assert all(-(self.layer_size + 1) <= i <= self.layer_size for i in repr_layers)
         repr_layers = [(i + self.layer_size + 1) % (self.layer_size + 1) for i in repr_layers]
 
