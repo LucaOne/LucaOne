@@ -582,7 +582,7 @@ def complete_embedding_matrix(
                 seg_idx = 0
                 for pos_idx in range(-cur_segment_len, -ori_seq_len + sliding_window, -sliding_window):
                     seg_idx += 1
-                    last_start = min(pos_idx - sliding_window, -ori_seq_len)
+                    last_start = max(pos_idx - sliding_window, -ori_seq_len)
                     seg_seq = seq[last_start: pos_idx + sliding_window]
                     seg_emb, seg_processed_seq_len = predict_embedding(
                         global_model_dirpath,
@@ -605,7 +605,7 @@ def complete_embedding_matrix(
                             complete_emb = torch.cat((seg_emb[:sliding_window], complete_emb), dim=0)
                 if last_start > -ori_seq_len:
                     seg_idx += 1
-                    remain = last_start - ori_seq_len
+                    remain = last_start + ori_seq_len
                     seg_seq = seq[-ori_seq_len:-ori_seq_len + 2 * sliding_window]
                     seg_emb, seg_processed_seq_len = predict_embedding(
                         global_model_dirpath,
@@ -645,6 +645,7 @@ def complete_embedding_matrix(
                     matrix_add_special_token=False,
                     save_type=save_type
                 )
+                '''
                 if model_args.trunc_type == "right":
                     if save_type == "numpy":
                         complete_emb = np.concatenate((complete_emb, seg_emb), axis=0)
@@ -655,7 +656,13 @@ def complete_embedding_matrix(
                         complete_emb = np.concatenate((seg_emb, complete_emb), axis=0)
                     else:
                         complete_emb = torch.cat((seg_emb, complete_emb), dim=0)
-            if model_args.trunc_type == "right": # 处理最后一个
+                '''
+                if save_type == "numpy":
+                    complete_emb = np.concatenate((complete_emb, seg_emb), axis=0)
+                else:
+                    complete_emb = torch.cat((complete_emb, seg_emb), dim=0)
+            if model_args.trunc_type == "right":
+                # 处理最后一个
                 last_seg_seq = seq[-cur_segment_len:]
                 really_len = (ori_seq_len - (segment_num - 1) * cur_segment_len)
                 last_seg_emb, last_seg_processed_seq_len = predict_embedding(

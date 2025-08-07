@@ -140,6 +140,8 @@ You can use the project: **<a href='https://github.com/LucaOne/LucaOneApp'>LucaO
 
 The project will download automatically LucaOne Trained-CheckPoint from **FTP**.     
 
+or code in 'src/get_embedding.py'   
+
 ## 7. For Downstream Tasks    
 This project: **<a href='https://github.com/LucaOne/LucaOneTasks'>LucaOneTasks Github</a> or <a href='http://47.93.21.181/lucaone/LucaOneTasks'>LucaOneTasks FTP</a>** is all the downstream tasks used in our paper(**based on LucaOne's Embedding**), and you can use this project to run other tasks, please refer to the **`README`** of this project. 
 
