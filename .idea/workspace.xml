@@ -364,14 +364,8 @@
       <workItem from="1754896191572" duration="93000" />
       <workItem from="1754896829916" duration="10000" />
       <workItem from="1754896876915" duration="57000" />
-      <workItem from="1754900430804" duration="123000" />
-    </task>
-    <task id="LOCAL-00034" summary="feature: update readme">
-      <created>1737174797148</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1737174797148</updated>
+      <workItem from="1754900430804" duration="146000" />
+      <workItem from="1754903092199" duration="46000" />
     </task>
     <task id="LOCAL-00035" summary="feature: update readme">
       <created>1737175546456</created>
@@ -709,7 +703,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754553021721</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="feature: debug code for complete_embedding_matrix">
+      <created>1754900565160</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1754900565160</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
