@@ -425,7 +425,7 @@ class LucaGPLM(nn.Module):
                     and not self.embedding_inference:
                 contacts = self.contact_head(input_ids, attentions)
                 representations["contacts"] = contacts
-                
+
         if not self.embedding_inference and output_keys:
             for item in output_keys.items():
                 cur_task_level_type = item[0]

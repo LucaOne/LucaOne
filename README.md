@@ -37,6 +37,10 @@ Our work focuses on building foundational models to decode the language of life.
 LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.
 
 # TimeLine      
+* 2025/08/15:   
+**Huggingface**     
+<a href='https://huggingface.co/LucaGroup'>https://huggingface.co/LucaGroup </a>     
+
 * 2025/06/16:  
 **The Pretraining Dataset uploaded CNSA**      
 The pre-training dataset of LucaOne has been deposited into CNGB Sequence Archive (CNSA) with accession number CNP0007266 (https://db.cngb.org/search/project/CNP0007266/).   
