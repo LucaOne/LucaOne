@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: debug code for complete_embedding_matrix">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: It is ready for Huggingface.">
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v1.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v2.txt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/aspera_00842_v3.txt" afterDir="false" />
@@ -20,7 +20,13 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/lucaone_gplm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lucaone_gplm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/batch_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/batch_converter_for_eval_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter_for_eval_mask.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/alphabet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/alphabet.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,13 +372,8 @@
       <workItem from="1754896876915" duration="57000" />
       <workItem from="1754900430804" duration="146000" />
       <workItem from="1754903092199" duration="46000" />
-    </task>
-    <task id="LOCAL-00035" summary="feature: update readme">
-      <created>1737175546456</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1737175546456</updated>
+      <workItem from="1755258589245" duration="598000" />
+      <workItem from="1755267727440" duration="522000" />
     </task>
     <task id="LOCAL-00036" summary="feature: update readme">
       <created>1737176171895</created>
@@ -710,7 +711,14 @@
       <option name="project" value="LOCAL" />
       <updated>1754900565160</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="feature: It is ready for Huggingface.">
+      <created>1755258821510</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1755258821511</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -742,7 +750,8 @@
     <MESSAGE value="feature: args: start_epoch-&gt;start_eval_epoch" />
     <MESSAGE value="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)" />
     <MESSAGE value="feature: debug code for complete_embedding_matrix" />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: debug code for complete_embedding_matrix" />
+    <MESSAGE value="feature: It is ready for Huggingface." />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: It is ready for Huggingface." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LucaOne$aspera_stats.coverage" NAME="aspera_stats Coverage Results" MODIFIED="1745891400392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />

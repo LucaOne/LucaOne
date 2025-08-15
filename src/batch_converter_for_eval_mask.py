@@ -113,10 +113,12 @@ class BatchConverter(object):
             elif seq_types[idx] == "prot":
                 # print("len: %d" % len(seqs[idx]))
                 assert len(seqs[idx]) == len(label["token_level"]["prot_mask"])
-        seq_encoded_list = [self.alphabet.encode_for_eval_mask(seq_str.upper()) for seq_str in seqs]
+        seq_encoded_list = [self.alphabet.encode_for_eval_mask(
+            seq_type=seq_type, seq=seq_str.upper()) for seq_type, seq_str in zip(seq_types, seqs)
+        ]
         seq_mask_label_list = [
-            self.alphabet.encode(label["token_level"]["gene_mask"].upper())
-            if seq_types[idx] == "gene" else self.alphabet.encode(label["token_level"]["prot_mask"].upper())
+            self.alphabet.encode(seq_type=seq_types[idx], seq=label["token_level"]["gene_mask"].upper())
+            if seq_types[idx] == "gene" else self.alphabet.encode(seq_type=seq_types[idx], seq=label["token_level"]["prot_mask"].upper())
             for idx, label in enumerate(seq_labels)
         ]
         batch_size = min(batch_size, len(seq_encoded_list))
