@@ -130,7 +130,7 @@ class BatchConverter(object):
             return input_ids, labels
 
     def __call_single__(self, batch_size, seq_types, seqs, seq_labels):
-        seq_encoded_list = [self.alphabet.encode(seq_str.upper()) for seq_str in seqs]
+        seq_encoded_list = [self.alphabet.encode(seq_type=seq_type, seq=seq_str.upper()) for seq_type, seq_str in zip(seq_types, seqs)]
         batch_size = min(batch_size, len(seq_encoded_list))
         if self.truncation_seq_length:
             seq_encoded_list = [encoded[:self.truncation_seq_length] for encoded in seq_encoded_list]
@@ -220,10 +220,12 @@ class BatchConverter(object):
             seqs,
             seq_labels
     ):
-        seq_encoded_list = [self.alphabet.encode_for_eval_mask(seq_str.upper()) for seq_str in seqs]
+        seq_encoded_list = [self.alphabet.encode_for_eval_mask(
+            seq_type=seq_type, seq=seq_str.upper()) for seq_type, seq_str in zip(seq_types, seqs)
+        ]
         seq_mask_label_list = [
-            self.alphabet.encode(label["token_level"]["gene_mask"].upper())
-            if seq_labels[idx] == "gene" else self.alphabet.encode(label["token_level"]["prot_mask"].upper())
+            self.alphabet.encode(seq_type=seq_types[idx], seq=label["token_level"]["gene_mask"].upper())
+            if seq_labels[idx] == "gene" else self.alphabet.encode(seq_type=seq_types[idx], seq=label["token_level"]["prot_mask"].upper())
             for idx, label in enumerate(seq_labels)
         ]
         batch_size = min(batch_size, len(seq_encoded_list))
