@@ -114,7 +114,8 @@ def multi_label_f1(targets, probs, threshold=0.5):
         else:
             # precision
             prec = 0.0
-
+            if predict_len > 0:
+                prec = intersection_len / predict_len
             # recall
             if target_len > 0:
                 recall = intersection_len / target_len
