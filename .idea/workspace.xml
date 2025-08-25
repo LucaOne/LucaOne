@@ -20,13 +20,7 @@
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/batch_converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/batch_converter_for_eval_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/batch_converter_for_eval_mask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/alphabet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/alphabet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/multi_label_metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/multi_label_metrics.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -373,14 +367,10 @@
       <workItem from="1754900430804" duration="146000" />
       <workItem from="1754903092199" duration="46000" />
       <workItem from="1755258589245" duration="598000" />
-      <workItem from="1755267727440" duration="522000" />
-    </task>
-    <task id="LOCAL-00036" summary="feature: update readme">
-      <created>1737176171895</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1737176171895</updated>
+      <workItem from="1755267727440" duration="626000" />
+      <workItem from="1755272922495" duration="66000" />
+      <workItem from="1755581404907" duration="18000" />
+      <workItem from="1756119668995" duration="21000" />
     </task>
     <task id="LOCAL-00037" summary="feature: update readme">
       <created>1737176248771</created>
@@ -718,7 +708,14 @@
       <option name="project" value="LOCAL" />
       <updated>1755258821511</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="feature: It is ready for Huggingface.">
+      <created>1755268293949</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1755268293949</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
