@@ -16,10 +16,10 @@ sys.path.append("..")
 sys.path.append("../../")
 sys.path.append("../../src")
 try:
-    from ..common.loss import *
-    from .model_utils import AllOutput, create_output_loss_lucagplm
-    from .alphabet import Alphabet
-    from .modeling_gplm import *
+    from common.loss import *
+    from models.model_utils import AllOutput, create_output_loss_lucagplm
+    from models.alphabet import Alphabet
+    from models.modeling_gplm import *
 except ImportError:
     from src.common.loss import *
     from src.models.model_utils import AllOutput, create_output_loss_lucagplm
