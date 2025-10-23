@@ -84,7 +84,7 @@ def get_args():
         '--model_type', 
         default="lucaone_gplm",
         type=str,
-        choices=["lucaone_bert", "lucaone_longformer", "lucaone_bigbird", "lucaone_gplm"],
+        choices=["lucaone_gplm"],
         help='the model type'
     )
     parser.add_argument(
