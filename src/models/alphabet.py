@@ -62,7 +62,7 @@ class Alphabet(object):
         self.cls_idx = self.get_idx("[CLS]")
         self.mask_idx = self.get_idx("[MASK]")
         self.eos_idx = self.get_idx("[SEP]")
-        self.all_special_tokens = prepend_toks + append_toks
+        self.all_special_tokens = self.prepend_toks + self.append_toks
         self.all_special_token_idx_list = [self.tok_to_idx[v] for v in self.all_special_tokens]
         self.unique_no_split_tokens = self.all_toks
         self.vocab_size = self.__len__()
@@ -98,14 +98,27 @@ class Alphabet(object):
         return cls(standard_toks, prepend_toks, append_toks, prepend_bos, append_eos)
 
     @classmethod
-    def from_pretrained(cls, dir_path):
-        import os, pickle
-        return pickle.load(open(os.path.join(dir_path, "alphabet.pkl"), "rb"))
+    def from_pretrained(cls, dir_path: str) -> object:
+        try:
+            import os, pickle
+            return pickle.load(open(os.path.join(dir_path, "alphabet.pkl"), "rb"))
+        except Exception:
+            return cls.from_predefined("gene_prot")
 
     def save_pretrained(self, save_dir):
-        import os, pickle
-        with open(os.path.join(save_dir, "alphabet.pkl"), 'wb') as outp:
-            pickle.dump(self, outp, pickle.HIGHEST_PROTOCOL)
+        import os, pickle, json
+        with open(os.path.join(save_dir, "alphabet.pkl"), 'wb') as wfp:
+            pickle.dump(self, wfp, pickle.HIGHEST_PROTOCOL)
+        all_tokens_json = {
+            "vocab_size": self.vocab_size,
+            "prepend": self.prepend_toks,
+            "standard": self.standard_toks,
+            "append": self.append_toks,
+            "prepend_bos": self.prepend_bos,
+            "append_eos": self.append_eos,
+        }
+        with open(os.path.join(save_dir, "all_tokens.json"), "w") as wfp:
+            json.dump(all_tokens_json, wfp, ensure_ascii=False)
 
     def _tokenize(self, seq) -> List[str]:
         return seq.split()
