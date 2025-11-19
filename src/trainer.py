@@ -59,13 +59,6 @@ def train(
         train_sampler=None,
         log_fp=None
 ):
-    # logger
-    if args.local_rank in [0, -1]:
-        tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
-        if log_fp is None:
-            log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
-        output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(0))
-        save_check_point(args, model, model_config, tokenizer, output_dir)
     no_decay = ["bias", "layer_norm.weight"]
     no_decay_keys = [n for n, _ in model.named_parameters() if any(nd in n.lower() for nd in no_decay)]
     print("no_decay_keys: ")
@@ -93,6 +86,13 @@ def train(
         betas=[args.beta1 if args.beta1 > 0 else 0.9, args.beta2 if args.beta2 > 0 else 0.98],
         eps=args.adam_epsilon
     )
+    # logger
+    if args.local_rank in [0, -1]:
+        tb_writer = SummaryWriter(log_dir=args.tb_log_dir)
+        if log_fp is None:
+            log_fp = open(os.path.join(args.log_dir, "logs.txt"), "w")
+        output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(0))
+        save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
     print("Init lr: ", get_lr(optimizer))
     print("Peak lr: ", args.learning_rate)
     print("Scheduler_type: %s" % args.scheduler_type)
@@ -417,7 +417,7 @@ def train(
                     # print("lr: ", get_lr(optimizer))
                 if args.local_rank in [-1, 0] and args.save_steps > 0 and global_step % args.save_steps == 0:
                     output_dir = os.path.join(args.output_dir, "checkpoint-step{}".format(global_step))
-                    save_check_point(args, model, model_config, tokenizer, output_dir)
+                    save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
             except Exception as e:
                 exception_path = "../exception/%s" % args.time_str
                 if not os.path.exists(exception_path):
@@ -525,7 +525,7 @@ def train(
             # save checkpoint
             output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(global_step))
             if args.save_all:
-                save_check_point(args, model, model_config, tokenizer, output_dir)
+                save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
             elif update_flag:
                 if args.delete_old:
                     # delete the old CheckPoint
@@ -533,7 +533,7 @@ def train(
                     for filename in filename_list:
                         if "checkpoint-" in filename and filename != "checkpoint-{}".format(global_step):
                             shutil.rmtree(os.path.join(args.output_dir, filename))
-                save_check_point(args, model, model_config, tokenizer, output_dir)
+                save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
 
         last_last_loss_list = last_loss_list
         last_loss_list = [v/batch_total for v in total_loss_detail]
@@ -624,6 +624,9 @@ def train_continue(
     print("Init lr: ", get_lr(optimizer))
     print("Peak: ", args.learning_rate)
     print("Scheduler_type: %s" % args.scheduler_type)
+    if args.model_dirpath and os.path.exists(os.path.join(args.model_dirpath, "optimizer")):
+        optimizer_state_dict = torch.load(os.path.join(args.model_dirpath, "optimizer", "optimizer.pt"))
+        optimizer.load_state_dict(optimizer_state_dict)
     args.warmup_steps = int(args.warmup_steps / args.gradient_accumulation_steps)
     if args.warmup_steps < 1000:
         args.warmup_steps = 2000
@@ -970,7 +973,7 @@ def train_continue(
                         # print("lr: ", get_lr(optimizer))
                     if args.local_rank in [-1, 0] and args.save_steps > 0 and global_step % args.save_steps == 0:
                         output_dir = os.path.join(args.output_dir, "checkpoint-step{}".format(global_step))
-                        save_check_point(args, model, model_config, tokenizer, output_dir)
+                        save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
             except Exception as e:
                 exception_path = "../exception/%s" % args.time_str
                 if not os.path.exists(exception_path):
@@ -1078,7 +1081,7 @@ def train_continue(
             # save checkpoint
             output_dir = os.path.join(args.output_dir, "checkpoint-{}".format(global_step))
             if args.save_all:
-                save_check_point(args, model, model_config, tokenizer, output_dir)
+                save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
             elif update_flag:
                 if args.delete_old:
                     # delete the old CheckPoint
@@ -1086,7 +1089,7 @@ def train_continue(
                     for filename in filename_list:
                         if "checkpoint-" in filename and filename != "checkpoint-{}".format(global_step):
                             shutil.rmtree(os.path.join(args.output_dir, filename))
-                save_check_point(args, model, model_config, tokenizer, output_dir)
+                save_check_point(args, model, model_config, optimizer, tokenizer, output_dir)
 
         last_last_loss_list = last_loss_list
         last_loss_list = [v/batch_total for v in total_loss_detail]
@@ -1134,11 +1137,12 @@ def cleanup():
     dist.destroy_process_group()
 
 
-def save_check_point(args, model, model_config, tokenizer, output_dir):
+def save_check_point(args, model, model_config, optimizer, tokenizer, output_dir):
     '''
     save checkpoint
     :param args:
     :param model:
+    :param optimizer
     :param tokenizer
     :param model_config
     :param output_dir:
@@ -1161,7 +1165,13 @@ def save_check_point(args, model, model_config, tokenizer, output_dir):
         torch.save(model_to_save, os.path.join(output_dir, "pytorch.pt"))
         torch.save(model_to_save.state_dict(), os.path.join(output_dir, "pytorch.pth"))
     # torch.save(model_to_save, os.path.join(output_dir + "model.pth"))
-    if tokenizer:
+    if optimizer is not None:
+        optimizer_dir = os.path.join(output_dir, "optimizer")
+        if not os.path.exists(optimizer_dir):
+            os.makedirs(optimizer_dir)
+        torch.save(optimizer.state_dict(), os.path.join(optimizer_dir, "optimizer.pt"))
+
+    if tokenizer is not None:
         tokenizer_dir = os.path.join(output_dir, "tokenizer")
         if not os.path.exists(tokenizer_dir):
             os.makedirs(tokenizer_dir)

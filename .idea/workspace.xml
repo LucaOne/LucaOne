@@ -16,11 +16,9 @@
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_bytes_check.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/data/lucaone_pretraining_dataset_filenames_list.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/multi_label_metrics.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/multi_label_metrics.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/alphabet.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/alphabet.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +52,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/downstream" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/pics" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -66,9 +64,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pics" />
       <recent name="$PROJECT_DIR$/src/downstream" />
       <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/pics" />
       <recent name="$PROJECT_DIR$/data" />
       <recent name="$PROJECT_DIR$/src/data_analysis" />
     </key>
@@ -370,49 +368,25 @@
       <workItem from="1755267727440" duration="626000" />
       <workItem from="1755272922495" duration="66000" />
       <workItem from="1755581404907" duration="18000" />
-      <workItem from="1756119668995" duration="21000" />
-    </task>
-    <task id="LOCAL-00037" summary="feature: update readme">
-      <created>1737176248771</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1737176248771</updated>
-    </task>
-    <task id="LOCAL-00038" summary="feature: update readme">
-      <created>1741401655809</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1741401655809</updated>
-    </task>
-    <task id="LOCAL-00039" summary="feature: update readme">
-      <created>1741402299593</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1741402299593</updated>
-    </task>
-    <task id="LOCAL-00040" summary="feature: update readme">
-      <created>1741414452932</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1741414452932</updated>
-    </task>
-    <task id="LOCAL-00041" summary="feature: update readme">
-      <created>1742984389766</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1742984389766</updated>
-    </task>
-    <task id="LOCAL-00042" summary="feature: add released">
-      <created>1744032445620</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1744032445620</updated>
+      <workItem from="1756119668995" duration="47000" />
+      <workItem from="1756337292260" duration="18000" />
+      <workItem from="1756373197565" duration="40000" />
+      <workItem from="1757301199769" duration="606000" />
+      <workItem from="1757479602715" duration="186000" />
+      <workItem from="1757661439109" duration="27000" />
+      <workItem from="1758360513696" duration="254000" />
+      <workItem from="1759196992828" duration="91000" />
+      <workItem from="1761096939011" duration="400000" />
+      <workItem from="1761191508720" duration="688000" />
+      <workItem from="1761200597434" duration="79000" />
+      <workItem from="1761226055288" duration="182000" />
+      <workItem from="1761737897309" duration="75000" />
+      <workItem from="1762399976775" duration="183000" />
+      <workItem from="1762403733572" duration="47000" />
+      <workItem from="1762491325944" duration="38000" />
+      <workItem from="1762491931324" duration="6000" />
+      <workItem from="1762495064452" duration="10000" />
+      <workItem from="1762858867014" duration="4365000" />
     </task>
     <task id="LOCAL-00043" summary="feature: update readme">
       <created>1744115617618</created>
@@ -715,7 +689,49 @@
       <option name="project" value="LOCAL" />
       <updated>1755268293949</updated>
     </task>
-    <option name="localTasksCounter" value="86" />
+    <task id="LOCAL-00086" summary="feature: It is ready for Huggingface.">
+      <created>1756119703590</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1756119703590</updated>
+    </task>
+    <task id="LOCAL-00087" summary="feature: It is ready for Huggingface.">
+      <created>1756373228452</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1756373228452</updated>
+    </task>
+    <task id="LOCAL-00088" summary="feature: It is ready for Huggingface.">
+      <created>1758360752430</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1758360752430</updated>
+    </task>
+    <task id="LOCAL-00089" summary="feature: It is ready for Huggingface.">
+      <created>1761200314057</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1761200314057</updated>
+    </task>
+    <task id="LOCAL-00090" summary="feature: It is ready for Huggingface.">
+      <created>1761200666791</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1761200666791</updated>
+    </task>
+    <task id="LOCAL-00091" summary="feature: It is ready for Huggingface.">
+      <created>1761737962552</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1761737962552</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

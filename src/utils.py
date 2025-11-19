@@ -1326,7 +1326,7 @@ def seq_type_is_match_seq(seq_type, seq):
     if total_num == atcgu_num or atcgu_num >= 0.8 * total_num:
         is_gene = True
 
-    if is_gene and seq_type == "gene":
+    if is_gene and seq_type in ["gene", "dna", "rna", "nucl"]:
         return True
     if not is_gene and seq_type == "prot":
         return True
