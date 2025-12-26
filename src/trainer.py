@@ -11,6 +11,7 @@
 @desc: trainer of LucaOne
 '''
 import shutil
+import torch
 import os, sys, time, json
 import torch.distributed as dist
 from torch.optim import AdamW
@@ -209,14 +210,25 @@ def train(
             # print("----" * 10)
             # print_batch_output(batch)
             try:
-                output = model(
-                    **batch,
-                    output_keys=args.gene_output_keys,
-                    output_keys_b=args.prot_output_keys,
-                    pair_output_keys=args.pair_output_keys,
-                    output_attentions=True,
-                    output_hidden_states=True
-                )
+                if args.use_bp16:
+                    with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+                        output = model(
+                            **batch,
+                            output_keys=args.gene_output_keys,
+                            output_keys_b=args.prot_output_keys,
+                            pair_output_keys=args.pair_output_keys,
+                            output_attentions=True,
+                            output_hidden_states=True
+                        )
+                else:
+                    output = model(
+                        **batch,
+                        output_keys=args.gene_output_keys,
+                        output_keys_b=args.prot_output_keys,
+                        pair_output_keys=args.pair_output_keys,
+                        output_attentions=True,
+                        output_hidden_states=True
+                    )
                 if isinstance(output, dict):
                     losses = []
                     outputs = []
@@ -766,14 +778,25 @@ def train_continue(
                                 log_fp.flush()
                                 writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
                 else:
-                    output = model(
-                        **batch,
-                        output_keys=args.gene_output_keys,
-                        output_keys_b=args.prot_output_keys,
-                        pair_output_keys=args.pair_output_keys,
-                        output_attentions=True,
-                        output_hidden_states=True
-                    )
+                    if args.use_bp16:
+                        with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+                            output = model(
+                                **batch,
+                                output_keys=args.gene_output_keys,
+                                output_keys_b=args.prot_output_keys,
+                                pair_output_keys=args.pair_output_keys,
+                                output_attentions=True,
+                                output_hidden_states=True
+                            )
+                    else:
+                        output = model(
+                            **batch,
+                            output_keys=args.gene_output_keys,
+                            output_keys_b=args.prot_output_keys,
+                            pair_output_keys=args.pair_output_keys,
+                            output_attentions=True,
+                            output_hidden_states=True
+                        )
                     if isinstance(output, dict):
                         losses = []
                         outputs = []

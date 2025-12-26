@@ -405,6 +405,11 @@ def get_args():
                         help="the pretrained checkpoints eval_min_step")
     parser.add_argument("--eval_max_step", default=20000000, type=int,
                         help="the pretrained checkpoints eval_max_step")
+    parser.add_argument(
+        "--use_bp16",
+        action="store_true",
+        help="whether to use bp16"
+    )
     input_args = parser.parse_args()
     return input_args
 
