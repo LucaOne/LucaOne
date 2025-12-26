@@ -412,6 +412,11 @@ def get_args():
         type=float,
         help="the epoch loss to continue training"
     )
+    parser.add_argument(
+        "--use_bp16",
+        action="store_true",
+        help="whether to use bp16"
+    )
     input_args = parser.parse_args()
     return input_args
 

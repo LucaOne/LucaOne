@@ -37,6 +37,10 @@ Our work focuses on building foundational models to decode the language of life.
 LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.
 
 # TimeLine      
+* 2025/12/26:   
+LucaOne now supports **BF16** for training and embedding inference.    
+add parameter: **--use_bp16**     
+
 * 2025/08/15:   
 **Huggingface**     
 <a href='https://huggingface.co/LucaGroup'>https://huggingface.co/LucaGroup </a>     

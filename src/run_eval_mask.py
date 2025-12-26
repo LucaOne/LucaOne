@@ -428,6 +428,11 @@ def get_args():
                         help="the pretrained checkpoints eval_min_step")
     parser.add_argument("--eval_max_step", default=20000000, type=int,
                         help="the pretrained checkpoints eval_max_step")
+    parser.add_argument(
+        "--use_bp16",
+        action="store_true",
+        help="whether to use bp16"
+    )
     parser.add_argument("--gpu_id", default=None, type=int, help="the used gpu index, -1 for cpu")
     input_args = parser.parse_args()
     return input_args

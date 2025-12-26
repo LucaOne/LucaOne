@@ -221,7 +221,11 @@ def get_embedding(args_info, model_config, tokenizer, model, seq, seq_type, devi
     model.to(device)
     model.eval()
     with torch.no_grad():
-        output = model(**batch)
+        if "use_bp16" in args_info and args_info["use_bp16"]:
+            with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
+                output = model(**batch)
+        else:
+            output = model(**batch)
         return output, processed_seq_len
 
 
@@ -276,6 +280,11 @@ def get_args():
         default=None,
         required=True,
         choices=["gene", "prot"], help="seq_type"
+    )
+    parser.add_argument(
+        "--use_bp16",
+        action="store_true",
+        help="whether to use bp16"
     )
     args = parser.parse_args()
     return args
