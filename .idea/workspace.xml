@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="LucaOne now supports **BF16** for training and embedding inference.">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: It is ready for Huggingface.">
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" afterDir="false" />
@@ -783,7 +783,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761737962552</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -816,8 +816,7 @@
     <MESSAGE value="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)" />
     <MESSAGE value="feature: debug code for complete_embedding_matrix" />
     <MESSAGE value="feature: It is ready for Huggingface." />
-    <MESSAGE value="LucaOne now supports **BF16** for training and embedding inference." />
-    <option name="LAST_COMMIT_MESSAGE" value="LucaOne now supports **BF16** for training and embedding inference." />
+    <option name="LAST_COMMIT_MESSAGE" value="feature: It is ready for Huggingface." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LucaOne$aspera_stats.coverage" NAME="aspera_stats Coverage Results" MODIFIED="1745891400392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
