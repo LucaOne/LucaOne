@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: It is ready for Huggingface.">
+    <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="LucaOne now supports **BF16** for training and embedding inference.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" afterDir="false" />
@@ -82,23 +83,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "developv2",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pics" />
@@ -438,7 +439,13 @@
       <workItem from="1766756856183" duration="804000" />
       <workItem from="1766757764903" duration="200000" />
       <workItem from="1766760848724" duration="499000" />
-      <workItem from="1766761915504" duration="1748000" />
+      <workItem from="1766761915504" duration="1866000" />
+      <workItem from="1766764468285" duration="6000" />
+      <workItem from="1766764566169" duration="419000" />
+      <workItem from="1766765365368" duration="55000" />
+      <workItem from="1766797183416" duration="582000" />
+      <workItem from="1766850303433" duration="679000" />
+      <workItem from="1767002945196" duration="75000" />
     </task>
     <task id="LOCAL-00043" summary="feature: update readme">
       <created>1744115617618</created>
@@ -783,7 +790,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761737962552</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -816,7 +823,8 @@
     <MESSAGE value="feature: update code(utils.clean_seq-&gt;utils.clean_seq_esm)" />
     <MESSAGE value="feature: debug code for complete_embedding_matrix" />
     <MESSAGE value="feature: It is ready for Huggingface." />
-    <option name="LAST_COMMIT_MESSAGE" value="feature: It is ready for Huggingface." />
+    <MESSAGE value="LucaOne now supports **BF16** for training and embedding inference." />
+    <option name="LAST_COMMIT_MESSAGE" value="LucaOne now supports **BF16** for training and embedding inference." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LucaOne$aspera_stats.coverage" NAME="aspera_stats Coverage Results" MODIFIED="1745891400392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data" />
