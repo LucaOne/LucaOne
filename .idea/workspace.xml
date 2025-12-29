@@ -5,19 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="feature: It is ready for Huggingface.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embedding/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/embedding/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_bak.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_bak.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/get_embedding_v1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/get_embedding_v1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_eval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/run_eval_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_eval_mask.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tester.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_mask_v2.0.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_continue.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_for_record.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_continue.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_gene_for_record.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,6 +40,31 @@
     &quot;assignee&quot;: &quot;LucaOne&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="developv2" />
+                    <option name="lastUsedInstant" value="1767003389" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1767003388" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/LucaOne/LucaOne.git&quot;,
@@ -66,7 +86,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "developv2",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

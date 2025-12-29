@@ -57,7 +57,7 @@ save_steps=100000
 # warmup_steps个step到达peak lr，实际上是warmup_steps=warmup_steps/gradient_accumulation_steps
 warmup_steps=64000
 # 最大迭代step次数(这么多次后，peak lr1变为lr2, 需要根据epoch,样本数量,n_gpu,batch_size,gradient_accumulation_steps进行估算）
-# 最后想要变成多大的值比如从lr1->lr2，那么就是(max_epochs*sample_cnt)*lr1/(n_gpu * batch_size * gradient_accumulation_steps*lr2))进行估算
+# 最后想要变成多大的值比如从lr1->lr2，那么就是(max_epochs*sample_cnt)*lr1/(n_gpu * batch_size * gradient_accumulation_steps*(lr1 - lr2)))进行估算
 max_steps=6000000
 # batch size for one GPU
 batch_size=1
