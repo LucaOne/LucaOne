@@ -36,7 +36,22 @@ Our work focuses on building foundational models to decode the language of life.
 # LucaOne(LucaGPLM)     
 LucaOne: Generalized Biological Foundation Model with Unified Nucleic Acid and Protein Language.
 
-# TimeLine      
+# TimeLine         
+* **2025/12/31**    
+LucaOne now supports the Hugging Face interface for further training.      
+It allows for various training modes, including using sequence-only inputs or injecting biological knowledge following the LucaOne framework. You can fine-tune the model for both sequence-level and token-level classification or regression tasks.        
+Please refer to the Hugging Face address: https://huggingface.co/collections/LucaGroup/lucaone, or the `huggingface` branch of this repository.
+
+  - **Hugging Face Native**: Full support for `AutoModel`, `AutoModelForMaskedLM`, `AutoModelForSequenceClassification`, `AutoModelForTokenClassification`, `AutoConfig`, and `AutoTokenizer`.
+  - **Unified Architecture**: Single model architecture handling multiple biological modalities.
+  - **Task-Specific Heads**:
+      - `LucaGPLMModel`: For sequences embedding.
+      - `LucaGPLMForMaskedLM`: For pre-training and sequence recovery.
+      - `LucaGPLMForSequenceClassification`: For sequence-level tasks (e.g., protein family, solubility, or promoter prediction).
+      - `LucaGPLMForTokenClassification`: For residue-level tasks (e.g., secondary structure, binding sites, or post-translational modifications).
+  - **Extensible**: Easily adaptable to custom downstream tasks using the standard `transformers` API.
+
+
 * 2025/12/26:   
 LucaOne now supports **BF16** for training and embedding inference.    
 add parameter: **--use_bp16**     
