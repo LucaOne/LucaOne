@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lucaone"
+version = "1.1.0"
+description = "LucaOne: LucaGPLM Model compatible with HuggingFace Transformers"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "YongHe", email = "sanyuan.hy@alibaba-inc.com" }
+]
+# install_requires
+dependencies = [
+    "torch>=1.13.1",
+    "transformers>=4.26.0",
+]
+
+[tool.setuptools]
+# package_dir={"": "src"}
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+# packages=find_packages(where="src")
+where = ["src"]
+include = ["lucaone*"] # 包含所有以 lucaone 开头的包
