@@ -92,7 +92,7 @@ class LucaGPLMTransformerLayer(nn.Module):
             use_rotary_embeddings: bool = False,
     ):
         '''
-        Tramsformer-Encoder 层
+        Transformer-Encoder 层
         :param embed_dim: token embedding dim
         :param ffn_embed_dim: fully connected layer dim
         :param attention_heads: heads num
