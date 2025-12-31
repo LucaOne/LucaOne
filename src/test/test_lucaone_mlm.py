@@ -24,12 +24,14 @@ else:
 
 model = AutoModelForMaskedLM.from_pretrained(
     model_id,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
     model_id,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 print(model)
 print("*" * 50)

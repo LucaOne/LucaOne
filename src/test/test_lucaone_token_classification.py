@@ -28,12 +28,14 @@ model = AutoModelForTokenClassification.from_pretrained(
     task_level="token_level",
     task_type="binary_class",
     classifier_num_labels=2,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
     model_id,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 print(model)
 print("*" * 50)

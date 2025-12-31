@@ -43,7 +43,7 @@ pip install -e .
 ## 🚀Quick Start
 
 ### 1. Feature Extraction/Embedding      
-Extract high-dimensional embeddings for downstream analysis or training downstream tasks using LucaOne-Embedding:
+Extract high-dimensional embeddings for downstream analysis or training downstream tasks using LucaOne-Embedding.   
 
 Please refer to the code in `test/test_lucaone_embedding.py`.
 
@@ -53,7 +53,7 @@ Continue to perform MLM pre-training or sequence recovery.
 Please refer to the code in `test/test_lucaone_mlm.py`.
 
 ### 3. Sequence Classification
-Predict properties for the entire sequence (e.g., Enzyme vs. Non-Enzyme):  
+Predict properties for the entire sequence (e.g., Enzyme vs. Non-Enzyme).     
 
 Supports `multi-class classification`, `binary classification`, `multi-label classification`, and `regression` tasks.
 
@@ -61,7 +61,7 @@ Please refer to the code in `test/test_lucaone_seq_classification.py`.
 
 
 ### 4. Token Classification   
-Predict properties for each residue/nucleotide (e.g., Secondary Structure, Binding Sites, and , Post-Translational Modifications):
+Predict properties for each residue/nucleotide (e.g., Secondary Structure, Binding Sites, and , Post-Translational Modifications).  
 
 Supports `multi-class classification`, `binary classification`, `multi-label classification`, and `regression` tasks.
 
@@ -84,7 +84,7 @@ Please refer to the code in `test/test_lucaone_token_classification.py`.
 If you have legacy weights in `.pth` format, use the provided conversion script to migrate them to the Hugging Face format. This script maps the original state dictionary to the new `lucaone.` prefixed structure.
 
 ```bash
-python scripts/convert_weights.py --input path/to/original.pth --output ./hf_model_dir
+python scripts/convert_weights.py
 ```
 
 ## Citation

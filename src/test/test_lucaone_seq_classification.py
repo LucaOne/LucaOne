@@ -29,12 +29,14 @@ model = AutoModelForSequenceClassification.from_pretrained(
     task_level="seq_level",
     task_type="multi_class",
     classifier_num_labels=4,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 
 tokenizer = AutoTokenizer.from_pretrained(
     model_id,
-    trust_remote_code=True
+    trust_remote_code=True,
+    force_download=True
 )
 print(model)
 print("*" * 50)
