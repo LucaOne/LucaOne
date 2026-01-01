@@ -713,7 +713,7 @@ class LucaGPLM(nn.Module):
                 )
 
     def predict_contacts(self, input_ids, position_ids=None, token_type_ids=None):
-        return self(
+        return self.forward(
             input_ids=input_ids,
             position_ids=position_ids,
             token_type_ids=token_type_ids,
