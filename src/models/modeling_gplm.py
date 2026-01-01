@@ -700,7 +700,7 @@ def with_incremental_state(cls):
 
 
 @with_incremental_state
-class LucaGPLMMultiheadAttention(nn.Module):
+class LucaGPLMMultiheadAttentionV1(nn.Module):
     def __init__(
             self,
             embed_dim,
@@ -1251,7 +1251,6 @@ class LucaGPLMMultiheadAttention(nn.Module):
         use_sdpa = hasattr(F, "scaled_dot_product_attention") and not (need_weights or need_head_weights)
 
         if use_sdpa:
-            print("use sdpa: ", use_sdpa)
             # 准备 Mask: SDPA 支持 (B, 1, T, S) 或 (B, H, T, S)
             # 我们构造一个 float mask 以获得最好的兼容性
             final_attn_mask = None

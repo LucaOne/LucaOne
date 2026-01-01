@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="LucaOne now supports flash attention and bp16  for training">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/lucaone_gplm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/lucaone_gplm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/modeling_gplm.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/modeling_gplm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run_eval.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_eval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run_eval_mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run_eval_mask.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot_continue_bp16.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/training/run_multi_v2.0_prot_continue_bp16.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -441,7 +448,7 @@
       <workItem from="1767059383220" duration="5181000" />
       <workItem from="1767074483018" duration="679000" />
       <workItem from="1767078341046" duration="3115000" />
-      <workItem from="1767254747278" duration="17477000" />
+      <workItem from="1767254747278" duration="19087000" />
     </task>
     <task id="LOCAL-00043" summary="feature: update readme">
       <created>1744115617618</created>
@@ -786,7 +793,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761737962552</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

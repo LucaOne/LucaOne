@@ -533,7 +533,7 @@ class LucaGPLM(nn.Module):
         if return_contacts is None:
             return_contacts = False
         if need_head_weights is None:
-            need_head_weights = True
+            need_head_weights = False
         has_pair = False
         has_pair_b = False
         if input_ids is not None or inputs_embeds is not None:

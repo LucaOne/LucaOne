@@ -917,8 +917,10 @@ def get_model(args):
                     new_state_dict[name] = v
                 else:
                     print("name: %s" % name)
-            print("diff:")
-            print(model_state_dict_keys.difference(new_state_dict.keys()))
+            diff = model_state_dict_keys.difference(new_state_dict.keys())
+            if diff:
+                print("diff:")
+                print(diff)
             model.load_state_dict(new_state_dict)
     else:
         # create model
