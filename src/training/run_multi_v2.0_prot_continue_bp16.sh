@@ -47,7 +47,7 @@ BEST_METRIC_TYPE="loss"
 ## max epochs
 num_train_epochs=2
 ## accumulation gradient steps
-gradient_accumulation_steps=32
+gradient_accumulation_steps=16
 # 间隔多少个step在log文件中写入loss（实际上是gradient_accumulation_steps与loss_logging_steps的最小公倍数, 这里是4000）
 loss_logging_steps=2000
 # 间隔多少个step在log文件中写入信息（实际上是gradient_accumulation_steps与logging_steps的最小公倍数, 这里是32000）
@@ -58,10 +58,10 @@ save_steps=320000
 warmup_steps=320000
 # 最大迭代step次数(这么多次后，peak lr1变为lr2, 需要根据epoch,样本数量,n_gpu,batch_size,gradient_accumulation_steps进行估算）
 # 最后想要变成多大的值比如从lr1->lr2，那么就是(max_epochs*sample_cnt)*lr1/(n_gpu * batch_size * gradient_accumulation_steps*(lr1-lr2)))进行估算
-# 2 * 1e-4 * 500000000/(8 * 1 * 32 * (1e-4 - 1e-5))
-max_steps=5000000
+# 2 * 1e-4 * 500000000/(8 * 4 * 16 * (1e-4 - 1e-5))
+max_steps=3000000
 # batch size for one GPU
-batch_size=1
+batch_size=4
 # 最大学习速率(peak learning rate)
 learning_rate=1e-4
 
