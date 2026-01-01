@@ -1,0 +1,30 @@
+numpy==1.24.2
+biopython==1.80
+biotite==0.35.0
+brotlipy==0.7.0
+pandas==1.5.3
+pickle5==0.0.11
+scikit-learn==1.2.1
+scipy==1.10.1
+six==1.16.0
+tokenizers==0.19.1
+# torch==2.1.2+cu121
+# torchaudio==2.1.2+cu121
+# torchvision==0.16.2+cu121
+transformers==4.41.2
+tensorboard==2.11.2
+tensorboardX==2.6.2.2
+statsmodels==0.14.1
+pynvml==11.5.0
+matplotlib==3.8.4
+datasets==2.12.0
+subword-nmt==0.3.8
+bcbio-gff==0.7.0
+fsspec==2023.5.0
+# triton==2.1.0
+requests==2.24.0
+fairscale==0.4.13
+fair-esm[esmfold]
+# OpenFold and its remaining dependency
+dllogger @ git+https://github.com/NVIDIA/dllogger.git
+pyarrow==19.0.1

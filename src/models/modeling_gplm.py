@@ -135,7 +135,8 @@ class LucaGPLMTransformerLayer(nn.Module):
             x,
             self_attn_mask=None,
             self_attn_padding_mask=None,
-            need_head_weights=False
+            need_head_weights=False,
+            need_weights=False
     ):
         residual = x
         x = self.pre_layer_norm(x)
@@ -144,7 +145,7 @@ class LucaGPLMTransformerLayer(nn.Module):
             key=x,
             value=x,
             key_padding_mask=self_attn_padding_mask,
-            need_weights=True,
+            need_weights=need_weights,
             need_head_weights=need_head_weights,
             attn_mask=self_attn_mask,
         )
@@ -754,7 +755,7 @@ class LucaGPLMMultiheadAttention(nn.Module):
         self.onnx_trace = False
         self.rot_emb = None
         if use_rotary_embeddings:
-            self.rot_emb = RotaryEmbedding(dim=self.head_dim)
+            self.rot_emb = LucaGPLMRotaryEmbedding(dim=self.head_dim)
 
         self.enable_torch_version = False
         if hasattr(F, "multi_head_attention_forward"):
@@ -1111,6 +1112,221 @@ class LucaGPLMMultiheadAttention(nn.Module):
         for key, value in items_to_add.items():
             state_dict[key] = value
 
+@with_incremental_state
+class LucaGPLMMultiheadAttention(nn.Module):
+    def __init__(
+            self,
+            embed_dim,
+            num_heads,
+            kdim=None,
+            vdim=None,
+            dropout=0.0,
+            bias=True,
+            add_bias_kv: bool = False,
+            add_zero_attn: bool = False,
+            self_attention: bool = False,
+            encoder_decoder_attention: bool = False,
+            use_rotary_embeddings: bool = True,
+    ):
+        super().__init__()
+        self.embed_dim = embed_dim
+        self.kdim = kdim if kdim is not None else embed_dim
+        self.vdim = vdim if vdim is not None else embed_dim
+        self.num_heads = num_heads
+        self.dropout = dropout
+        self.head_dim = embed_dim // num_heads
+        assert self.head_dim * num_heads == self.embed_dim, "embed_dim 必须能被 num_heads 整除"
+
+        self.scaling = self.head_dim ** -0.5
+        self.self_attention = self_attention
+        self.encoder_decoder_attention = encoder_decoder_attention
+
+        self.k_proj = nn.Linear(self.kdim, embed_dim, bias=bias)
+        self.v_proj = nn.Linear(self.vdim, embed_dim, bias=bias)
+        self.q_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
+        self.out_proj = nn.Linear(embed_dim, embed_dim, bias=bias)
+
+        if add_bias_kv:
+            self.bias_k = nn.Parameter(torch.Tensor(1, 1, embed_dim))
+            self.bias_v = nn.Parameter(torch.Tensor(1, 1, embed_dim))
+        else:
+            self.bias_k = self.bias_v = None
+
+        self.add_zero_attn = add_zero_attn
+        self.rot_emb = None
+        if use_rotary_embeddings:
+            self.rot_emb = LucaGPLMRotaryEmbedding(dim=self.head_dim)
+
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        gain = nn.init.calculate_gain("relu")
+        nn.init.xavier_uniform_(self.k_proj.weight, gain=gain)
+        nn.init.xavier_uniform_(self.v_proj.weight, gain=gain)
+        nn.init.xavier_uniform_(self.q_proj.weight, gain=gain)
+        nn.init.xavier_uniform_(self.out_proj.weight, gain=gain)
+        if self.out_proj.bias is not None:
+            nn.init.constant_(self.out_proj.bias, 0.0)
+
+    def forward(
+            self,
+            query: Tensor,
+            key: Optional[Tensor] = None,
+            value: Optional[Tensor] = None,
+            key_padding_mask: Optional[Tensor] = None,
+            incremental_state: Optional[Dict[str, Dict[str, Optional[Tensor]]]] = None,
+            need_weights: bool = False,
+            static_kv: bool = False,
+            attn_mask: Optional[Tensor] = None,
+            need_head_weights: bool = False,
+    ) -> Tuple[Tensor, Optional[Tensor]]:
+
+        tgt_len, bsz, embed_dim = query.size()
+
+        # 1. 投影 Q, K, V
+        if self.self_attention:
+            q = self.q_proj(query)
+            k = self.k_proj(query)
+            v = self.v_proj(query)
+        elif self.encoder_decoder_attention:
+            q = self.q_proj(query)
+            if key is None:
+                k = v = None
+            else:
+                k = self.k_proj(key)
+                v = self.v_proj(key)
+        else:
+            q = self.q_proj(query)
+            k = self.k_proj(key)
+            v = self.v_proj(value)
+
+        # 2. 处理 Bias KV (增加序列长度)
+        if self.bias_k is not None:
+            k = torch.cat([k, self.bias_k.repeat(1, bsz, 1)])
+            v = torch.cat([v, self.bias_v.repeat(1, bsz, 1)])
+            if attn_mask is not None:
+                attn_mask = F.pad(attn_mask, (0, 1))
+            if key_padding_mask is not None:
+                key_padding_mask = F.pad(key_padding_mask, (0, 1), value=False)
+
+        # 3. 处理 Incremental State (推理缓存)
+        if incremental_state is not None:
+            saved_state = self._get_input_buffer(incremental_state)
+            if saved_state is not None and "prev_key" in saved_state:
+                if static_kv:
+                    k, v = saved_state["prev_key"], saved_state["prev_value"]
+                else:
+                    k = torch.cat([saved_state["prev_key"], k], dim=0)
+                    v = torch.cat([saved_state["prev_value"], v], dim=0)
+
+            # 更新缓存
+            new_saved_state = {"prev_key": k, "prev_value": v}
+            self._set_input_buffer(incremental_state, new_saved_state)
+
+        # 4. 处理 zero_attn
+        if self.add_zero_attn:
+            z = k.new_zeros(1, bsz, embed_dim)
+            k = torch.cat([k, z], dim=0)
+            v = torch.cat([v, z], dim=0)
+            if attn_mask is not None:
+                attn_mask = F.pad(attn_mask, (0, 1))
+            if key_padding_mask is not None:
+                key_padding_mask = F.pad(key_padding_mask, (0, 1), value=False)
+
+        src_len = k.size(0)
+
+        # 5. 准备维度转换 (T, B, C) -> (B, H, T, D)
+        q = q.view(tgt_len, bsz, self.num_heads, self.head_dim).transpose(0, 1).transpose(1, 2)
+        k = k.view(src_len, bsz, self.num_heads, self.head_dim).transpose(0, 1).transpose(1, 2)
+        v = v.view(src_len, bsz, self.num_heads, self.head_dim).transpose(0, 1).transpose(1, 2)
+
+        # 6. 应用 Rotary Embedding
+        if self.rot_emb is not None:
+            q, k = self.rot_emb(q, k)
+
+        # ----------------------------------------------------------------------
+        # 分支逻辑：SDPA vs 传统实现
+        # ----------------------------------------------------------------------
+        # 条件：PyTorch 2.0+, 不需要权重输出
+        use_sdpa = hasattr(F, "scaled_dot_product_attention") and not (need_weights or need_head_weights)
+
+        if use_sdpa:
+            print("use sdpa: ", use_sdpa)
+            # 准备 Mask: SDPA 支持 (B, 1, T, S) 或 (B, H, T, S)
+            # 我们构造一个 float mask 以获得最好的兼容性
+            final_attn_mask = None
+            if key_padding_mask is not None or attn_mask is not None:
+                # 初始为 0 (不遮蔽)
+                final_attn_mask = torch.zeros(bsz, 1, tgt_len, src_len, device=q.device, dtype=q.dtype)
+
+                if key_padding_mask is not None:
+                    # key_padding_mask: (B, S) -> (B, 1, 1, S)
+                    pm = key_padding_mask.unsqueeze(1).unsqueeze(2).to(torch.bool)
+                    final_attn_mask = final_attn_mask.masked_fill(pm, float("-inf"))
+
+                if attn_mask is not None:
+                    # attn_mask: (T, S) -> (1, 1, T, S)
+                    final_attn_mask += attn_mask.view(1, 1, tgt_len, src_len)
+
+            # 调用 SDPA (注意：不需要提前乘 scaling，SDPA 内部会处理)
+            attn_output = F.scaled_dot_product_attention(
+                q, k, v,
+                attn_mask=final_attn_mask,
+                dropout_p=self.dropout if self.training else 0.0,
+                is_causal=False  # 掩码已在 final_attn_mask 中处理
+            )
+
+            # 恢复维度: (B, H, T, D) -> (T, B, C)
+            attn_output = attn_output.transpose(1, 2).transpose(0, 1).contiguous().view(tgt_len, bsz, embed_dim)
+            attn_output = self.out_proj(attn_output)
+            return attn_output, None
+
+        else:
+            # --- 传统回退路径 (用于需要权重可视化等情况) ---
+            # 此时 q 需要手动缩放
+            q = q * self.scaling
+
+            # 转为 (B*H, T, D) 进行 batch matrix multiply
+            q = q.reshape(bsz * self.num_heads, tgt_len, self.head_dim)
+            k = k.reshape(bsz * self.num_heads, src_len, self.head_dim)
+            v = v.reshape(bsz * self.num_heads, src_len, self.head_dim)
+
+            attn_weights = torch.bmm(q, k.transpose(1, 2))
+
+            if attn_mask is not None:
+                attn_weights += attn_mask.unsqueeze(0)
+
+            if key_padding_mask is not None:
+                attn_weights = attn_weights.view(bsz, self.num_heads, tgt_len, src_len)
+                attn_weights = attn_weights.masked_fill(key_padding_mask.unsqueeze(1).unsqueeze(2), float("-inf"))
+                attn_weights = attn_weights.view(bsz * self.num_heads, tgt_len, src_len)
+
+            attn_probs = F.softmax(attn_weights, dim=-1, dtype=torch.float32).type_as(attn_weights)
+            attn_probs = F.dropout(attn_probs, p=self.dropout, training=self.training)
+
+            attn = torch.bmm(attn_probs, v)
+            attn = attn.view(bsz, self.num_heads, tgt_len, self.head_dim).transpose(1, 2).transpose(0, 1)
+            attn = attn.contiguous().view(tgt_len, bsz, embed_dim)
+            attn = self.out_proj(attn)
+
+            attn_weights_output: Optional[Tensor] = None
+            if need_weights:
+                attn_weights_output = attn_probs.view(bsz, self.num_heads, tgt_len, src_len)
+                if not need_head_weights:
+                    attn_weights_output = attn_weights_output.mean(dim=1)
+
+            return attn, attn_weights_output
+
+    # --- 辅助方法保持不变 (Fairseq 兼容) ---
+    def _get_input_buffer(self, incremental_state: Dict[str, Dict[str, Optional[Tensor]]]) -> Dict[str, Optional[Tensor]]:
+        # 这里可以使用 fairseq.utils.get_incremental_state
+        return incremental_state.get(id(self), {}).get("attn_state", {})
+
+    def _set_input_buffer(self, incremental_state: Dict[str, Dict[str, Optional[Tensor]]], buffer: Dict[str, Optional[Tensor]]):
+        if id(self) not in incremental_state:
+            incremental_state[id(self)] = {}
+        incremental_state[id(self)]["attn_state"] = buffer
+
 
 def rotate_half(x):
     x1, x2 = x.chunk(2, dim=-1)
@@ -1124,7 +1340,7 @@ def apply_rotary_pos_emb(x, cos, sin):
     return (x * cos) + (rotate_half(x) * sin)
 
 
-class RotaryEmbedding(torch.nn.Module):
+class LucaGPLMRotaryEmbedding(torch.nn.Module):
     def __init__(self, dim: int, *_, **__):
         super().__init__()
         inv_freq = 1.0 / (10000 ** (torch.arange(0, dim, 2).float() / dim))
