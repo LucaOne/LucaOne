@@ -713,7 +713,7 @@ class LucaGPLMMultiheadAttention(nn.Module):
             add_zero_attn: bool = False,
             self_attention: bool = False,
             encoder_decoder_attention: bool = False,
-            use_rotary_embeddings: bool = False,
+            use_rotary_embeddings: bool = True,
     ):
         super().__init__()
         self.embed_dim = embed_dim
