@@ -115,8 +115,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, global_step, 
                             output_keys=args.gene_output_keys,
                             output_keys_b=args.prot_output_keys,
                             pair_output_keys=args.pair_output_keys,
-                            output_attentions=True,
-                            output_hidden_states=True
+                            output_attentions=False,
+                            output_hidden_states=False
                         )
                 else:
                     output = model(
@@ -124,8 +124,8 @@ def test(args, model, label_list, parse_row_func, batch_data_func, global_step, 
                         output_keys=args.gene_output_keys,
                         output_keys_b=args.prot_output_keys,
                         pair_output_keys=args.pair_output_keys,
-                        output_attentions=True,
-                        output_hidden_states=True
+                        output_attentions=False,
+                        output_hidden_states=False
                     )
             except Exception as e:
                 exception_path = "../exception/%s" % args.time_str

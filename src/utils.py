@@ -1854,7 +1854,8 @@ def load_trained_model(model_config, args, model_class, model_dirpath):
         model = model_class(model_config, args=args)
         pretrained_net_dict = torch.load(
             os.path.join(model_dirpath, "pytorch.pth"),
-            map_location=torch.device("cpu")
+            map_location=torch.device("cpu"),
+            weights_only=True
         )
         model_state_dict_keys = set()
         for key in model.state_dict().keys():
@@ -1868,8 +1869,10 @@ def load_trained_model(model_config, args, model_class, model_dirpath):
                 name = k
             if name in model_state_dict_keys:
                 new_state_dict[name] = v
-        print("diff:")
-        print(model_state_dict_keys.difference(new_state_dict.keys()))
+        diff = model_state_dict_keys.difference(new_state_dict.keys())
+        if diff:
+            print("diff:")
+            print(diff)
         model.load_state_dict(new_state_dict)
     return model
 

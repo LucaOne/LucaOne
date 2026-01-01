@@ -28,7 +28,7 @@ try:
     from encoder import Encoder
     from utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from multi_files_stream_dataloader import MultiFilesStreamLoader
-    from trainer import train, train_continue
+    from trainer import train, train_continue, train_optim
     from models.lucaone_gplm import LucaGPLM
     from models.alphabet import Alphabet
     from models.lucaone_gplm_config import LucaGPLMConfig
@@ -38,7 +38,7 @@ except ImportError as e:
     from src.encoder import Encoder
     from src.utils import set_seed, to_device, get_labels, get_parameter_number, save_model_parameters
     from src.multi_files_stream_dataloader import MultiFilesStreamLoader
-    from src.trainer import train, train_continue
+    from src.trainer import train, train_continue, train_optim
     from src.models.lucaone_gplm import LucaGPLM
     from src.models.alphabet import Alphabet
     from src.models.lucaone_gplm_config import LucaGPLMConfig
@@ -416,6 +416,16 @@ def get_args():
         "--use_bp16",
         action="store_true",
         help="whether to use bp16"
+    )
+    parser.add_argument(
+        "--has_contact_head",
+        action="store_true",
+        help="whether to contain contact head"
+    )
+    parser.add_argument(
+        "--training_optim",
+        action="store_true",
+        help="whether to training optim"
     )
     input_args = parser.parse_args()
     return input_args
@@ -802,6 +812,7 @@ def get_model(args):
             )
 
     # model important parameters
+    model_config.has_contact_head = args.has_contact_head
     model_config.hidden_size = args.hidden_size
     model_config.num_attention_heads = args.num_attention_heads
     model_config.num_hidden_layers = args.num_hidden_layers
@@ -879,7 +890,11 @@ def get_model(args):
             )
         except Exception as e:
             model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(os.path.join(args.model_dirpath, "pytorch.pth"), map_location=torch.device("cpu"))
+            pretrained_net_dict = torch.load(
+                os.path.join(args.model_dirpath, "pytorch.pth"),
+                map_location=torch.device("cpu"),
+                weights_only=True
+            )
 
             model_state_dict_keys = set()
             for key in model.state_dict():
@@ -895,8 +910,10 @@ def get_model(args):
                     new_state_dict[name] = v
                 else:
                     print("name: %s" % name)
-            print("diff:")
-            print(model_state_dict_keys.difference(new_state_dict.keys()))
+            diff = model_state_dict_keys.difference(new_state_dict.keys())
+            if diff:
+                print("diff:")
+                print(diff)
             model.load_state_dict(new_state_dict)
     else:
         # create model
@@ -1049,7 +1066,11 @@ def create_device(args):
         if args.n_gpu > 1:
             torch.cuda.set_device(args.local_rank)
             device = torch.device("cuda", args.local_rank)
-            dist.init_process_group(backend="nccl", timeout=datetime.timedelta(seconds=54000))
+            dist.init_process_group(
+                backend="nccl",
+                timeout=datetime.timedelta(seconds=54000),
+                device_id=torch.device(f'cuda:{args.local_rank}')
+            )
             if args.local_rank == 0:
                 print('world size: %d' % dist.get_world_size())
         else:
@@ -1294,11 +1315,9 @@ def main():
     # model to device
     model.to(args.device)
 
-    if args.local_rank not in [-1, 0]:
-        dist.barrier()
+    if args.local_rank != -1:
+        dist.barrier(device_ids=[args.local_rank])
 
-    if args.local_rank == 0:
-        dist.barrier()
     if args.n_gpu <= 1:
         print("n_gpu: %d, use: MultiFilesStreamLoader" % args.n_gpu)
         if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
@@ -1399,7 +1418,20 @@ def main():
             collate_fn=batch_data_func
         )
     if args.do_train:
-        if args.trained_checkpoint is not None:
+        if args.training_optim:
+            global_step, avg_loss, max_metric_model_info = train_optim(
+                args,
+                model,
+                model_config,
+                dataloader=train_dataloader,
+                label_size_dict=args.label_size,
+                parse_row_func=parse_row_func,
+                batch_data_func=batch_data_func,
+                tokenizer=tokenizer,
+                train_sampler=None,
+                log_fp=log_fp
+            )
+        elif args.trained_checkpoint is not None:
             global_step, avg_loss, max_metric_model_info = train_continue(
                 args,
                 model,

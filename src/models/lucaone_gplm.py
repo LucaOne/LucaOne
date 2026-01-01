@@ -35,6 +35,7 @@ class LucaGPLM(nn.Module):
     ):
         super().__init__()
         self.config = config
+        self.has_contact_head = config.has_contact_head
         self.max_position_embeddings = config.max_position_embeddings
         self.type_vocab_size = config.type_vocab_size
         self.num_layers = config.num_hidden_layers
@@ -179,7 +180,7 @@ class LucaGPLM(nn.Module):
         )
         self.layer_size = len(self.layers)
 
-        if not self.embedding_inference:
+        if not self.embedding_inference and self.has_contact_head:
             self.contact_head = ContactPredictionHead(
                 self.num_layers * self.attention_heads,
                 self.prepend_bos,
@@ -330,6 +331,11 @@ class LucaGPLM(nn.Module):
         if return_contacts:
             need_head_weights = True
 
+        if need_head_weights:
+            need_weights = True
+        else:
+            need_weights = False
+
         assert input_ids.ndim == 2
         # 动态求mask，(B * Seq_len) 被mask掉位置的值为True
         if attention_mask is None:
@@ -379,6 +385,7 @@ class LucaGPLM(nn.Module):
                 x,
                 self_attn_padding_mask=padding_mask,
                 need_head_weights=need_head_weights,
+                need_weights=need_weights
             )
             if (layer_idx + 1) in repr_layers:
                 hidden_representations[layer_idx + 1] = x.transpose(0, 1)
@@ -526,7 +533,7 @@ class LucaGPLM(nn.Module):
         if return_contacts is None:
             return_contacts = False
         if need_head_weights is None:
-            need_head_weights = True
+            need_head_weights = False
         has_pair = False
         has_pair_b = False
         if input_ids is not None or inputs_embeds is not None:
@@ -706,7 +713,7 @@ class LucaGPLM(nn.Module):
                 )
 
     def predict_contacts(self, input_ids, position_ids=None, token_type_ids=None):
-        return self(
+        return self.forward(
             input_ids=input_ids,
             position_ids=position_ids,
             token_type_ids=token_type_ids,

@@ -410,6 +410,11 @@ def get_args():
         action="store_true",
         help="whether to use bp16"
     )
+    parser.add_argument(
+        "--has_contact_head",
+        action="store_true",
+        help="whether to contain contact head"
+    )
     input_args = parser.parse_args()
     return input_args
 
@@ -809,6 +814,7 @@ def get_model(args):
         model_config.embed_scale = args.embed_scale
 
     # input parameters
+    model_config.has_contact_head = args.has_contact_head
     model_config.vocab_size = tokenizer.vocab_size
     model_config.max_position_embeddings = args.max_length
     model_config.pad_token_id = tokenizer.pad_token_id
@@ -866,7 +872,11 @@ def get_model(args):
             model = model_class.from_pretrained(args.model_dirpath, args=args)
         except Exception as e:
             model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(os.path.join(args.model_dirpath, "pytorch.pth"), map_location=torch.device("cpu"))
+            pretrained_net_dict = torch.load(
+                os.path.join(args.model_dirpath, "pytorch.pth"),
+                map_location=torch.device("cpu"),
+                weights_only=True
+            )
 
             model_state_dict_keys = set()
             for key in model.state_dict():
@@ -882,8 +892,10 @@ def get_model(args):
                     new_state_dict[name] = v
                 else:
                     print("name: %s removed" % name)
-            print("diff:")
-            print(model_state_dict_keys.difference(new_state_dict.keys()))
+            diff = model_state_dict_keys.difference(new_state_dict.keys())
+            if diff:
+                print("diff:")
+                print(diff)
             model.load_state_dict(new_state_dict)
     else:
         # create model
@@ -1276,11 +1288,8 @@ def main():
     # model to device
     model.to(args.device)
 
-    if args.local_rank not in [-1, 0]:
-        dist.barrier()
-
-    if args.local_rank == 0:
-        dist.barrier()
+    if args.local_rank != -1:
+        dist.barrier(device_ids=[args.local_rank])
 
     print("device:", args.device)
 

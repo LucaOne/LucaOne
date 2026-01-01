@@ -433,6 +433,11 @@ def get_args():
         action="store_true",
         help="whether to use bp16"
     )
+    parser.add_argument(
+        "--has_contact_head",
+        action="store_true",
+        help="whether to contain contact head"
+    )
     parser.add_argument("--gpu_id", default=None, type=int, help="the used gpu index, -1 for cpu")
     input_args = parser.parse_args()
     return input_args
@@ -818,6 +823,7 @@ def get_model(args):
             )
 
     # model important parameters
+    model_config.has_contact_head = args.has_contact_head
     model_config.hidden_size = args.hidden_size
     model_config.num_attention_heads = args.num_attention_heads
     model_config.num_hidden_layers = args.num_hidden_layers
@@ -891,7 +897,11 @@ def get_model(args):
             model = model_class.from_pretrained(args.model_dirpath, args=args)
         except Exception as e:
             model = model_class(model_config, args=args)
-            pretrained_net_dict = torch.load(os.path.join(args.model_dirpath, "pytorch.pth"), map_location=torch.device("cpu"))
+            pretrained_net_dict = torch.load(os.path.join(
+                args.model_dirpath, "pytorch.pth"),
+                map_location=torch.device("cpu"),
+                weights_only=True
+            )
 
             model_state_dict_keys = set()
             for key in model.state_dict():
@@ -907,8 +917,10 @@ def get_model(args):
                     new_state_dict[name] = v
                 else:
                     print("name: %s" % name)
-            print("diff:")
-            print(model_state_dict_keys.difference(new_state_dict.keys()))
+            diff = model_state_dict_keys.difference(new_state_dict.keys())
+            if diff:
+                print("diff:")
+                print(diff)
             model.load_state_dict(new_state_dict)
     else:
         # create model
@@ -1303,11 +1315,8 @@ def main():
     # model to device
     model.to(args.device)
 
-    if args.local_rank not in [-1, 0]:
-        dist.barrier()
-
-    if args.local_rank == 0:
-        dist.barrier()
+    if args.local_rank != -1:
+        dist.barrier(device_ids=[args.local_rank])
 
     print("device:", args.device)
 
