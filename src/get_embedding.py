@@ -1032,7 +1032,7 @@ def main(model_args):
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
                                 use_cpu=use_cpu,
-                                use_bp16=not use_cpu
+                                use_bp16=not use_cpu and model_args.use_bp16
                             )
                         if use_cpu:
                             print("use_cpu: %r" % use_cpu)
@@ -1077,7 +1077,7 @@ def main(model_args):
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
                                 use_cpu=use_cpu,
-                                use_bp16=not use_cpu
+                                use_bp16=not use_cpu and model_args.use_bp16
                             )
                         if use_cpu:
                             print("use_cpu: %r" % use_cpu)
@@ -1154,7 +1154,7 @@ def main(model_args):
                     matrix_add_special_token=matrix_add_special_token,
                     save_type=model_args.save_type,
                     use_cpu=use_cpu,
-                    use_bp16=not use_cpu
+                    use_bp16=not use_cpu and model_args.use_bp16
                 )
             if use_cpu:
                 print("use_cpu: %r" % use_cpu)
