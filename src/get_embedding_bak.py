@@ -222,7 +222,7 @@ def get_embedding(args_info, model_config, tokenizer, model, seq, seq_type, devi
     model.to(device)
     model.eval()
     with torch.no_grad():
-        if "use_bp16" in args_info and args_info["use_bp16"]:
+        if "use_bf16" in args_info and args_info["use_bf16"]:
             with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                 output = model(**batch)
         else:
@@ -283,9 +283,9 @@ def get_args():
         choices=["gene", "prot"], help="seq_type"
     )
     parser.add_argument(
-        "--use_bp16",
+        "--use_bf16",
         action="store_true",
-        help="whether to use bp16"
+        help="whether to use bf16"
     )
     args = parser.parse_args()
     return args

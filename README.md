@@ -54,7 +54,7 @@ Please refer to the Hugging Face address: https://huggingface.co/collections/Luc
 
 * 2025/12/26:   
 LucaOne now supports **BF16** for training and embedding inference.    
-add parameter: **--use_bp16**     
+add parameter: **--use_bf16**     
 
 * 2025/08/15:   
 **Huggingface**     

@@ -309,7 +309,7 @@ def get_embedding(
     model.eval()
     try:
         with torch.no_grad():
-            if "use_bp16" in args_info and args_info["use_bp16"]:
+            if "use_bf16" in args_info and args_info["use_bf16"]:
                 with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                     output = model(**batch)
             else:
@@ -330,7 +330,7 @@ def predict_embedding(
         device=None,
         matrix_add_special_token=False,
         save_type="numpy",
-        use_bp16=False,
+        use_bf16=False,
 ):
     """
     use sequence to predict bio seq embedding matrix or vector(bos)
@@ -343,7 +343,7 @@ def predict_embedding(
     :param device:
     :param matrix_add_special_token:
     :parma save_type:
-    :param use_bp16
+    :param use_bf16
     :return: embedding, processed_seq_len
     """
     global global_log_filepath, global_model_dirpath, global_args_info, \
@@ -370,7 +370,7 @@ def predict_embedding(
                     embedding_inference=True
                 )
         global_args_info["max_length"] = truncation_seq_length
-        global_args_info["use_bp16"] = use_bp16
+        global_args_info["use_bf16"] = use_bf16
     else:
         for item in llm_dirpath.items():
             key = item[0]
@@ -398,7 +398,7 @@ def predict_embedding(
                 global_model[key] = tmp_model
                 global_tokenizer[key] = tmp_tokenizer
             global_args_info[key]["max_length"] = truncation_seq_length
-            global_args_info[key]["use_bp16"] = use_bp16
+            global_args_info[key]["use_bf16"] = use_bf16
 
     processed_seq = clean_seq_luca(seq_id, seq)
     if len(processed_seq) > truncation_seq_length:
@@ -471,7 +471,7 @@ def predict_embedding(
             embedding = emb.hidden_states_b
         else:
             embedding = emb.hidden_states
-        if use_bp16:
+        if use_bf16:
             embedding = embedding.float()
         if matrix_add_special_token:
             embeddings["representations"] = embedding[0, 0: processed_seq_len, :].to(device="cpu").clone()
@@ -485,7 +485,7 @@ def predict_embedding(
             embedding = emb.hidden_states_b
         else:
             embedding = emb.hidden_states
-        if use_bp16:
+        if use_bf16:
             embedding = embedding.float()
         embeddings["bos_representations"] = embedding[0, 0, :].to(device="cpu").clone()
         if save_type == "numpy":
@@ -495,7 +495,7 @@ def predict_embedding(
             embedding = emb.contacts_b
         else:
             embedding = emb.contacts
-        if use_bp16:
+        if use_bf16:
             embedding = embedding.float()
         embeddings["contacts"] = embedding.to(device="cpu")[0, :, :].clone()
         if save_type == "numpy":
@@ -519,7 +519,7 @@ def complete_embedding_matrix(
         matrix_add_special_token,
         save_type="numpy",
         use_cpu=False,
-        use_bp16=False
+        use_bf16=False
 ):
     if init_emb is not None and model_args.embedding_complete and ("representations" in embedding_type or "matrix" in embedding_type):
         torch.cuda.empty_cache()
@@ -557,7 +557,7 @@ def complete_embedding_matrix(
                         device=model_args.device if not use_cpu else torch.device("cpu"),
                         matrix_add_special_token=False,
                         save_type=save_type,
-                        use_bp16=use_bp16
+                        use_bf16=use_bf16
                     )
 
                     # 有seq overlap 所以要截取
@@ -582,7 +582,7 @@ def complete_embedding_matrix(
                         device=model_args.device if not use_cpu else torch.device("cpu"),
                         matrix_add_special_token=False,
                         save_type=save_type,
-                        use_bp16=use_bp16
+                        use_bf16=use_bf16
                     )
                     # 有seq overlap 所以要截取
                     if complete_emb is None:
@@ -609,7 +609,7 @@ def complete_embedding_matrix(
                         device=model_args.device if not use_cpu else torch.device("cpu"),
                         matrix_add_special_token=False,
                         save_type=save_type,
-                        use_bp16=use_bp16
+                        use_bf16=use_bf16
                     )
                     # 有seq overlap 所以要截取
                     if complete_emb is None:
@@ -633,7 +633,7 @@ def complete_embedding_matrix(
                         device=model_args.device if not use_cpu else torch.device("cpu"),
                         matrix_add_special_token=False,
                         save_type=save_type,
-                        use_bp16=use_bp16
+                        use_bf16=use_bf16
                     )
                     # 有seq overlap 所以要截取
                     if complete_emb is None:
@@ -661,7 +661,7 @@ def complete_embedding_matrix(
                     device=model_args.device if not use_cpu else torch.device("cpu"),
                     matrix_add_special_token=False,
                     save_type=save_type,
-                    use_bp16=use_bp16
+                    use_bf16=use_bf16
                 )
                 '''
                 if model_args.trunc_type == "right":
@@ -693,7 +693,7 @@ def complete_embedding_matrix(
                     device=model_args.device if not use_cpu else torch.device("cpu"),
                     matrix_add_special_token=False,
                     save_type=save_type,
-                    use_bp16=use_bp16
+                    use_bf16=use_bf16
                 )
                 last_seg_emb = last_seg_emb[-really_len:, :]
                 if save_type == "numpy":
@@ -714,7 +714,7 @@ def complete_embedding_matrix(
                     device=model_args.device if not use_cpu else torch.device("cpu"),
                     matrix_add_special_token=False,
                     save_type=save_type,
-                    use_bp16=use_bp16
+                    use_bf16=use_bf16
                 )
                 first_seg_emb = first_seg_emb[:really_len, :]
                 if save_type == "numpy":
@@ -807,14 +807,14 @@ def get_args():
 
     # for running
     parser.add_argument(
-        "--use_bp16",
+        "--use_bf16",
         action="store_true",
-        help="whether to use bp16"
+        help="whether to use bf16"
     )
     parser.add_argument(
-        "--use_bp16",
+        "--use_bf16",
         action="store_true",
-        help="whether to use bp16"
+        help="whether to use bf16"
     )
     parser.add_argument('--gpu_id', type=int, default=-1,
                         help="the gpu id to use.")
@@ -943,7 +943,7 @@ def main(model_args):
                             device=model_args.device,
                             matrix_add_special_token=matrix_add_special_token,
                             save_type=model_args.save_type,
-                            use_bp16=model_args.use_bp16
+                            use_bf16=model_args.use_bf16
                         )
                         # 如果指定的设备运行失败，则使用CPU
                         use_cpu = False
@@ -958,7 +958,7 @@ def main(model_args):
                                 device=torch.device("cpu"),
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
-                                use_bp16=False
+                                use_bf16=False
                             )
                             use_cpu = True
                         if emb is not None and input_seq_len > model_args.embedding_fixed_len_a_time:
@@ -973,7 +973,7 @@ def main(model_args):
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
                                 use_cpu=use_cpu,
-                                use_bp16=not use_cpu and model_args.use_bp16
+                                use_bf16=not use_cpu and model_args.use_bf16
                             )
                         if use_cpu:
                             print("use_cpu: %r" % use_cpu)
@@ -988,7 +988,7 @@ def main(model_args):
                             device=model_args.device,
                             matrix_add_special_token=matrix_add_special_token,
                             save_type=model_args.save_type,
-                            use_bp16=model_args.use_bp16
+                            use_bf16=model_args.use_bf16
                         )
                         use_cpu = False
                         if emb is None:
@@ -1002,7 +1002,7 @@ def main(model_args):
                                 device=torch.device("cpu"),
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
-                                use_bp16=False
+                                use_bf16=False
                             )
                             use_cpu = True
                         # embedding全
@@ -1018,7 +1018,7 @@ def main(model_args):
                                 matrix_add_special_token=matrix_add_special_token,
                                 save_type=model_args.save_type,
                                 use_cpu=use_cpu,
-                                use_bp16=not use_cpu and model_args.use_bp16
+                                use_bf16=not use_cpu and model_args.use_bf16
                             )
                         if use_cpu:
                             print("use_cpu: %r" % use_cpu)
@@ -1065,7 +1065,7 @@ def main(model_args):
                 device=model_args.device,
                 matrix_add_special_token=matrix_add_special_token,
                 save_type=model_args.save_type,
-                use_bp16=model_args.use_bp16,
+                use_bf16=model_args.use_bf16,
             )
             use_cpu = False
             if emb is None:
@@ -1079,7 +1079,7 @@ def main(model_args):
                     device=torch.device("cpu"),
                     matrix_add_special_token=matrix_add_special_token,
                     save_type=model_args.save_type,
-                    use_bp16=False
+                    use_bf16=False
                 )
                 use_cpu = True
             # embedding全
@@ -1095,7 +1095,7 @@ def main(model_args):
                     matrix_add_special_token=matrix_add_special_token,
                     save_type=model_args.save_type,
                     use_cpu=use_cpu,
-                    use_bp16=not use_cpu and model_args.use_bp16
+                    use_bf16=not use_cpu and model_args.use_bf16
                 )
             if use_cpu:
                 print("use_cpu: %r" % use_cpu)

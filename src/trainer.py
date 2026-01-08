@@ -210,7 +210,7 @@ def train(
             # print("----" * 10)
             # print_batch_output(batch)
             try:
-                if args.use_bp16:
+                if args.use_bf16:
                     with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                         output = model(
                             **batch,
@@ -750,7 +750,7 @@ def train_optim(
             # print("----" * 10)
             # print_batch_output(batch)
             try:
-                if args.use_bp16:
+                if args.use_bf16:
                     with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                         output = model(
                             **batch,
@@ -1318,7 +1318,7 @@ def train_continue(
                                 log_fp.flush()
                                 writer_info_tb(tb_writer, {"updated_lr": updated_lr}, cur_global_steps, prefix="logging")
                 else:
-                    if args.use_bp16:
+                    if args.use_bf16:
                         with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                             output = model(
                                 **batch,

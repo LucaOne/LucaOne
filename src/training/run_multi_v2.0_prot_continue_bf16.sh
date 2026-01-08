@@ -200,4 +200,4 @@ python -W ignore -m torch.distributed.launch --nnodes 1 --node_rank 0 --nproc_pe
        --epoch_loss $epoch_loss \
        --model_dirpath /mnt/sanyuan.hy/workspace/LucaOne/models/lucagplm/v2.0/token_level,span_level,seq_level,structure_level/lucaone_gplm/20240906230224/checkpoint-step$trained_checkpoint \
        --training_optim \
-       --use_bp16
+       --use_bf16
