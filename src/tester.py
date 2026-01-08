@@ -108,7 +108,7 @@ def test(args, model, label_list, parse_row_func, batch_data_func, global_step, 
             batch, cur_sample_num = to_device(args.device, batch)
             done_sample_num += cur_sample_num
             try:
-                if args.use_bp16:
+                if args.use_bf16:
                     with torch.autocast(device_type='cuda', dtype=torch.bfloat16):
                         output = model(
                             **batch,

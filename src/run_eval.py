@@ -406,9 +406,9 @@ def get_args():
     parser.add_argument("--eval_max_step", default=20000000, type=int,
                         help="the pretrained checkpoints eval_max_step")
     parser.add_argument(
-        "--use_bp16",
+        "--use_bf16",
         action="store_true",
-        help="whether to use bp16"
+        help="whether to use bf16"
     )
     parser.add_argument(
         "--has_contact_head",

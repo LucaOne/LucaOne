@@ -413,9 +413,9 @@ def get_args():
         help="the epoch loss to continue training"
     )
     parser.add_argument(
-        "--use_bp16",
+        "--use_bf16",
         action="store_true",
-        help="whether to use bp16"
+        help="whether to use bf16"
     )
     parser.add_argument(
         "--has_contact_head",
