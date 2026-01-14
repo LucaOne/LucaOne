@@ -1141,8 +1141,10 @@ class LucaGPLMForMaskedLM(LucaGPLMPreTrainedModel):
 
 class LucaGPLMForSequenceClassification(LucaGPLMPreTrainedModel):
     def __init__(self, config):
+        if hasattr(config, "classifier_num_labels") and config.classifier_num_labels > 0:
+            config.num_labels = config.classifier_num_labels
         super().__init__(config)
-        self.num_labels = config.classifier_num_labels
+        self.num_labels = config.num_labels
         self.task_level = config.task_level
         self.task_type = config.task_type
         assert self.task_level == "seq_level"
@@ -1247,8 +1249,10 @@ class LucaGPLMForSequenceClassification(LucaGPLMPreTrainedModel):
 
 class LucaGPLMForTokenClassification(LucaGPLMPreTrainedModel):
     def __init__(self, config):
+        if hasattr(config, "classifier_num_labels") and config.classifier_num_labels > 0:
+            config.num_labels = config.classifier_num_labels
         super().__init__(config)
-        self.num_labels = config.classifier_num_labels
+        self.num_labels = config.num_labels
         self.task_level = config.task_level
         self.task_type = config.task_type
         assert self.task_level == "token_level"
