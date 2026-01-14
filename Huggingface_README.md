@@ -8,7 +8,7 @@ tags:
   - AI4Science
   - AI4Biology
   - Bio
-  - 1.1.0
+  - 1.1.1
 language:
   - en
 ---
@@ -22,7 +22,7 @@ LucaOne/LucaGPLM - The LUCA Gene-Protein language model.
 You can install the package from source using pip:
 
 ```bash
-pip install lucaone==1.1.0
+pip install lucaone==1.1.1
 pip install tokenizers==0.19.1
 pip install transformers==4.41.2
 ```
