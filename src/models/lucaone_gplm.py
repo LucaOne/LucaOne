@@ -35,7 +35,7 @@ class LucaGPLM(nn.Module):
     ):
         super().__init__()
         self.config = config
-        self.has_contact_head = config.has_contact_head
+        self.has_contact_head = config.has_contact_head if hasattr(config, "has_contact_head") else False
         self.max_position_embeddings = config.max_position_embeddings
         self.type_vocab_size = config.type_vocab_size
         self.num_layers = config.num_hidden_layers

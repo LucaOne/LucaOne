@@ -34,6 +34,7 @@ class LucaGPLMConfig(PretrainedConfig):
             use_last_layer_norm=True,
             embed_scale=1.0,
             ignore_index=-100,
+            has_contact_head=False,
             **kwargs
     ):
         super().__init__(pad_token_id=pad_token_id, **kwargs)
@@ -54,4 +55,5 @@ class LucaGPLMConfig(PretrainedConfig):
         self.use_embed_layer_norm = use_embed_layer_norm
         self.use_last_layer_norm = use_last_layer_norm
         self.embed_scale = embed_scale
+        self.has_contact_head = has_contact_head
 
