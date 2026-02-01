@@ -181,6 +181,8 @@ class LucaGPLMTokenizer(PreTrainedTokenizer):
 
     def _convert_text_to_ids(self, text: str, seq_type: str) -> List[int]:
         """Internal helper to convert text to IDs without special tokens."""
+        if seq_type not in ["gene", "prot"]:
+            raise ValueError(f"seq_type must be 'gene'(for DNA or RNA) or 'prot'(for protein), got {seq_type}")
         if seq_type == "gene":
             text = gene_seq_replace(text)
         tokens = self._tokenize(text)
@@ -228,7 +230,8 @@ class LucaGPLMTokenizer(PreTrainedTokenizer):
         max_length: Optional[int] = None,  # <--- 关键参数
         **kwargs
     ) -> List[int]:
-        
+        if seq_type not in ["gene", "prot"]:
+            raise ValueError(f"seq_type must be 'gene'(for DNA or RNA) or 'prot'(for protein), got {seq_type}")
         # 1. 基础转换
         token_ids = self._convert_text_to_ids(text, seq_type)
         
@@ -262,6 +265,8 @@ class LucaGPLMTokenizer(PreTrainedTokenizer):
         """
         Main callable method for tokenization - HuggingFace standard interface
         """
+        if seq_type not in ["gene", "prot"]:
+            raise ValueError(f"seq_type must be 'gene'(for DNA or RNA) or 'prot'(for protein), got {seq_type}")
         if isinstance(text, list):
             # Handle batch processing
             return self.batch_encode_plus(
@@ -311,7 +316,8 @@ class LucaGPLMTokenizer(PreTrainedTokenizer):
         truncation: bool = False,
         **kwargs
     ) -> Dict[str, Any]:
-        
+        if seq_type not in ["gene", "prot"]:
+            raise ValueError(f"seq_type must be 'gene'(for DNA or RNA) or 'prot'(for protein), got {seq_type}")
         # 调用修复后的 encode，它现在会正确处理截断
         token_ids = self.encode(
             text, 
@@ -357,6 +363,8 @@ class LucaGPLMTokenizer(PreTrainedTokenizer):
         Encode using the EXACT same process as the old model's encoder function.
         This replicates the logic from src/llm/lucaone_virus/get_embedding.py:encoder()
         """
+        if seq_type not in ["gene", "prot"]:
+            raise ValueError(f"seq_type must be 'gene'(for DNA or RNA) or 'prot'(for protein), got {seq_type}")
         # Preprocess gene sequences (done in get_embedding function BEFORE calling encoder)
         if seq_type == "gene":
             text = gene_seq_replace(text)
