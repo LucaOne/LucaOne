@@ -431,7 +431,7 @@ def get_args():
     parser.add_argument(
         "--use_bf16",
         action="store_true",
-        help="whether to use bf16"
+        help="whether to use bf16 (Not recommended for use)"
     )
     parser.add_argument(
         "--has_contact_head",
