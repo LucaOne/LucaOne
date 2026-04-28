@@ -2054,12 +2054,8 @@ def calc_emb_filename_by_seq_id(seq_id, embedding_type):
     if seq_id[0] == ">":
         seq_id = seq_id[1:]
     if "|" in seq_id:
-        print(f"Warning: the seq id({seq_id}) contain invalid char '|', it will be split and selected the idx=1 as the unique id.")
-        strs = seq_id.split("|")
-        if len(strs) > 1:
-            emb_filename = embedding_type + "_" + strs[1].strip() + ".pt"
-        else:
-            emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_") + ".pt"
+        print(f"Warning: the seq id({seq_id}) contain invalid char '|', it will be replace with '_'.")
+        emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_").replace("|", "_") + ".pt"
     else:
         emb_filename = embedding_type + "_" + seq_id.replace(" ", "").replace("/", "_") + ".pt"
     return emb_filename
