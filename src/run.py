@@ -1319,6 +1319,7 @@ def main():
         dist.barrier(device_ids=[args.local_rank])
 
     if args.n_gpu <= 1:
+        train_dataset = None
         print("n_gpu: %d, use: MultiFilesStreamLoader" % args.n_gpu)
         if "all" in args.pretrain_task_level_type or "pair_level" in args.pretrain_task_level_type:
             print("Has Pair: True")
@@ -1423,6 +1424,7 @@ def main():
                 args,
                 model,
                 model_config,
+                dataset=train_dataset,
                 dataloader=train_dataloader,
                 label_size_dict=args.label_size,
                 parse_row_func=parse_row_func,
@@ -1436,6 +1438,7 @@ def main():
                 args,
                 model,
                 model_config,
+                dataset=train_dataset,
                 dataloader=train_dataloader,
                 label_size_dict=args.label_size,
                 parse_row_func=parse_row_func,
@@ -1449,6 +1452,7 @@ def main():
                 args,
                 model,
                 model_config,
+                dataset=train_dataset,
                 dataloader=train_dataloader,
                 label_size_dict=args.label_size,
                 parse_row_func=parse_row_func,
