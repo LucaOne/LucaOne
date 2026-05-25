@@ -17,6 +17,7 @@ import torch.distributed as dist
 from torch.optim import AdamW
 from torch.utils.tensorboard import SummaryWriter
 from transformers import get_linear_schedule_with_warmup
+from torch.utils.data.dataloader import DataLoader
 sys.path.append(".")
 sys.path.append("..")
 sys.path.append("../src")
@@ -52,6 +53,7 @@ def train(
         args,
         model,
         model_config,
+        dataset,
         dataloader,
         label_size_dict,
         parse_row_func,
@@ -172,6 +174,19 @@ def train(
     for epoch in range(args.num_train_epochs):
         if train_sampler:
             train_sampler.set_epoch(epoch)
+        if args.n_gpu > 1 and epoch > 0 and dataset is not None:
+            dataset = dataset.shuffle(buffer_size=args.buffer_size, seed=epoch + args.seed)
+            num_workers = min(args.worker_num, dataset.n_shards)
+            print("DataLoader worker num: %d" % num_workers)
+            dataloader = DataLoader(
+                dataset=dataset,
+                batch_size=args.per_gpu_train_batch_size,
+                # sampler=train_sampler,
+                num_workers=num_workers,
+                pin_memory=True,
+                # shuffle=True,
+                collate_fn=batch_data_func
+            )
         if args.local_rank in [0, -1]:
             print("\n=====Epoch: %06d=====" % (epoch + 1))
         batch_total = 0
@@ -592,6 +607,7 @@ def train_optim(
         args,
         model,
         model_config,
+        dataset,
         dataloader,
         label_size_dict,
         parse_row_func,
@@ -712,12 +728,28 @@ def train_optim(
     for epoch in range(args.num_train_epochs):
         if train_sampler:
             train_sampler.set_epoch(epoch)
+        if args.n_gpu > 1 and epoch > 0 and dataset is not None:
+            dataset = dataset.shuffle(buffer_size=args.buffer_size, seed=epoch + args.seed)
+            num_workers = min(args.worker_num, dataset.n_shards)
+            print("DataLoader worker num: %d" % num_workers)
+            dataloader = DataLoader(
+                dataset=dataset,
+                batch_size=args.per_gpu_train_batch_size,
+                # sampler=train_sampler,
+                num_workers=num_workers,
+                pin_memory=True,
+                # shuffle=True,
+                collate_fn=batch_data_func
+            )
         if args.local_rank in [0, -1]:
             print("\n=====Epoch: %06d=====" % (epoch + 1))
         batch_total = 0
 
         cur_epoch_step = 0
-        cur_epoch_loss = args.epoch_loss
+        if args.trained_epoch == epoch + 1:
+            cur_epoch_loss = args.epoch_loss
+        else:
+            cur_epoch_loss = 0.0
         cur_epoch_time = 0.0
         # total_step = 0
         # num = 0
@@ -1133,6 +1165,7 @@ def train_continue(
         args,
         model,
         model_config,
+        dataset,
         dataloader,
         label_size_dict,
         parse_row_func,
@@ -1250,12 +1283,28 @@ def train_continue(
     for epoch in range(args.num_train_epochs):
         if train_sampler:
             train_sampler.set_epoch(epoch)
+        if args.n_gpu > 1 and epoch > 0 and dataset is not None:
+            dataset = dataset.shuffle(buffer_size=args.buffer_size, seed=epoch + args.seed)
+            num_workers = min(args.worker_num, dataset.n_shards)
+            print("DataLoader worker num: %d" % num_workers)
+            dataloader = DataLoader(
+                dataset=dataset,
+                batch_size=args.per_gpu_train_batch_size,
+                # sampler=train_sampler,
+                num_workers=num_workers,
+                pin_memory=True,
+                # shuffle=True,
+                collate_fn=batch_data_func
+            )
         if args.local_rank in [0, -1]:
             print("\n=====Epoch: %06d=====" % (epoch + 1))
         batch_total = 0
 
         cur_epoch_step = 0
-        cur_epoch_loss = args.epoch_loss
+        if args.trained_epoch == epoch + 1:
+            cur_epoch_loss = args.epoch_loss
+        else:
+            cur_epoch_loss = 0.0
         cur_epoch_time = 0.0
         # total_step = 0
         # num = 0

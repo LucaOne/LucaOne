@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b87d994f-3391-4ce5-bc54-951f2f9495f9" name="Changes" comment="debug: fix the bug for getting embedding using bf16">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -452,6 +454,15 @@
       <workItem from="1770181738600" duration="1603000" />
       <workItem from="1773816777800" duration="129000" />
       <workItem from="1775701704371" duration="19000" />
+      <workItem from="1775714306892" duration="133000" />
+      <workItem from="1777013668435" duration="20000" />
+      <workItem from="1777372598600" duration="54000" />
+      <workItem from="1777374222104" duration="50000" />
+      <workItem from="1778128735575" duration="5000" />
+      <workItem from="1779331972207" duration="108000" />
+      <workItem from="1779333457746" duration="403000" />
+      <workItem from="1779333892061" duration="741000" />
+      <workItem from="1779335703921" duration="714000" />
     </task>
     <task id="LOCAL-00043" summary="feature: update readme">
       <created>1744115617618</created>
@@ -796,7 +807,7 @@
       <option name="project" value="LOCAL" />
       <updated>1761737962552</updated>
     </task>
-    <option name="localTasksCounter" value="101" />
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
