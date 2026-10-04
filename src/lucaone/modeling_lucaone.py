@@ -77,8 +77,10 @@ class LucaGPLMRotaryEmbedding(torch.nn.Module):
         self._cos_cached, self._sin_cached = self._update_cos_sin_tables(k, seq_dimension=-2)
 
         return (
-            apply_rotary_pos_emb(q, self._cos_cached, self._sin_cached),
-            apply_rotary_pos_emb(k, self._cos_cached, self._sin_cached),
+            # FP32 rotary tables can promote low-precision Q/K while V keeps
+            # its input dtype. Restore each dtype before attention.
+            apply_rotary_pos_emb(q, self._cos_cached, self._sin_cached).to(q.dtype),
+            apply_rotary_pos_emb(k, self._cos_cached, self._sin_cached).to(k.dtype),
         )
 
 class LucaGPLMGlobalMaskWeightedAttentionPooling1D(nn.Module):
